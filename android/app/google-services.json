@@ -12,7 +12,20 @@
           "package_name": "com.example.bmi_project"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "246066529696-nh59edalaeodu32m715p56ee4h3ej0eb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bmi_project",
+            "certificate_hash": "8b1623c0c045bdd94c1df74a7fb9e151a051dba7"
+          }
+        },
+        {
+          "client_id": "246066529696-8ebfhta3m08bd5frsfngbsp73umgr56a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDxCRIhFPeGmrzq6Bev2Zc6btHFNnvgsec"
@@ -20,7 +33,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246066529696-8ebfhta3m08bd5frsfngbsp73umgr56a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "246066529696-4ngpj80iv78g1jd9g1lus4rtpl9ogmca.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bmiProject"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246066529696:android:62f4adb1a854a94c2d10c5",
+        "android_client_info": {
+          "package_name": "com.vansh.apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246066529696-djs80b0nir4487o5kae143p71gb16qn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vansh.apps",
+            "certificate_hash": "8b1623c0c045bdd94c1df74a7fb9e151a051dba7"
+          }
+        },
+        {
+          "client_id": "246066529696-8ebfhta3m08bd5frsfngbsp73umgr56a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxCRIhFPeGmrzq6Bev2Zc6btHFNnvgsec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246066529696-8ebfhta3m08bd5frsfngbsp73umgr56a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "246066529696-4ngpj80iv78g1jd9g1lus4rtpl9ogmca.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bmiProject"
+              }
+            }
+          ]
         }
       }
     }

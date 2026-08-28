@@ -1,4 +1,4 @@
-package com.example.bmi_project
+package com.vansh.apps
 
 import io.flutter.embedding.android.FlutterActivity
 

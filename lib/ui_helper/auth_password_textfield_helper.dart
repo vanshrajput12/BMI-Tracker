@@ -37,21 +37,21 @@ class AuthPasswordTextFieldHelper extends StatelessWidget {
         ),
 
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(34),
         ),
 
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(34),
           borderSide: const BorderSide(
-            color: Colors.grey,
+            color: Colors.black,
           ),
         ),
 
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(34),
           borderSide: const BorderSide(
-            color: Colors.blue,
-            width: 2,
+            color: Colors.orange,
+            width: 1.5,
           ),
         ),
 

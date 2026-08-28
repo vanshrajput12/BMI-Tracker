@@ -1,3 +1,4 @@
+import 'package:bmi_project/pages/advanceScreen.dart';
 import 'package:bmi_project/pages/dashboard_screen.dart';
 import 'package:bmi_project/pages/setting_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   final List<Widget> pages = [
     const DashboardScreen(),
+    const AdvanceScreen(),
     const SettingsScreen(),
   ];
 
@@ -39,6 +41,10 @@ class _BottomNavState extends State<BottomNav> {
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard_rounded),
             label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.class_outlined),
+            label: 'Advance',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

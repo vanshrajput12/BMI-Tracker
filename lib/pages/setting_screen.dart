@@ -175,7 +175,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _showMessage(String message) {
     if (!mounted) return;
-
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
@@ -189,23 +188,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   InputDecoration _fieldDecoration(String hint) {
     return InputDecoration(
       hintText: hint,
-
       hintStyle: GoogleFonts.poppins(color: Colors.grey),
-
       filled: true,
-
       fillColor: Colors.grey.shade800,
-
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
       ),
-
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
       ),
-
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(color: Colors.blue),
@@ -236,7 +229,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
-
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -260,7 +252,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: [
                         CircleAvatar(
                           radius: 28,
-                          backgroundColor: Colors.blue.shade700,
+                          backgroundColor: Colors.orange,
 
                           child: Text(
                             _profile!.initials,
@@ -306,7 +298,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 Text(
                   'Personal information',
-                  style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 15, fontWeight: FontWeight(600)),
                 ),
 
                 const SizedBox(height: 10),
@@ -342,7 +334,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 Text(
                   'Body data',
-                  style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 15, fontWeight: FontWeight(600)),
                 ),
 
                 const SizedBox(height: 10),
@@ -350,7 +342,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // WEIGHT
                 TextFormField(
                   controller: _weightController,
-
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
@@ -416,13 +407,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // GENDER
                 DropdownButtonFormField<String>(
                   initialValue: _gender,
-
                   dropdownColor: Colors.grey.shade800,
-
                   style: GoogleFonts.poppins(color: Colors.white),
-
                   decoration: _fieldDecoration('Gender'),
-
                   items: const ['Male', 'Female', 'Other'].map((gender) {
                     return DropdownMenuItem(value: gender, child: Text(gender));
                   }).toList(),
@@ -433,7 +420,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           if (value == null) {
                             return;
                           }
-
                           setState(() {
                             _gender = value;
                           });
@@ -446,9 +432,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(
                   width: double.infinity,
                   height: 52,
-
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -469,6 +455,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             'Save Changes',
                             style: GoogleFonts.poppins(
                               fontSize: 16,
+                              color: Colors.black,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -479,7 +466,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 Text(
                   'Account',
-                  style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 16, fontWeight: FontWeight(700)),
                 ),
 
                 const SizedBox(height: 10),
@@ -487,18 +474,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: OutlinedButton.icon(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade200,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(color: Colors.red)
+                      )
+                    ),
                     onPressed: _logout,
-                    icon: const Icon(Icons.logout, color: Colors.red),
-                    label: Text(
-                      'Logout',
-                      style: GoogleFonts.poppins(
-                        color: Colors.red,
-                        fontWeight: FontWeight.w600,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.logout, color: Colors.red),
+                          SizedBox(width: 6,),
+                          Text(
+                            'Logout',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
+                SizedBox(height: 30,),
+                Center(
+                  child: Text("Version", style: GoogleFonts.poppins(color: Colors.grey,
+                  fontWeight: FontWeight(700),
+                  fontSize: 16),),
+                ),
+                Center(child: Text("1.0.0", style: GoogleFonts.poppins(fontWeight: FontWeight(700) , color: Colors.grey ),))
               ],
             ),
           ),

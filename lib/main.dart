@@ -5,6 +5,7 @@ import 'package:bmi_project/pages/auth_pages/sign_up_screen.dart';
 import 'package:bmi_project/pages/dashboard_screen.dart';
 import 'package:bmi_project/pages/setting_screen.dart';
 import 'package:bmi_project/pages/user_detail_pages/deatils_screen.dart';
+import 'package:bmi_project/services/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,8 @@ import 'firebase/firebase_options.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final notificationService = NotificationService();
+  await notificationService.initialize();
   runApp(const MyApp());
 }
 

@@ -85,14 +85,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     }
     final firebaseUser = FirebaseAuth.instance.currentUser;
     if (firebaseUser == null) {
-      SnackBarHelper.show('User session expired. Please login again.', context);
+      SnackBarHelper.show('User session expired. Please login again.', context, Colors.red);
 
       return;
     }
     final weightKg = _weightInKg;
     final heightCm = _heightInCm;
     if (weightKg == null || heightCm == null) {
-      SnackBarHelper.show('Please enter valid body measurements.', context);
+      SnackBarHelper.show('Please enter valid body measurements.', context, Colors.red);
       return;
     }
     setState(() {
@@ -124,16 +124,16 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       });
 
       if (!mounted) return;
-      SnackBarHelper.show('Your details have been saved.', context);
+      SnackBarHelper.show('Your details have been saved.', context, Colors.green);
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const BottomNav()),
       );
     } on FirebaseException catch (e) {
-      SnackBarHelper.show('Unable to save your details.', context);
+      SnackBarHelper.show('Unable to save your details.', context, Colors.red);
     } catch (e) {
-      SnackBarHelper.show('Something went wrong. Please try again.', context);
+      SnackBarHelper.show('Something went wrong. Please try again.', context,Colors.red);
     } finally {
       if (mounted) {
         setState(() {

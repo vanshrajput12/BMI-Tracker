@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 class AuthEmailTextFieldHelper extends StatefulWidget {
   final TextEditingController controller;
   final String text;
@@ -23,6 +22,7 @@ class _AuthEmailTextFieldHelperState extends State<AuthEmailTextFieldHelper> {
         ),
         controller: widget.controller,
         decoration: InputDecoration(
+
           hintText: widget.text,
           hintStyle: GoogleFonts.poppins(
             fontSize: 16,
@@ -30,21 +30,21 @@ class _AuthEmailTextFieldHelperState extends State<AuthEmailTextFieldHelper> {
           ),
 
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(34),
           ),
 
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(34),
             borderSide: const BorderSide(
-              color: Colors.grey,
+              color: Colors.black,
             ),
           ),
 
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(34),
             borderSide: const BorderSide(
-              color: Colors.blue,
-              width: 2,
+              color: Colors.orange,
+              width: 1.5,
             ),
           ),
           suffixIcon: widget.suffixIcon,
