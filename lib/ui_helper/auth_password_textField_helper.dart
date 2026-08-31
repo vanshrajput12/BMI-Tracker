@@ -54,10 +54,8 @@ class AuthPasswordTextFieldHelper extends StatelessWidget {
             width: 1.5,
           ),
         ),
-
         suffixIcon: suffixIcon,
       ),
-
       validator: validator,
     );
   }

@@ -1,5 +1,6 @@
 import 'package:bmi_project/ui_helper/day_button_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../days/Day 1.dart';
 import '../days/Day2.dart';
@@ -11,27 +12,25 @@ import '../days/Day7.dart';
 
 class AdvanceScreen extends StatelessWidget {
   const AdvanceScreen({super.key});
-
+  static const Color _backgroundColor = Color(0xFF111111);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.grey.shade900,
-        title: Text(
-          "Training Schedule",
-          style: TextStyle(
-            fontFamily: 'poppins',
-            color: Colors.white,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      ),
+      backgroundColor: _backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            SizedBox(height: 60),
+            Text(
+              'TRAINING SCHEDULE',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            SizedBox(width:240,child: Divider(color: Colors.white,)),
             SizedBox(height: 30),
             DayButtonHelper(
               text: "DAY 1 ",

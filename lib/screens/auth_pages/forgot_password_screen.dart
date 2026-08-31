@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import '../../ui_helper/auth_mail_textfield_helper.dart';
-import '../../ui_helper/snackbar_helper.dart';
+import '../../ui_helper/auth_mail_textField_helper.dart';
+import '../../ui_helper/snackBar_helper.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -59,22 +59,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      String message;
       switch (e.code) {
         case 'invalid-email':
-          message = 'Please enter a valid email address.';
           break;
 
         case 'user-not-found':
-          message = 'No account found with this email.';
           break;
 
         case 'too-many-requests':
-          message = 'Too many requests. Please try again later.';
           break;
 
         default:
-          message = e.message ?? 'Unable to send reset email.';
       }
     } catch (e) {
       SnackBarHelper.show(
@@ -94,7 +89,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
           Positioned(
@@ -142,18 +136,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           SafeArea(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                padding: const EdgeInsets.symmetric(horizontal: 28.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 70),
                     Center(
-                      child: Lottie.asset(
-                        'assets/animations/forgotPassword.json',
-                        width: 250,
-                        height: 250,
-                        fit: BoxFit.contain,
-                        repeat: true,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 30.0),
+                        child: Lottie.asset(
+                          'assets/animations/forgotPassword.json',
+                          width: 250,
+                          height: 250,
+                          fit: BoxFit.contain,
+                          repeat: true,
+                        ),
                       ),
                     ),
 
@@ -164,7 +161,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         style: GoogleFonts.poppins(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.orange,
                         ),
                       ),
                     ),

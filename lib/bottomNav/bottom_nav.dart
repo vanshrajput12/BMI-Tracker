@@ -1,8 +1,13 @@
-import 'package:bmi_project/pages/advanceScreen.dart';
-import 'package:bmi_project/pages/dashboard_screen.dart';
-import 'package:bmi_project/pages/setting_screen.dart';
+
+import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../screens/advanceScreen.dart';
+import '../screens/dashboard_screen.dart';
+import '../screens/notification_page.dart';
+import '../screens/profile_screen.dart';
+import '../screens/step_counter_screen.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -14,8 +19,10 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   final List<Widget> pages = [
     const DashboardScreen(),
+    const StepCounterScreen(),
     const AdvanceScreen(),
-    const SettingsScreen(),
+    const NotificationPage(),
+    const ProfileScreen(),
   ];
 
   int currentIndex = 0;
@@ -23,32 +30,50 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        mouseCursor: MouseCursor.defer,
-        backgroundColor: Colors.black,
-        elevation: 2,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.orange,
-        selectedLabelStyle: GoogleFonts.poppins(),
+      extendBody: true,
+      body: IndexedStack(
+        index: currentIndex,
+        children: pages,
+      ),
+
+      bottomNavigationBar: CrystalNavigationBar(
         currentIndex: currentIndex,
+        indicatorColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        borderWidth: 1.5,
+
+        outlineBorderColor: Colors.white.withValues(alpha: 0.7),
+
         onTap: (index) {
           setState(() {
             currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_rounded),
-            label: 'Dashboard',
+
+        items: [
+          CrystalNavigationBarItem(
+            icon: Icons.space_dashboard_rounded,
+            selectedColor: Colors.orange,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.class_outlined),
-            label: 'Advance',
+
+          CrystalNavigationBarItem(
+            icon: Icons.directions_run_rounded,
+            selectedColor: Colors.orange,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+
+          CrystalNavigationBarItem(
+            icon: Icons.analytics_rounded,
+            selectedColor: Colors.orange,
+          ),
+
+          CrystalNavigationBarItem(
+            icon: Icons.notifications,
+            selectedColor: Colors.orange,
+          ),
+
+          CrystalNavigationBarItem(
+            icon: CupertinoIcons.person_fill,
+            selectedColor: Colors.orange,
           ),
         ],
       ),

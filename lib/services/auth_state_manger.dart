@@ -1,5 +1,5 @@
 import 'package:bmi_project/bottomNav/bottom_nav.dart';
-import 'package:bmi_project/pages/auth_pages/login_screen.dart';
+import 'package:bmi_project/screens/auth_pages/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
