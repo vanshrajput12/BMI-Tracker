@@ -704,3 +704,87 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+// Widget _bodyDataCard() {
+//   return Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 6),
+//     decoration: BoxDecoration(
+//       color: _cardColor,
+//       borderRadius: BorderRadius.circular(24),
+//       border: Border.all(color: Colors.white.withValues(alpha: 0.04)),
+//     ),
+//     child: Column(
+//       children: [
+//         SizedBox(
+//           width: double.infinity,
+//           child: ListTile(
+//             leading: Icon(CupertinoIcons.folder_solid, color: Colors.grey),
+//             title: Text(
+//               "Preferences",
+//               style: GoogleFonts.poppins(
+//                 color: Colors.white,
+//                 fontSize: 15,
+//                 fontWeight: FontWeight(400),
+//               ),
+//             ),
+//             trailing: Icon(
+//               CupertinoIcons.forward,
+//               color: Colors.grey,
+//               size: 20,
+//             ),
+//           ),
+//         ),
+//         Divider(),
+//         SizedBox(
+//           width: double.infinity,
+//           child: ListTile(
+//             leading: Icon(Icons.lock, color: Colors.grey),
+//             title: Text(
+//               "Privacy",
+//               style: GoogleFonts.poppins(
+//                 color: Colors.white,
+//                 fontSize: 15,
+//                 fontWeight: FontWeight.w400,
+//               ),
+//             ),
+//             trailing: Icon(CupertinoIcons.forward, color: Colors.grey),
+//           ),
+//         ),
+//         Divider(),
+//         SizedBox(
+//           width: double.infinity,
+//           child: ListTile(
+//             leading: Icon(Icons.safety_check_rounded, color: Colors.grey),
+//             title: Text(
+//               "Support",
+//               style: GoogleFonts.poppins(
+//                 color: Colors.white,
+//                 fontSize: 15,
+//                 fontWeight: FontWeight.w600,
+//               ),
+//             ),
+//             trailing: Icon(CupertinoIcons.forward, color: Colors.grey),
+//           ),
+//         ),
+//         Divider(),
+//         SizedBox(
+//           width: double.infinity,
+//           child: ListTile(
+//             leading: Icon(
+//               CupertinoIcons.collections_solid,
+//               color: Colors.grey,
+//             ),
+//             title: Text(
+//               "Legal",
+//               style: GoogleFonts.poppins(
+//                 color: Colors.white,
+//                 fontSize: 15,
+//                 fontWeight: FontWeight.w600,
+//               ),
+//             ),
+//             trailing: Icon(CupertinoIcons.forward, color: Colors.grey),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }

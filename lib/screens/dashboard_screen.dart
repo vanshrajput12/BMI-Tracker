@@ -176,7 +176,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       backgroundColor: _backgroundColor,
-
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _refresh,
