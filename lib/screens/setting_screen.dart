@@ -30,7 +30,6 @@ class _SettingScreenState extends State<SettingScreen> {
         scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: true,
-
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(
@@ -49,10 +48,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 color: _accentColor,
               ),
             ),
-            Container(
-              width: 75,
-              height: 1,
-              color: Colors.white,
+            const SizedBox(height: 3),
+
+            SizedBox(
+              width: 120,
+              child: Divider(
+                color: Colors.white,
+                thickness: 1,
+              ),
             ),
           ],
         ),

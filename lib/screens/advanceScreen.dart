@@ -16,12 +16,14 @@ class AdvanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      appBar: AppBar(
+        backgroundColor: _backgroundColor,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        centerTitle: true,
+        title: Column(
           children: [
-            SizedBox(height: 60),
             Text(
               'TRAINING SCHEDULE',
               style: GoogleFonts.poppins(
@@ -30,7 +32,15 @@ class AdvanceScreen extends StatelessWidget {
                 color: Colors.orange,
               ),
             ),
-            SizedBox(width:240,child: Divider(color: Colors.white,)),
+            SizedBox(width: 240, child: Divider(color: Colors.white)),
+          ],
+        ),
+      ),
+      backgroundColor: _backgroundColor,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
             SizedBox(height: 30),
             DayButtonHelper(
               text: "DAY 1 ",
