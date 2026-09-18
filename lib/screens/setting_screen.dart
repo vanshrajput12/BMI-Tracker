@@ -256,24 +256,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
           const Divider(),
 
-          ListTile(
-            onTap: () {},
-            leading: const Icon(
-              Icons.support_agent,
-              color: Colors.grey,
-            ),
-            title: Text(
-              'Support',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 15,
-              ),
-            ),
-            trailing: const Icon(
-              CupertinoIcons.forward,
-              color: Colors.grey,
-            ),
-          ),
+
 
           const Divider(),
 
