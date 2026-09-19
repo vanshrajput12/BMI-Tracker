@@ -49,11 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
   }
 
-  void _goToUserDetails() {
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, '/user-details');
-  }
-
   Future<void> _signInWithEmail() async {
     if (!_formKey.currentState!.validate()) {
       return;
@@ -115,38 +110,112 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _signInWithGoogle() async {
     FocusScope.of(context).unfocus();
+
+    if (_isLoading) return;
+
     setState(() {
       _isLoading = true;
     });
 
     try {
+      // ------------------------------------------------------------
+      // 1. Google Sign-In
+      // ------------------------------------------------------------
+
       final GoogleSignIn googleSignIn = GoogleSignIn.instance;
-      await googleSignIn.initialize();
+      await googleSignIn.initialize(
+        serverClientId:
+            '246066529696-8ebfhta3m08bd5frsfngbsp73umgr56a.apps.googleusercontent.com',
+      );
+      // Open Google account selector
       final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+
+      // ------------------------------------------------------------
+      // 2. Get Google authentication
+      // ------------------------------------------------------------
+
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+      debugPrint('Google ID Token: ${googleAuth.idToken != null}');
+
+      if (googleAuth.idToken == null) {
+        throw Exception('Google ID token is null');
+      }
+
+      // ------------------------------------------------------------
+      // 3. Create Firebase credential
+      // ------------------------------------------------------------
+
       final AuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // ------------------------------------------------------------
+      // 4. Firebase Login
+      // ------------------------------------------------------------
+
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+
+      if (user == null) {
+        throw Exception('Firebase user is null');
+      }
+
+      // ------------------------------------------------------------
+      // 5. VERY IMPORTANT
+      // Check whether Firebase created a NEW account
+      // ------------------------------------------------------------
+
+      final bool isNewUser =
+          userCredential.additionalUserInfo?.isNewUser ?? false;
+
       if (!mounted) return;
-      _showSnackBar('Google login successful!');
-      _goToUserDetails();
+
+      // ------------------------------------------------------------
+      // 6. NEW USER
+      // ------------------------------------------------------------
+
+      if (isNewUser) {
+        _showSnackBar('Google account created successfully!');
+
+        Navigator.pushReplacementNamed(context, '/details');
+
+        return;
+      }
+
+      // ------------------------------------------------------------
+      // 7. EXISTING USER
+      // ------------------------------------------------------------
+
+      _showSnackBar('Welcome back!');
+
+      Navigator.pushReplacementNamed(context, '/bottom-nav');
     } on GoogleSignInException catch (e) {
-      debugPrint('GOOGLE SIGN-IN ERROR: ${e.description}');
-      _showSnackBar('Google Sign-In failed. Please try again.');
+      if (!mounted) return;
+
+      _showSnackBar('Google Sign-In failed: ${e.description ?? e.code}');
     } on FirebaseAuthException catch (e) {
-      debugPrint('========== LOGIN ERROR ==========');
-      debugPrint('Code: ${e.code}');
-      debugPrint('Message: ${e.message}');
-      debugPrint('Email: ${_emailController.text.trim()}');
-      debugPrint('=================================');
-      debugPrint('FIREBASE GOOGLE ERROR: ${e.code}');
+      if (!mounted) return;
 
-      _showSnackBar(e.message ?? 'Firebase Google Sign-In failed.');
+      if (e.code == 'account-exists-with-different-credential') {
+        _showSnackBar(
+          'This email already has an account. '
+          'Please sign in using your existing method.',
+        );
+      } else {
+        _showSnackBar('Firebase error: ${e.message ?? e.code}');
+      }
     } catch (e) {
-      debugPrint('GOOGLE LOGIN ERROR: $e');
+      debugPrint('=================================');
+      debugPrint('GOOGLE LOGIN ERROR');
+      debugPrint('$e');
+      debugPrint('=================================');
 
-      _showSnackBar('Google Sign-In failed. Please try again.');
+      if (!mounted) return;
+
+      _showSnackBar('Google Sign-In failed: $e');
     } finally {
       if (mounted) {
         setState(() {
@@ -444,7 +513,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),

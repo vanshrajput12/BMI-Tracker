@@ -203,99 +203,111 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget _bodyDataCard() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
-        color: _cardColor,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.04),
         ),
       ),
-      child: Column(
-        children: [
-          ListTile(
-            onTap: () {},
-            leading: const Icon(
-              CupertinoIcons.folder_solid,
-              color: Colors.grey,
-            ),
-            title: Text(
-              'Preferences',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 15,
+      child: Material(
+        color: _cardColor,
+        borderRadius: BorderRadius.circular(24),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            ListTile(
+              onTap: () {},
+              leading: const Icon(
+                CupertinoIcons.folder_solid,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Preferences',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+              trailing: const Icon(
+                CupertinoIcons.forward,
+                color: Colors.grey,
+                size: 20,
               ),
             ),
-            trailing: const Icon(
-              CupertinoIcons.forward,
-              color: Colors.grey,
-              size: 20,
-            ),
-          ),
 
-          const Divider(),
-
-          ListTile(
-            onTap: () {},
-            leading: const Icon(
-              Icons.lock,
-              color: Colors.grey,
+            const Divider(
+              height: 1,
+              color: Colors.white12,
             ),
-            title: Text(
-              'Privacy',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 15,
+
+            ListTile(
+              onTap: () {},
+              leading: const Icon(
+                Icons.lock,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Privacy',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+              trailing: const Icon(
+                CupertinoIcons.forward,
+                color: Colors.grey,
               ),
             ),
-            trailing: const Icon(
-              CupertinoIcons.forward,
-              color: Colors.grey,
-            ),
-          ),
 
-          const Divider(),
-
-          ListTile(
-            onTap: () {},
-            leading: const Icon(
-              Icons.support_agent,
-              color: Colors.grey,
+            const Divider(
+              height: 1,
+              color: Colors.white12,
             ),
-            title: Text(
-              'Support',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 15,
+
+            ListTile(
+              onTap: () {},
+              leading: const Icon(
+                Icons.support_agent,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Support',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+              trailing: const Icon(
+                CupertinoIcons.forward,
+                color: Colors.grey,
               ),
             ),
-            trailing: const Icon(
-              CupertinoIcons.forward,
-              color: Colors.grey,
-            ),
-          ),
 
-          const Divider(),
-
-          ListTile(
-            onTap: () {},
-            leading: const Icon(
-              CupertinoIcons.doc_text_fill,
-              color: Colors.grey,
+            const Divider(
+              height: 1,
+              color: Colors.white12,
             ),
-            title: Text(
-              'Legal',
-              style: GoogleFonts.poppins(
-                color: Colors.white,
-                fontSize: 15,
+
+            ListTile(
+              onTap: () {},
+              leading: const Icon(
+                CupertinoIcons.doc_text_fill,
+                color: Colors.grey,
+              ),
+              title: Text(
+                'Legal',
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
+              ),
+              trailing: const Icon(
+                CupertinoIcons.forward,
+                color: Colors.grey,
               ),
             ),
-            trailing: const Icon(
-              CupertinoIcons.forward,
-              color: Colors.grey,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

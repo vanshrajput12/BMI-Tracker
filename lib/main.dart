@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bmi_project/bottomNav/bottom_nav.dart';
 import 'package:bmi_project/screens/auth_pages/forgot_password_screen.dart';
 import 'package:bmi_project/screens/auth_pages/login_screen.dart';
@@ -9,50 +11,73 @@ import 'package:bmi_project/services/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'services/auth_state_manger.dart';
 import 'firebase/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final notificationService = NotificationService();
-  await notificationService.initialize();
+
+  // Initialize Firebase first.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // Start the Flutter UI immediately.
   runApp(const MyApp());
+
+  // Initialize notifications in the background.
+  unawaited(
+    NotificationService().initialize(),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const AuthWrapper(),
       title: 'BMI Tracker',
+      home: const AuthWrapper(),
+
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.grey.shade900,
+
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blue,
           brightness: Brightness.dark,
         ),
 
-        textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          ThemeData.dark().textTheme,
+        ),
+
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: Colors.grey.shade800,
+
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.grey.shade700),
+            borderSide: BorderSide(
+              color: Colors.grey.shade700,
+            ),
           ),
 
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.grey.shade700),
+            borderSide: BorderSide(
+              color: Colors.grey.shade700,
+            ),
           ),
 
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Colors.blue),
+            borderSide: const BorderSide(
+              color: Colors.blue,
+            ),
           ),
         ),
       ),
