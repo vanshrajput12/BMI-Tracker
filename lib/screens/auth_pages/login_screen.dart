@@ -166,7 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
       // ------------------------------------------------------------
       // 5. VERY IMPORTANT
       // Check whether Firebase created a NEW account
-      // ------------------------------------------------------------
 
       final bool isNewUser =
           userCredential.additionalUserInfo?.isNewUser ?? false;

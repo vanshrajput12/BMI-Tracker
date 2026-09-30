@@ -329,91 +329,91 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
               const SizedBox(height: 10),
 
               // STREAK CARD
-              // Container(
-              //   width: double.infinity,
-              //   padding: const EdgeInsets.all(20),
-              //   decoration: BoxDecoration(
-              //     color: _cardColor,
-              //     borderRadius: BorderRadius.circular(20),
-              //     border: Border.all(
-              //       color: _borderColor,
-              //     ),
-              //   ),
-              //
-              //   child: Row(
-              //     children: [
-              //       Container(
-              //         height: 55,
-              //         width: 55,
-              //         decoration: BoxDecoration(
-              //           color: Colors.orange.withOpacity(0.12),
-              //           shape: BoxShape.circle,
-              //         ),
-              //
-              //         child: const Center(
-              //           child: Text(
-              //             '🔥',
-              //             style: TextStyle(
-              //               fontSize: 28,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //
-              //       const SizedBox(width: 15),
-              //
-              //       Expanded(
-              //         child: Column(
-              //           crossAxisAlignment:
-              //           CrossAxisAlignment.start,
-              //           children: [
-              //             Text(
-              //               'Daily Streak',
-              //               style: GoogleFonts.poppins(
-              //                 color: Colors.white,
-              //                 fontSize: 16,
-              //                 fontWeight: FontWeight.w600,
-              //               ),
-              //             ),
-              //
-              //             const SizedBox(height: 3),
-              //
-              //             Text(
-              //               _streak == 0
-              //                   ? 'Walk 100 steps to start your streak'
-              //                   : 'Keep walking every day!',
-              //               style: GoogleFonts.poppins(
-              //                 color: Colors.white54,
-              //                 fontSize: 11,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //
-              //       Text(
-              //         '$_streak',
-              //         style: GoogleFonts.poppins(
-              //           color: Colors.orange,
-              //           fontSize: 28,
-              //           fontWeight: FontWeight.bold,
-              //         ),
-              //       ),
-              //
-              //       const SizedBox(width: 4),
-              //
-              //       Text(
-              //         'days',
-              //         style: GoogleFonts.poppins(
-              //           color: Colors.white54,
-              //           fontSize: 11,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              //
-              // const SizedBox(height: 30),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: _cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: _borderColor,
+                  ),
+                ),
+
+                child: Row(
+                  children: [
+                    Container(
+                      height: 55,
+                      width: 55,
+                      decoration: BoxDecoration(
+                        color: Colors.orange.withOpacity(0.12),
+                        shape: BoxShape.circle,
+                      ),
+
+                      child: const Center(
+                        child: Text(
+                          '🔥',
+                          style: TextStyle(
+                            fontSize: 28,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(width: 15),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:
+                        CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Daily Streak',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          const SizedBox(height: 3),
+
+                          Text(
+                            _streak == 0
+                                ? 'Walk 100 steps to start your streak'
+                                : 'Keep walking every day!',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white54,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    Text(
+                      '$_streak',
+                      style: GoogleFonts.poppins(
+                        color: Colors.orange,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(width: 4),
+
+                    Text(
+                      'days',
+                      style: GoogleFonts.poppins(
+                        color: Colors.white54,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 30),
             ],
           ),
         ),
