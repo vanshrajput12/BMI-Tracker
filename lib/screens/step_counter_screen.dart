@@ -2,6 +2,7 @@ import 'package:bmi_project/services/step_counter_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../services/streak_count_service.dart';
 
@@ -41,7 +42,16 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
     });
   }
 
-  void _startStepCounter() {
+  Future<void> _startStepCounter() async {
+    final status = await Permission.activityRecognition.request();
+
+    if (!status.isGranted) {
+      debugPrint('ACTIVITY RECOGNITION PERMISSION DENIED');
+      return;
+    }
+
+    debugPrint('ACTIVITY RECOGNITION PERMISSION GRANTED');
+
     _stepCounterService.startStepCounter((steps) async {
       if (!mounted) return;
 
