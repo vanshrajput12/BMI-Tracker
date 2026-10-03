@@ -35,12 +35,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadUserData() async {
     try {
-      setState(() {
-        _isLoading = true;
-        _loadError = null;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = true;
+          _loadError = null;
+        });
+      }
 
+      // First load the user's profile
       final profile = await _service.getUserProfile();
+
+      // NEW USER:
+      // If profile doesn't exist, go to details screen.
+      if (profile == null) {
+        if (!mounted) return;
+
+        setState(() {
+          _profile = null;
+          _weightHistory = [];
+          _isLoading = false;
+        });
+
+        Navigator.of(context).pushReplacementNamed('/details');
+        return; // VERY IMPORTANT
+      }
+
+      // Existing user: now load weight history
       final history = await _service.getWeightHistory();
 
       if (!mounted) return;
@@ -50,11 +70,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _weightHistory = history;
         _isLoading = false;
       });
+    } catch (e, stackTrace) {
+      debugPrint('Dashboard load error: $e');
+      debugPrintStack(stackTrace: stackTrace);
 
-      if (profile == null && mounted) {
-        Navigator.of(context).pushReplacementNamed('/details');
-      }
-    } catch (e) {
       if (!mounted) return;
 
       setState(() {

@@ -19,8 +19,9 @@ class DashboardService {
         .doc(user.uid)
         .get();
 
-    if (!document.exists) {
-      throw Exception('User profile not found.');
+    // New user: Firestore profile does not exist yet.
+    if (!document.exists || document.data() == null) {
+      return null;
     }
 
     return UserProfile.fromMap(
