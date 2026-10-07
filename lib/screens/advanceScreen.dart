@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../days/Day 1.dart';
 import '../days/Day2.dart';
 import '../days/Day3.dart';
@@ -159,7 +158,6 @@ class AdvanceScreen extends StatelessWidget {
           // Extra bottom padding keeps the last row clear of the floating nav bar.
           padding: const EdgeInsets.fromLTRB(22, 0, 22, 130),
           children: [
-
             Text(
               '$doneCount of ${plan.length} days done this week',
               style: _poppins(14, color: _C.muted),
@@ -255,6 +253,7 @@ class _TodayCard extends StatelessWidget {
     final onAccent = Colors.black.withValues(alpha: .75);
 
     return Material(
+      borderRadius:  BorderRadius.circular(28),
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(28),
@@ -271,8 +270,7 @@ class _TodayCard extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: _C.accent.withValues(alpha: .28),
-                blurRadius: 32,
-                offset: const Offset(0, 14),
+                blurRadius: 20,
               ),
             ],
           ),
