@@ -8,10 +8,10 @@ class day4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: _backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: _backgroundColor,
         leading: GestureDetector(
             onTap: (){
               Navigator.pop(context);

@@ -8,9 +8,9 @@ class day2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: _backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: _backgroundColor,
         elevation: 0,
         leading: GestureDetector(
             onTap: (){
