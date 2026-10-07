@@ -1,4 +1,3 @@
-
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,19 +30,13 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: IndexedStack(
-        index: currentIndex,
-        children: pages,
-      ),
-
+      body: IndexedStack(index: currentIndex, children: pages),
       bottomNavigationBar: CrystalNavigationBar(
         currentIndex: currentIndex,
         indicatorColor: Colors.white,
         unselectedItemColor: Colors.white70,
         borderWidth: 1.5,
-
         outlineBorderColor: Colors.white.withValues(alpha: 0.7),
-
         onTap: (index) {
           setState(() {
             currentIndex = index;

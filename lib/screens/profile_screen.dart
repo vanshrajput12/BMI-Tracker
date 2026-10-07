@@ -615,6 +615,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       backgroundColor: _backgroundColor,
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.only(

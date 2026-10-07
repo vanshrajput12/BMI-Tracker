@@ -23,7 +23,6 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _backgroundColor,
-
       appBar: AppBar(
         backgroundColor: _backgroundColor,
         surfaceTintColor: Colors.transparent,
