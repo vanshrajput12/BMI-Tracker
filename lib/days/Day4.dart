@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class day4 extends StatelessWidget {
+  static const Color _backgroundColor = Color(0xFF111111);
   const day4({super.key});
 
   @override

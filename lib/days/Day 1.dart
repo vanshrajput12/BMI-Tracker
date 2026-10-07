@@ -2,15 +2,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class day1 extends StatelessWidget {
+  static const Color _backgroundColor = Color(0xFF111111);
   const day1({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: _backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: _backgroundColor,
         leading: GestureDetector(
             onTap: (){
               Navigator.pop(context);

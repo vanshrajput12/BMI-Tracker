@@ -21,17 +21,16 @@ class _C {
 }
 
 TextStyle _poppins(
-    double size, {
-      FontWeight weight = FontWeight.w400,
-      Color color = _C.text,
-      double? height,
-    }) =>
-    GoogleFonts.poppins(
-      fontSize: size,
-      fontWeight: weight,
-      color: color,
-      height: height,
-    );
+  double size, {
+  FontWeight weight = FontWeight.w400,
+  Color color = _C.text,
+  double? height,
+}) => GoogleFonts.poppins(
+  fontSize: size,
+  fontWeight: weight,
+  color: color,
+  height: height,
+);
 
 // ───────────────────────── Data ─────────────────────────
 enum DayStatus { done, today, upcoming, rest }
@@ -133,18 +132,34 @@ class AdvanceScreen extends StatelessWidget {
     final doneCount = plan.where((d) => d.status == DayStatus.done).length;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: _C.bg,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        centerTitle: true,
+        title: Column(
+          children: [
+            Text(
+              'TRAINING SCHEDULE',
+              style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            SizedBox(width: 240, child: Divider(color: Colors.white)),
+          ],
+        ),
+      ),
       backgroundColor: _C.bg,
       body: SafeArea(
         bottom: false,
         child: ListView(
           // Extra bottom padding keeps the last row clear of the floating nav bar.
-          padding: const EdgeInsets.fromLTRB(22, 20, 22, 130),
+          padding: const EdgeInsets.fromLTRB(22, 0, 22, 130),
           children: [
-            Text(
-              'Training schedule',
-              style: _poppins(30, weight: FontWeight.w700, height: 1.1),
-            ),
-            const SizedBox(height: 6),
+
             Text(
               '$doneCount of ${plan.length} days done this week',
               style: _poppins(14, color: _C.muted),
@@ -154,10 +169,7 @@ class AdvanceScreen extends StatelessWidget {
             const SizedBox(height: 26),
             _TodayCard(plan: today, onTap: () => _open(context, today)),
             const SizedBox(height: 26),
-            Text(
-              'All days',
-              style: _poppins(16, weight: FontWeight.w600),
-            ),
+            Text('All days', style: _poppins(16, weight: FontWeight.w600)),
             const SizedBox(height: 12),
             // Shows all 7 days, today included (highlighted).
             for (final d in plan)
@@ -187,10 +199,7 @@ class _WeekStrip extends StatelessWidget {
         children: [
           for (var i = 0; i < plan.length; i++) ...[
             Expanded(
-              child: _Segment(
-                status: plan[i].status,
-                progress: _stagger(t, i),
-              ),
+              child: _Segment(status: plan[i].status, progress: _stagger(t, i)),
             ),
             if (i != plan.length - 1) const SizedBox(width: 6),
           ],
@@ -374,8 +383,10 @@ class _DayRow extends StatelessWidget {
               ),
               if (isToday)
                 Container(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: _C.accent,
                     borderRadius: BorderRadius.circular(20),

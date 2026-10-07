@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class day7 extends StatelessWidget {
+  static const Color _backgroundColor = Color(0xFF111111);
   const day7({super.key});
 
   @override

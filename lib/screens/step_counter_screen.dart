@@ -72,7 +72,6 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _backgroundColor,
-
       appBar: AppBar(
         backgroundColor: _backgroundColor,
         surfaceTintColor: Colors.transparent,
@@ -129,6 +128,7 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
       ),
 
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(
             horizontal: 24,

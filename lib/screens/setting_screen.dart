@@ -60,79 +60,82 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       ),
 
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _bodyDataCard(),
+      body: SafeArea(
+        bottom: false,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _bodyDataCard(),
 
-            const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-            Row(
-              children: [
-                Container(
-                  width: 34,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    color: _accentColor.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Icon(
-                    Icons.person,
-                    color: _accentColor,
-                  ),
-                ),
-
-                const SizedBox(width: 11),
-
-                Text(
-                  'Account',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 12),
-
-            Container(
-              width: double.infinity,
-              height: 55,
-              decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(30),
-                border: Border.all(
-                  color: Colors.red.withValues(alpha: 0.2),
-                ),
-              ),
-              child: TextButton(
-                onPressed: _logout,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.logout_rounded,
-                      color: Colors.redAccent,
-                      size: 20,
+              Row(
+                children: [
+                  Container(
+                    width: 34,
+                    height: 34,
+                    decoration: BoxDecoration(
+                      color: _accentColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Log Out',
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
+                    child: const Icon(
+                      Icons.person,
+                      color: _accentColor,
+                    ),
+                  ),
+
+                  const SizedBox(width: 11),
+
+                  Text(
+                    'Account',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              Container(
+                width: double.infinity,
+                height: 55,
+                decoration: BoxDecoration(
+                  color: Colors.red.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: Colors.red.withValues(alpha: 0.2),
+                  ),
+                ),
+                child: TextButton(
+                  onPressed: _logout,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.logout_rounded,
                         color: Colors.redAccent,
+                        size: 20,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 6),
+                      Text(
+                        'Log Out',
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
