@@ -81,37 +81,37 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
         centerTitle: true,
 
         // 🔥 STREAK
-        // leading: InkWell(
-        //   onTap: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) =>
-        //             StreakScreen(streak: _streak, steps: _steps, goal: 10000),
-        //       ),
-        //     );
-        //   },
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(left: 16),
-        //     child: Row(
-        //       mainAxisSize: MainAxisSize.min,
-        //       children: [
-        //         const Text('🔥', style: TextStyle(fontSize: 21)),
-        //
-        //         const SizedBox(width: 3),
-        //
-        //         Text(
-        //           '$_streak',
-        //           style: GoogleFonts.poppins(
-        //             color: Colors.orange,
-        //             fontSize: 15,
-        //             fontWeight: FontWeight.w700,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+        leading: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    StreakScreen(streak: _streak, steps: _steps, goal: 10000),
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('🔥', style: TextStyle(fontSize: 21)),
+
+                const SizedBox(width: 3),
+
+                Text(
+                  '$_streak',
+                  style: GoogleFonts.poppins(
+                    color: Colors.orange,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
 
         title: Column(
           children: [
