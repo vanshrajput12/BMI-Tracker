@@ -7,7 +7,6 @@ class day1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: AppBar(

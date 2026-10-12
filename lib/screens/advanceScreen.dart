@@ -51,7 +51,7 @@ class _DayInfo {
 
 /// A day combined with its status for the current week (what the UI renders).
 class _DayPlan {
-  final int day; // 1..7
+  final int day;
   final _DayInfo info;
   final DayStatus status;
 

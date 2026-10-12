@@ -1,3 +1,4 @@
+import 'package:bmi_project/screens/streak_counter_screen.dart';
 import 'package:bmi_project/services/step_counter_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -80,31 +81,37 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
         centerTitle: true,
 
         // 🔥 STREAK
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                '🔥',
-                style: TextStyle(
-                  fontSize: 21,
-                ),
-              ),
-
-              const SizedBox(width: 3),
-
-              Text(
-                '$_streak',
-                style: GoogleFonts.poppins(
-                  color: Colors.orange,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ),
+        // leading: InkWell(
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) =>
+        //             StreakScreen(streak: _streak, steps: _steps, goal: 10000),
+        //       ),
+        //     );
+        //   },
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(left: 16),
+        //     child: Row(
+        //       mainAxisSize: MainAxisSize.min,
+        //       children: [
+        //         const Text('🔥', style: TextStyle(fontSize: 21)),
+        //
+        //         const SizedBox(width: 3),
+        //
+        //         Text(
+        //           '$_streak',
+        //           style: GoogleFonts.poppins(
+        //             color: Colors.orange,
+        //             fontSize: 15,
+        //             fontWeight: FontWeight.w700,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
 
         title: Column(
           children: [
@@ -117,12 +124,7 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
               ),
             ),
 
-            SizedBox(
-              width: 190,
-              child: Divider(
-                color: Colors.white,
-              ),
-            ),
+            SizedBox(width: 190, child: Divider(color: Colors.white)),
           ],
         ),
       ),
@@ -130,9 +132,7 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 24,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
 
           child: Column(
             children: [
@@ -178,9 +178,7 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
                   const SizedBox(width: 5),
 
                   Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 15,
-                    ),
+                    padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
                       '/ 10,000',
                       style: GoogleFonts.poppins(
@@ -202,9 +200,7 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
                 decoration: BoxDecoration(
                   color: _cardColor,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _borderColor,
-                  ),
+                  border: Border.all(color: _borderColor),
                 ),
 
                 child: Column(
@@ -251,17 +247,14 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
                 decoration: BoxDecoration(
                   color: _cardColor,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _borderColor,
-                  ),
+                  border: Border.all(color: _borderColor),
                 ),
 
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                       children: [
                         Text(
@@ -292,29 +285,20 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
                         end: (_steps / 10000).clamp(0.0, 1.0),
                       ),
 
-                      duration: const Duration(
-                        milliseconds: 500,
-                      ),
+                      duration: const Duration(milliseconds: 500),
 
                       curve: Curves.easeInOut,
 
-                      builder: (
-                          context,
-                          value,
-                          child,
-                          ) {
+                      builder: (context, value, child) {
                         return ClipRRect(
-                          borderRadius:
-                          BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10),
 
                           child: LinearProgressIndicator(
                             value: value,
                             minHeight: 10,
                             backgroundColor: Colors.white12,
 
-                            valueColor:
-                            const AlwaysStoppedAnimation<
-                                Color>(
+                            valueColor: const AlwaysStoppedAnimation<Color>(
                               Colors.red,
                             ),
                           ),
@@ -338,8 +322,6 @@ class _StepCounterScreenState extends State<StepCounterScreen> {
               const SizedBox(height: 10),
 
               // STREAK CARD
-
-
               const SizedBox(height: 30),
             ],
           ),
