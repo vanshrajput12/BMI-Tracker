@@ -217,6 +217,13 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
           _tips(t),
           const SizedBox(height: 24),
           _quote(t),
+          const SizedBox(height: 10),
+          Center(
+            child: SizedBox(
+                height: MediaQuery.of(context).size.height / 4,
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Image.asset("assets/images/workGym.png")),
+          )
         ],
       ),
       bottomNavigationBar: SafeArea(

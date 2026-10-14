@@ -93,12 +93,12 @@ class AdvanceScreen extends StatelessWidget {
     _DayInfo(
       title: 'Mobility & stretch',
       detail: '4 exercises · 25 min',
-      page: (_) => day6(),
+      page: (_) => DayRecoveryScreen(),
     ),
     _DayInfo(
       title: 'Rest day',
       detail: 'Recover and refuel',
-      page: (_) => day7(),
+      page: (_) => DayRestScreen(),
       isRest: true,
     ),
   ];
