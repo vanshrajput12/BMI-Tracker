@@ -88,7 +88,7 @@ class AdvanceScreen extends StatelessWidget {
     _DayInfo(
       title: 'Full-body conditioning',
       detail: '6 exercises · 35 min',
-      page: (_) => day5(),
+      page: (_) => DayStrengthTrainingScreen(),
     ),
     _DayInfo(
       title: 'Mobility & stretch',
