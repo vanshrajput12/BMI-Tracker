@@ -614,90 +614,93 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actionsPadding: EdgeInsets.only(right: 24, bottom: 10),
       ),
       backgroundColor: _backgroundColor,
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.only(
-            top: 10,
-            left: 24,
-            right: 24,
-            bottom: 20,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _profileCard(),
-                const SizedBox(height: 20),
-                _sectionTitle('Personal Information', Icons.person_outline),
-                const SizedBox(height: 14),
-                _personalInformationCard(),
-                const SizedBox(height: 20),
-                _sectionTitle('Body Data', Icons.monitor_weight_outlined),
-                const SizedBox(height: 14),
-                _bodyDataCard(),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: _isSaving ? null : _updateProfile,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      disabledBackgroundColor: _accentColor.withValues(
-                        alpha: 0.5,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              left: 24,
+              right: 24,
+              bottom: 20,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _profileCard(),
+                  const SizedBox(height: 20),
+                  _sectionTitle('Personal Information', Icons.person_outline),
+                  const SizedBox(height: 14),
+                  _personalInformationCard(),
+                  const SizedBox(height: 20),
+                  _sectionTitle('Body Data', Icons.monitor_weight_outlined),
+                  const SizedBox(height: 14),
+                  _bodyDataCard(),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _isSaving ? null : _updateProfile,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        disabledBackgroundColor: _accentColor.withValues(
+                          alpha: 0.5,
+                        ),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(34),
+                        ),
                       ),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(34),
-                      ),
-                    ),
-                    child: _isSaving
-                        ? const SizedBox(
-                            width: 23,
-                            height: 23,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.5,
-                              color: Colors.black,
-                            ),
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.check_rounded,
+                      child: _isSaving
+                          ? const SizedBox(
+                              width: 23,
+                              height: 23,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
                                 color: Colors.black,
-                                size: 21,
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Save Changes',
-                                style: GoogleFonts.poppins(
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.check_rounded,
                                   color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
+                                  size: 21,
                                 ),
-                              ),
-                            ],
-                          ),
-                  ),
-                ),
-
-                const SizedBox(height: 25),
-
-                Center(
-                  child: Text(
-                    'BMI Tracker • Your health, your progress',
-                    style: GoogleFonts.poppins(
-                      color: Colors.grey.shade700,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Save Changes',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
                     ),
                   ),
-                ),
-              ],
+
+                  const SizedBox(height: 25),
+
+                  Center(
+                    child: Text(
+                      'BMI Tracker • Your health, your progress',
+                      style: GoogleFonts.poppins(
+                        color: Colors.grey.shade700,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 55),
+                ],
+              ),
             ),
           ),
         ),

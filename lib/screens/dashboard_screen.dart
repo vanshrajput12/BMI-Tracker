@@ -219,6 +219,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildSectionHeader(),
                 const SizedBox(height: 14),
                 _buildWeightHistoryCard(),
+                const SizedBox(height: 80),
               ],
             ),
           ),

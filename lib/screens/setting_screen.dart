@@ -1,3 +1,4 @@
+import 'package:bmi_project/screens/prefrence_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,7 @@ class _SettingScreenState extends State<SettingScreen> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
-            CupertinoIcons.back,
-            color: Colors.white,
-          ),
+          icon: const Icon(CupertinoIcons.back, color: Colors.white),
         ),
 
         title: Column(
@@ -51,10 +49,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
             SizedBox(
               width: 120,
-              child: Divider(
-                color: Colors.white,
-                thickness: 1,
-              ),
+              child: Divider(color: Colors.white, thickness: 1),
             ),
           ],
         ),
@@ -80,10 +75,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       color: _accentColor.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(
-                      Icons.person,
-                      color: _accentColor,
-                    ),
+                    child: const Icon(Icons.person, color: _accentColor),
                   ),
 
                   const SizedBox(width: 11),
@@ -107,9 +99,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 decoration: BoxDecoration(
                   color: Colors.red.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: Colors.red.withValues(alpha: 0.2),
-                  ),
+                  border: Border.all(color: Colors.red.withValues(alpha: 0.2)),
                 ),
                 child: TextButton(
                   onPressed: _logout,
@@ -159,18 +149,14 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           content: Text(
             'Are you sure you want to logout?',
-            style: GoogleFonts.poppins(
-              color: Colors.grey.shade400,
-            ),
+            style: GoogleFonts.poppins(color: Colors.grey.shade400),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
               child: Text(
                 'Cancel',
-                style: GoogleFonts.poppins(
-                  color: Colors.grey.shade400,
-                ),
+                style: GoogleFonts.poppins(color: Colors.grey.shade400),
               ),
             ),
             TextButton(
@@ -196,10 +182,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(
-        builder: (_) => const LoginScreen(),
-      ),
-          (_) => false,
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+      (_) => false,
     );
   }
 
@@ -207,9 +191,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.04),
-        ),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.04)),
       ),
       child: Material(
         color: _cardColor,
@@ -218,17 +200,19 @@ class _SettingScreenState extends State<SettingScreen> {
         child: Column(
           children: [
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PreferencesScreen()),
+                );
+              },
               leading: const Icon(
                 CupertinoIcons.folder_solid,
                 color: Colors.grey,
               ),
               title: Text(
                 'Preferences',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 15),
               ),
               trailing: const Icon(
                 CupertinoIcons.forward,
@@ -237,58 +221,31 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
 
-            const Divider(
-              height: 1,
-              color: Colors.white12,
-            ),
+            const Divider(height: 1, color: Colors.white12),
 
             ListTile(
               onTap: () {},
-              leading: const Icon(
-                Icons.lock,
-                color: Colors.grey,
-              ),
+              leading: const Icon(Icons.lock, color: Colors.grey),
               title: Text(
                 'Privacy',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 15),
               ),
-              trailing: const Icon(
-                CupertinoIcons.forward,
-                color: Colors.grey,
-              ),
+              trailing: const Icon(CupertinoIcons.forward, color: Colors.grey),
             ),
 
-            const Divider(
-              height: 1,
-              color: Colors.white12,
-            ),
+            const Divider(height: 1, color: Colors.white12),
 
             ListTile(
               onTap: () {},
-              leading: const Icon(
-                Icons.support_agent,
-                color: Colors.grey,
-              ),
+              leading: const Icon(Icons.support_agent, color: Colors.grey),
               title: Text(
                 'Support',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 15),
               ),
-              trailing: const Icon(
-                CupertinoIcons.forward,
-                color: Colors.grey,
-              ),
+              trailing: const Icon(CupertinoIcons.forward, color: Colors.grey),
             ),
 
-            const Divider(
-              height: 1,
-              color: Colors.white12,
-            ),
+            const Divider(height: 1, color: Colors.white12),
 
             ListTile(
               onTap: () {},
@@ -298,15 +255,9 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               title: Text(
                 'Legal',
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
+                style: GoogleFonts.poppins(color: Colors.white, fontSize: 15),
               ),
-              trailing: const Icon(
-                CupertinoIcons.forward,
-                color: Colors.grey,
-              ),
+              trailing: const Icon(CupertinoIcons.forward, color: Colors.grey),
             ),
           ],
         ),
