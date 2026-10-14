@@ -145,7 +145,10 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
     return Scaffold(
       backgroundColor: _bg,
       appBar: AppBar(
+        scrolledUnderElevation: 0,           // no elevation change on scroll
+        surfaceTintColor: Colors.transparent, // no grey tint on scroll
         backgroundColor: _bg,
+
         elevation: 0,
         leading: const BackButton(color: _text),
         title: Text('Day ${widget.day}',
