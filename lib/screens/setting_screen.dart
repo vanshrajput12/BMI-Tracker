@@ -1,4 +1,6 @@
 import 'package:bmi_project/screens/prefrence_screen.dart';
+import 'package:bmi_project/screens/privacy_screen.dart';
+import 'package:bmi_project/screens/support_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -224,7 +226,12 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(height: 1, color: Colors.white12),
 
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PrivacyScreen()),
+                );
+              },
               leading: const Icon(Icons.lock, color: Colors.grey),
               title: Text(
                 'Privacy',
@@ -236,7 +243,12 @@ class _SettingScreenState extends State<SettingScreen> {
             const Divider(height: 1, color: Colors.white12),
 
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SupportScreen()),
+                );
+              },
               leading: const Icon(Icons.support_agent, color: Colors.grey),
               title: Text(
                 'Support',
