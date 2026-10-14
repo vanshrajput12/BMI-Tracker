@@ -1,7 +1,3 @@
-// lib/screens/streak_screen.dart
-// Presentation-only: it reuses the streak + steps you already compute in
-// StepCounterScreen, so it does NOT define its own StreakService.
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,11 +25,12 @@ class StreakScreen extends StatelessWidget {
   /// `streak` days ending today (if goal hit) or yesterday (if not yet).
   Set<DateTime> get _activeDays {
     final now = DateTime.now();
-    final end = DateTime(now.year, now.month, now.day)
-        .subtract(Duration(days: _goalHitToday ? 0 : 1));
-    return {
-      for (var i = 0; i < streak; i++) end.subtract(Duration(days: i)),
-    };
+    final end = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(Duration(days: _goalHitToday ? 0 : 1));
+    return {for (var i = 0; i < streak; i++) end.subtract(Duration(days: i))};
   }
 
   int get _nextMilestone {
@@ -85,7 +82,11 @@ class StreakScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(
-          24, MediaQuery.of(context).padding.top + 16, 24, 32),
+        24,
+        MediaQuery.of(context).padding.top + 16,
+        24,
+        32,
+      ),
       decoration: const BoxDecoration(
         gradient: RadialGradient(
           center: Alignment(0, -0.6),
@@ -96,36 +97,37 @@ class StreakScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white70, size: 20),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
           const SizedBox(height: 24),
           const Text('🔥', style: TextStyle(fontSize: 88)),
           const SizedBox(height: 40),
-          Text('$streak',
-              style: GoogleFonts.poppins(
-                  fontSize: 80,
-                  fontWeight: FontWeight.w800,
-                  color: const Color(0xFFF7EFE4),
-                  height: 1.1)),
+          Text(
+            '$streak',
+            style: GoogleFonts.poppins(
+              fontSize: 80,
+              fontWeight: FontWeight.w800,
+              color: const Color(0xFFF7EFE4),
+              height: 1.1,
+            ),
+          ),
           const SizedBox(height: 4),
-          Text('days of walking, unbroken',
-              style: GoogleFonts.poppins(
-                  fontSize: 19, fontWeight: FontWeight.w600, color: _gold)),
+          Text(
+            'days of walking, unbroken',
+            style: GoogleFonts.poppins(
+              fontSize: 19,
+              fontWeight: FontWeight.w600,
+              color: _gold,
+            ),
+          ),
           const SizedBox(height: 14),
           Text(
             message,
             textAlign: TextAlign.center,
             style: GoogleFonts.poppins(
-                fontSize: 14,
-                height: 1.5,
-                color: Colors.white.withOpacity(0.65),
-                fontWeight: FontWeight.w500),
+              fontSize: 14,
+              height: 1.5,
+              color: Colors.white.withValues(alpha: 0.65),
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),
@@ -147,11 +149,14 @@ class StreakScreen extends StatelessWidget {
           final day = monday.add(Duration(days: i));
           return Column(
             children: [
-              Text(labels[i],
-                  style: GoogleFonts.poppins(
-                      color: Colors.white.withOpacity(0.5),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13)),
+              Text(
+                labels[i],
+                style: GoogleFonts.poppins(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
               const SizedBox(height: 14),
               _dayCircle(done: active.contains(day), isToday: day == today),
             ],
@@ -182,7 +187,7 @@ class StreakScreen extends StatelessWidget {
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white.withOpacity(0.12), width: 1.5),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.12), width: 1.5),
       ),
     );
   }
@@ -192,17 +197,24 @@ class StreakScreen extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(18),
-      decoration:
-      BoxDecoration(color: _card, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+        color: _card,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Row(
         children: [
           Container(
             width: 58,
             height: 58,
             decoration: BoxDecoration(
-                color: _orange, borderRadius: BorderRadius.circular(14)),
-            child: const Icon(Icons.star_rounded,
-                color: Color(0xFF1A110D), size: 30),
+              color: _orange,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Icon(
+              Icons.star_rounded,
+              color: Color(0xFF1A110D),
+              size: 30,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -210,18 +222,22 @@ class StreakScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                    '$remaining day${remaining == 1 ? '' : 's'} to your next badge',
-                    style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15)),
+                  '$remaining day${remaining == 1 ? '' : 's'} to your next badge',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
-                    'Hit a $_nextMilestone day streak to unlock the $_badgeName badge.',
-                    style: GoogleFonts.poppins(
-                        color: Colors.white.withOpacity(0.55),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500)),
+                  'Hit a $_nextMilestone day streak to unlock the $_badgeName badge.',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white.withValues(alpha: 0.55),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
             ),
           ),
@@ -245,9 +261,13 @@ class StreakScreen extends StatelessWidget {
               shape: const StadiumBorder(),
             ),
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('Keep the streak alive',
-                style: GoogleFonts.poppins(
-                    fontSize: 16, fontWeight: FontWeight.w600)),
+            child: Text(
+              'Keep the streak alive',
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ),
       ),
@@ -270,8 +290,13 @@ class _DashedCirclePainter extends CustomPainter {
     const dashes = 16;
     const sweep = 6.2831853 / dashes;
     for (var i = 0; i < dashes; i++) {
-      canvas.drawArc(Rect.fromCircle(center: c, radius: r), i * sweep,
-          sweep * 0.55, false, paint);
+      canvas.drawArc(
+        Rect.fromCircle(center: c, radius: r),
+        i * sweep,
+        sweep * 0.55,
+        false,
+        paint,
+      );
     }
   }
 
