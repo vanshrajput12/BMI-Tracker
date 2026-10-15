@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const _bg = Color(0xFF0E0E10);
-const _surface = Color(0xFF16171A);
+// Mostly amber. Red appears only as a slight tint in the top card gradient.
+const _bg = Color(0xFF121212);
+const _surface = Color(0xFF1C1C1E);
 const _line = Color(0x14FFFFFF);
-const _text = Color(0xFFF2F0F5);
-const _muted = Color(0xFF8C8A94);
-const _coral = Color(0xFFFF6B5A);
-const _sage = Color(0xFF7FD1A8);
+const _text = Color(0xFFEDEAF2);
+const _muted = Color(0xFF9A98A3);
+const _amber = Color(0xFFFFB400);
+const _onAmber = Color(0xFF1A1205);
+const _redTint = Color(0xFF3A1815);
 
 class PreferencesScreen extends StatefulWidget {
   const PreferencesScreen({super.key});
@@ -50,7 +52,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       builder: (context, child) => Theme(
         data: Theme.of(context).copyWith(
           colorScheme: const ColorScheme.dark(
-            primary: _coral,
+            primary: _amber,
+            onPrimary: _onAmber,
             surface: _surface,
             onSurface: _text,
           ),
@@ -87,6 +90,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
+          _banner(t),
+          const SizedBox(height: 24),
           _sectionTitle(t, Icons.straighten_rounded, 'Units'),
           _card([
             _segmentRow(t, 'Weight', ['kg', 'lb'], _weightUnit,
@@ -123,17 +128,17 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: sel
-                                  ? _coral.withOpacity(0.15)
+                                  ? _amber.withOpacity(0.15)
                                   : Colors.white.withOpacity(0.05),
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(
                                   color: sel
-                                      ? _coral.withOpacity(0.6)
+                                      ? _amber.withOpacity(0.6)
                                       : Colors.transparent),
                             ),
                             child: Text(labels[i],
                                 style: t.titleSmall!.copyWith(
-                                    color: sel ? _coral : _text,
+                                    color: sel ? _amber : _text,
                                     fontWeight: FontWeight.w600)),
                           ),
                         ),
@@ -156,15 +161,15 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                       const Spacer(),
                       Text('${_stepGoal.round()} steps',
                           style: t.bodyMedium!.copyWith(
-                              color: _sage, fontWeight: FontWeight.w600)),
+                              color: _amber, fontWeight: FontWeight.w600)),
                     ],
                   ),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: _coral,
+                      activeTrackColor: _amber,
                       inactiveTrackColor: Colors.white12,
                       thumbColor: Colors.white,
-                      overlayColor: _coral.withOpacity(0.15),
+                      overlayColor: _amber.withOpacity(0.15),
                       trackHeight: 4,
                     ),
                     child: Slider(
@@ -213,16 +218,16 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             child: ElevatedButton(
               onPressed: _changed ? _save : null,
               style: ElevatedButton.styleFrom(
-                backgroundColor: _text,
-                foregroundColor: const Color(0xFF111113),
-                disabledBackgroundColor: const Color(0xFF2A2A2D),
-                disabledForegroundColor: _muted,
+                backgroundColor: Colors.white,
+                // foregroundColor: const Color(0xFF111113),
+                // disabledBackgroundColor: const Color(0xFF2A2A2D),
+                // disabledForegroundColor: _muted,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
               ),
               child: Text('Save changes',
-                  style: t.titleMedium!.copyWith(fontWeight: FontWeight.w600)),
+                  style: t.titleMedium!.copyWith(fontWeight: FontWeight.w600, color: Colors.black)),
             ),
           ),
         ),
@@ -232,16 +237,59 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
   // ---------- building blocks ----------
 
+  Widget _banner(TextTheme t) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF3A2812), _redTint, Color(0xFF1C1C1E)],
+          stops: [0.0, 0.45, 1.0],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: _amber.withOpacity(0.25)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: _amber.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Icon(Icons.tune_rounded, color: _amber, size: 26),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Make it yours',
+                    style: t.titleMedium!.copyWith(
+                        color: _text, fontWeight: FontWeight.w700)),
+                const SizedBox(height: 2),
+                Text('Units, goals and reminders',
+                    style: t.bodySmall!.copyWith(color: _muted)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _sectionTitle(TextTheme t, IconData icon, String title) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 0, 0, 12),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: _muted),
+          Icon(icon, size: 20, color: _amber),
           const SizedBox(width: 8),
           Text(title,
-              style: t.titleSmall!
-                  .copyWith(color: _muted, fontWeight: FontWeight.w600)),
+              style: t.titleMedium!
+                  .copyWith(color: _amber, fontWeight: FontWeight.w700)),
         ],
       ),
     );
@@ -285,12 +333,12 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                     padding:
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                     decoration: BoxDecoration(
-                      color: sel ? _text : Colors.transparent,
+                      color: sel ? _amber : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(options[i],
                         style: t.bodyMedium!.copyWith(
-                            color: sel ? const Color(0xFF111113) : _muted,
+                            color: sel ? _onAmber : _muted,
                             fontWeight: FontWeight.w600)),
                   ),
                 );
@@ -321,8 +369,8 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: Colors.white,
-            activeTrackColor: _coral,
+            activeColor: const Color(0xFF1A1A1C),
+            activeTrackColor: Colors.white,
             inactiveThumbColor: _muted,
             inactiveTrackColor: Colors.white12,
             trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
@@ -348,7 +396,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                     style: t.bodyLarge!.copyWith(color: _text))),
             Text(value,
                 style: t.bodyMedium!
-                    .copyWith(color: _sage, fontWeight: FontWeight.w600)),
+                    .copyWith(color: _amber, fontWeight: FontWeight.w600)),
             const SizedBox(width: 6),
             const Icon(Icons.chevron_right_rounded, color: _muted),
           ],

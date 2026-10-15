@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Amber + red palette (same as your Day 1-7 screens)
+// Mostly amber. Red appears only as a slight tint in the top card gradient.
 const _bg = Color(0xFF121212);
 const _card = Color(0xFF1C1C1E);
-const _red = Color(0xFFFF4D3D);
+const _redTint = Color(0xFF3A1815);
 const _amber = Color(0xFFFFB400);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
@@ -136,11 +136,12 @@ class _SupportScreenState extends State<SupportScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         gradient: const LinearGradient(
-          colors: [Color(0xFF3A1511), Color(0xFF1C1C1E)],
+          colors: [Color(0xFF3A2812), _redTint, Color(0xFF1C1C1E)],
+          stops: [0.0, 0.45, 1.0],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: _red.withOpacity(0.25)),
+        border: Border.all(color: _amber.withOpacity(0.25)),
       ),
       child: Row(
         children: [
@@ -182,11 +183,11 @@ class _SupportScreenState extends State<SupportScreen> {
               width: 8,
               height: 8,
               decoration:
-              const BoxDecoration(color: _red, shape: BoxShape.circle)),
+              const BoxDecoration(color: _amber, shape: BoxShape.circle)),
           const SizedBox(width: 10),
           Text(title,
               style: t.titleMedium!
-                  .copyWith(color: _red, fontWeight: FontWeight.w700)),
+                  .copyWith(color: _amber, fontWeight: FontWeight.w700)),
         ],
       ),
     );
@@ -252,11 +253,11 @@ class _SupportScreenState extends State<SupportScreen> {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: _red.withOpacity(0.15),
+                color: _amber.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(14),
               ),
               child: const Icon(Icons.mail_outline_rounded,
-                  color: _red, size: 22),
+                  color: _amber, size: 22),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -305,12 +306,12 @@ class _SupportScreenState extends State<SupportScreen> {
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                   decoration: BoxDecoration(
                     color: sel
-                        ? _red.withOpacity(0.18)
+                        ? _amber.withOpacity(0.18)
                         : Colors.white.withOpacity(0.06),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                         color: sel
-                            ? _red.withOpacity(0.7)
+                            ? _amber.withOpacity(0.7)
                             : Colors.transparent),
                   ),
                   child: Text(_categories[i],
@@ -351,8 +352,8 @@ class _SupportScreenState extends State<SupportScreen> {
             child: ElevatedButton(
               onPressed: _sending ? null : _send,
               style: ElevatedButton.styleFrom(
-                backgroundColor: _red,
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                foregroundColor: const Color(0xFF111113),
                 disabledBackgroundColor: const Color(0xFF2A2A2D),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
@@ -363,7 +364,7 @@ class _SupportScreenState extends State<SupportScreen> {
                   width: 22,
                   height: 22,
                   child: CircularProgressIndicator(
-                      strokeWidth: 2.5, color: Colors.white))
+                      strokeWidth: 2.5, color: Color(0xFF111113)))
                   : Text('Send message',
                   style: t.titleSmall!
                       .copyWith(fontWeight: FontWeight.w600)),

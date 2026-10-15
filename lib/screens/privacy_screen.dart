@@ -3,14 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const _bg = Color(0xFF0E0E10);
-const _surface = Color(0xFF16171A);
+// Mostly amber. Red appears only as a slight tint in card gradients.
+const _bg = Color(0xFF121212);
+const _surface = Color(0xFF1C1C1E);
 const _line = Color(0x14FFFFFF);
-const _text = Color(0xFFF2F0F5);
-const _muted = Color(0xFF8C8A94);
-const _coral = Color(0xFFFF6B5A);
-const _sage = Color(0xFF7FD1A8);
-const _danger = Color(0xFFFF5A5F);
+const _text = Color(0xFFEDEAF2);
+const _muted = Color(0xFF9A98A3);
+const _amber = Color(0xFFFFB400);
+const _onAmber = Color(0xFF1A1205);
+const _redTint = Color(0xFF3A1815);
 
 class PrivacyScreen extends StatefulWidget {
   const PrivacyScreen({super.key});
@@ -72,7 +73,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             onPressed: () => Navigator.pop(context, true),
             child: Text('Delete',
                 style: t.titleSmall!
-                    .copyWith(color: _danger, fontWeight: FontWeight.w600)),
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600)),
           ),
         ],
       ),
@@ -160,9 +161,13 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: _danger.withOpacity(0.08),
+                  gradient: const LinearGradient(
+                    colors: [_redTint, Color(0xFF1C1C1E)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: _danger.withOpacity(0.25)),
+                  border: Border.all(color: _amber.withOpacity(0.25)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,8 +192,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                             style: t.titleSmall!
                                 .copyWith(fontWeight: FontWeight.w600)),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: _danger,
-                          side: BorderSide(color: _danger.withOpacity(0.5)),
+                          foregroundColor: Colors.white,
+                          side: BorderSide(color: Colors.white.withOpacity(0.6)),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14)),
                         ),
@@ -204,7 +209,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               child: Container(
                 color: Colors.black54,
                 child: const Center(
-                    child: CircularProgressIndicator(color: _coral)),
+                    child: CircularProgressIndicator(color: _amber)),
               ),
             ),
         ],
@@ -218,11 +223,12 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         gradient: const LinearGradient(
-          colors: [Color(0xFF1B2420), Color(0xFF16171A)],
+          colors: [Color(0xFF3A2812), _redTint, Color(0xFF1C1C1E)],
+          stops: [0.0, 0.45, 1.0],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: _sage.withOpacity(0.2)),
+        border: Border.all(color: _amber.withOpacity(0.25)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,11 +237,11 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: _sage.withOpacity(0.12),
+              color: _amber.withOpacity(0.12),
               borderRadius: BorderRadius.circular(14),
             ),
             child: const Icon(Icons.verified_user_outlined,
-                color: _sage, size: 24),
+                color: _amber, size: 24),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -262,11 +268,11 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       padding: const EdgeInsets.fromLTRB(4, 0, 0, 12),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: _muted),
+          Icon(icon, size: 20, color: _amber),
           const SizedBox(width: 8),
           Text(title,
-              style: t.titleSmall!
-                  .copyWith(color: _muted, fontWeight: FontWeight.w600)),
+              style: t.titleMedium!
+                  .copyWith(color: _amber, fontWeight: FontWeight.w700)),
         ],
       ),
     );
@@ -305,8 +311,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: Colors.white,
-            activeTrackColor: _coral,
+            activeColor: const Color(0xFF1A1A1C),
+            activeTrackColor: Colors.white,
             inactiveThumbColor: _muted,
             inactiveTrackColor: Colors.white12,
             trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
@@ -333,7 +339,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               child: Text(value,
                   textAlign: TextAlign.right,
                   overflow: TextOverflow.ellipsis,
-                  style: t.bodyMedium!.copyWith(color: _sage)),
+                  style: t.bodyMedium!.copyWith(color: _amber)),
             ),
             if (showChevron) ...[
               const SizedBox(width: 6),
