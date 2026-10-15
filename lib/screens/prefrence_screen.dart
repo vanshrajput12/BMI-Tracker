@@ -1,4 +1,5 @@
 // pubspec.yaml -> dependencies: google_fonts: ^6.2.1
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -82,7 +83,10 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
-        leading: const BackButton(color: _text),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(CupertinoIcons.back, color: Colors.white),
+        ),
         title: Text('Preferences',
             style: t.titleLarge!
                 .copyWith(color: _text, fontWeight: FontWeight.w600)),

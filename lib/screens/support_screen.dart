@@ -1,6 +1,7 @@
 // pubspec.yaml -> dependencies: google_fonts, firebase_auth, cloud_firestore
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,7 +101,10 @@ class _SupportScreenState extends State<SupportScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
-        leading: const BackButton(color: _text),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(CupertinoIcons.back, color: Colors.white),
+        ),
         title: Text('Support',
             style: t.titleLarge!
                 .copyWith(color: _text, fontWeight: FontWeight.w600)),
@@ -367,7 +371,7 @@ class _SupportScreenState extends State<SupportScreen> {
                       strokeWidth: 2.5, color: Color(0xFF111113)))
                   : Text('Send message',
                   style: t.titleSmall!
-                      .copyWith(fontWeight: FontWeight.w600)),
+                      .copyWith(fontWeight: FontWeight.w600, color: Colors.black)),
             ),
           ),
         ],
