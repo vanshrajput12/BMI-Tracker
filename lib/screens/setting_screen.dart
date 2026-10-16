@@ -19,12 +19,14 @@ class _SettingScreenState extends State<SettingScreen> {
   // Mostly amber. Red appears only as a slight tint in the profile card gradient.
   static const Color _bg = Color(0xFF121212);
   static const Color _card = Color(0xFF1C1C1E);
-  static const Color _amber = Color(0xFFFFB400);
+  static const Color _amber = Color(0xFFFFA500);
   static const Color _redTint = Color(0xFF3A1815);
   static const Color _text = Color(0xFFEDEAF2);
   static const Color _muted = Color(0xFF9A98A3);
   static const Color _line = Color(0x14FFFFFF);
   static const Color _onWhite = Color(0xFF111113);
+
+  static const Color _accentColor = Color(0xFFFF8A00);
 
   final _auth = FirebaseAuth.instance;
 
@@ -66,7 +68,7 @@ class _SettingScreenState extends State<SettingScreen> {
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.amber,
+                color: Colors.orange,
               ),
             ),
             SizedBox(
@@ -83,12 +85,12 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _profileCard(t),
-              const SizedBox(height: 28),
-              _sectionTitle(t, Icons.settings_outlined, 'General'),
+              _sectionTitle( 'General', Icons.settings_outlined,),
+              SizedBox(height: 20,),
               _generalCard(t),
               const SizedBox(height: 28),
-              _sectionTitle(t, Icons.person_outline_rounded, 'Account'),
+              _sectionTitle(  'Account',Icons.person_outline_rounded,),
+              SizedBox(height: 20,),
               _logoutButton(t),
               const SizedBox(height: 28),
               Center(
@@ -104,90 +106,30 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  // ---------- pieces ----------
+  // ---------- pieces ------ //
 
-  Widget _profileCard(TextTheme t) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF3A2812), _redTint, Color(0xFF1C1C1E)],
-          stops: [0.0, 0.45, 1.0],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+  Widget _sectionTitle(String title, IconData icon, ) {
+    return Row(
+      children: [
+        Container(
+          width: 34,
+          height: 34,
+          decoration: BoxDecoration(
+            color: _accentColor.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(icon, color: _accentColor, size: 18),
         ),
-        border: Border.all(color: _amber.withValues(alpha: 0.25)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 62,
-            height: 62,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: _amber.withValues(alpha: 0.15),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: _amber.withValues(alpha: 0.6),
-                width: 1.5,
-              ),
-            ),
-            child: Text(
-              _initial,
-              style: t.headlineSmall!.copyWith(
-                color: _amber,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
+        const SizedBox(width: 11),
+        Text(
+          title,
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: t.titleMedium!.copyWith(
-                    color: _text,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                if (_email.isNotEmpty) ...[
-                  const SizedBox(height: 2),
-                  Text(
-                    _email,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: t.bodySmall!.copyWith(color: _muted),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _sectionTitle(TextTheme t, IconData icon, String title) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 0, 0, 12),
-      child: Row(
-        children: [
-          Icon(icon, size: 20, color: _amber),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: t.titleMedium!.copyWith(
-              color: _amber,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -265,10 +207,10 @@ class _SettingScreenState extends State<SettingScreen> {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: _amber.withValues(alpha: 0.14),
+                  color: Colors.white.withValues(alpha: 0.14),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: Icon(icon, color: _amber, size: 22),
+                child: Icon(icon, color: Colors.white, size: 22),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -314,7 +256,7 @@ class _SettingScreenState extends State<SettingScreen> {
           foregroundColor: _onWhite,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(34),
           ),
         ),
       ),
