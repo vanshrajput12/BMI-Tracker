@@ -136,8 +136,6 @@ class TrainingScheduleScreen extends StatelessWidget {
           // Extra bottom padding so the floating nav bar never covers content.
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 140),
           children: [
-            _weekProgress(t),
-            const SizedBox(height: 20),
             _todayCard(t, todayDay),
             const SizedBox(height: 28),
             Text(
@@ -156,66 +154,6 @@ class TrainingScheduleScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _weekProgress(TextTheme t) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: _surface,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _line),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                '${completed.length}',
-                style: t.headlineMedium!.copyWith(
-                  color: _text,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Text(
-                ' of ${days.length} days done',
-                style: t.bodyMedium!.copyWith(color: _muted),
-              ),
-              const Spacer(),
-              Text(
-                '${(completed.length / days.length * 100).round()}%',
-                style: t.titleSmall!.copyWith(
-                  color: Colors.amber,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          Row(
-            children: days.map((d) {
-              final done = completed.contains(d.number);
-              final isToday = d.number == today;
-              return Expanded(
-                child: Container(
-                  height: 6,
-                  margin: EdgeInsets.only(right: d == days.last ? 0 : 6),
-                  decoration: BoxDecoration(
-                    color: done
-                        ? _sage
-                        : isToday
-                        ? _coral.withValues(alpha: 0.35)
-                        : Colors.white.withValues(alpha: 0.08),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ],
       ),
     );
   }
@@ -447,22 +385,20 @@ class TrainingScheduleScreen extends StatelessWidget {
   }
 }
 
-/* Example wiring:
-
-TrainingScheduleScreen(
-  today: TrainingProgressService.todayDayNumber(), // real date
-  completed: completedDaysForThisWeek,
-  onDayTap: (day) {
-    final Widget page = switch (day) {
-      1 => const DayWorkoutScreen(),
-      2 => const DayStrengthScreen(),
-      3 => const DayFlexibilityScreen(),
-      4 => const DayHiitScreen(),
-      5 => const DayStrengthTrainingScreen(),
-      6 => const DayRecoveryScreen(),
-      _ => const DayRestScreen(),
-    };
-    Navigator.push(context, MaterialPageRoute(builder: (_) => page));
-  },
-)
-*/
+//
+// TrainingScheduleScreen(
+//   today: TrainingProgressService.todayDayNumber(), // real date
+//   completed: completedDaysForThisWeek,
+//   onDayTap: (day) {
+//     final Widget page = switch (day) {
+//       1 => const DayWorkoutScreen(),
+//       2 => const DayStrengthScreen(),
+//       3 => const DayFlexibilityScreen(),
+//       4 => const DayHiitScreen(),
+//       5 => const DayStrengthTrainingScreen(),
+//       6 => const DayRecoveryScreen(),
+//       _ => const DayRestScreen(),
+//     };
+//     Navigator.push(context, MaterialPageRoute(builder: (_) => page));
+//   },
+// )
