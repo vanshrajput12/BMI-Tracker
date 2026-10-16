@@ -1,6 +1,17 @@
 // pubspec.yaml -> dependencies: google_fonts: ^6.2.1
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../days/Day 1.dart';
+import '../days/Day2.dart';
+import '../days/Day3.dart';
+import '../days/Day4.dart';
+import '../days/Day5.dart';
+import '../days/Day6.dart';
+import '../days/Day7.dart';
+import '../services/training_progess_service.dart';
 
 // Calm, mostly neutral palette. Coral is used only for "today",
 // sage green only for "done". No amber on this screen.
@@ -84,17 +95,120 @@ const kWeekPlan = <WorkoutDay>[
   ),
 ];
 
-class TrainingScheduleScreen extends StatelessWidget {
+/// The Training Schedule screen. It looks after everything by itself:
+/// it reads the real date, works out which day is "today", moves to the next
+/// day when the date changes, opens the day screens and saves progress.
+/// Use it anywhere as: const TrainingScheduleScreen()
+class TrainingScheduleScreen extends StatefulWidget {
+  const TrainingScheduleScreen({super.key});
+
+  @override
+  State<TrainingScheduleScreen> createState() => _TrainingScheduleScreenState();
+}
+
+class _TrainingScheduleScreenState extends State<TrainingScheduleScreen>
+    with WidgetsBindingObserver {
+  final _service = TrainingProgressService.instance;
+  Timer? _midnightTimer;
+  bool _ready = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _init();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _midnightTimer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _init() async {
+    await _service.load();
+    if (!mounted) return;
+    setState(() => _ready = true);
+    _scheduleMidnight();
+  }
+
+  // The user comes back to the app (for example on a new day): rebuild
+  // with the real date.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && mounted) {
+      setState(() {});
+      _scheduleMidnight();
+    }
+  }
+
+  // The app is left open past midnight: move to the next day by itself.
+  void _scheduleMidnight() {
+    _midnightTimer?.cancel();
+    final now = DateTime.now();
+    final nextMidnight = DateTime(now.year, now.month, now.day + 1);
+    _midnightTimer = Timer(
+      nextMidnight.difference(now) + const Duration(seconds: 1),
+          () {
+        if (!mounted) return;
+        setState(() {});
+        _scheduleMidnight();
+      },
+    );
+  }
+
+  Future<void> _openDay(int day) async {
+    final Widget page = switch (day) {
+      1 => const DayWorkoutScreen(),
+      2 => const DayStrengthScreen(),
+      3 => const DayFlexibilityScreen(),
+      4 => const DayHiitScreen(),
+      5 => const DayStrengthTrainingScreen(),
+      6 => const DayRecoveryScreen(),
+      _ => const DayRestScreen(),
+    };
+
+    // The day screens return true from "Complete Day", nothing on back.
+    final finished = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => page),
+    );
+    if (finished != true) return;
+
+    await _service.markCompleted(day);
+    if (mounted) setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_ready) {
+      return const Scaffold(
+        backgroundColor: _bg,
+        body: Center(child: CircularProgressIndicator(color: Colors.amber)),
+      );
+    }
+
+    final now = DateTime.now(); // read again on every rebuild
+    return _ScheduleView(
+      today: _service.todayDay(now),
+      completed: _service.completed(now),
+      onDayTap: _openDay,
+    );
+  }
+}
+
+/// The screen design (unchanged). It only shows what it is given.
+class _ScheduleView extends StatelessWidget {
   final List<WorkoutDay> days;
   final Set<int> completed; // day numbers
   final int today; // day number
   final void Function(int day) onDayTap;
 
-  const TrainingScheduleScreen({
-    super.key,
+  const _ScheduleView({
     this.days = kWeekPlan,
-    this.completed = const {1, 2},
-    this.today = 3,
+    required this.completed,
+    required this.today,
     required this.onDayTap,
   });
 
@@ -384,21 +498,3 @@ class TrainingScheduleScreen extends StatelessWidget {
     return const Icon(Icons.chevron_right_rounded, color: _muted, size: 26);
   }
 }
-
-//
-// TrainingScheduleScreen(
-//   today: TrainingProgressService.todayDayNumber(), // real date
-//   completed: completedDaysForThisWeek,
-//   onDayTap: (day) {
-//     final Widget page = switch (day) {
-//       1 => const DayWorkoutScreen(),
-//       2 => const DayStrengthScreen(),
-//       3 => const DayFlexibilityScreen(),
-//       4 => const DayHiitScreen(),
-//       5 => const DayStrengthTrainingScreen(),
-//       6 => const DayRecoveryScreen(),
-//       _ => const DayRestScreen(),
-//     };
-//     Navigator.push(context, MaterialPageRoute(builder: (_) => page));
-//   },
-// )
