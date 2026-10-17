@@ -1,7 +1,6 @@
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../days/Day 1.dart';
 import '../days/Day2.dart';
 import '../days/Day3.dart';
@@ -66,23 +65,23 @@ class _BottomNavState extends State<BottomNav> {
         items: [
           CrystalNavigationBarItem(
             icon: Icons.space_dashboard_rounded,
-            selectedColor:  Colors.amber,
+            selectedColor: Colors.orange,
           ),
           CrystalNavigationBarItem(
             icon: Icons.directions_run_rounded,
-            selectedColor:  Colors.amber,
+            selectedColor: Colors.orange,
           ),
           CrystalNavigationBarItem(
             icon: Icons.analytics_rounded,
-            selectedColor:  Colors.amber,
+            selectedColor: Colors.orange,
           ),
           CrystalNavigationBarItem(
             icon: Icons.notifications,
-            selectedColor:  Colors.amber,
+            selectedColor: Colors.orange,
           ),
           CrystalNavigationBarItem(
             icon: CupertinoIcons.person_fill,
-            selectedColor:  Colors.amber,
+            selectedColor: Colors.orange,
           ),
         ],
       ),

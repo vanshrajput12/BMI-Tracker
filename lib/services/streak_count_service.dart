@@ -15,8 +15,7 @@ class StreakService {
   Future<int> updateStreak(int steps) async {
     final prefs = await SharedPreferences.getInstance();
     int streak = prefs.getInt(_streakKey) ?? 0;
-    final String? lastCompletedDate =
-    prefs.getString(_lastCompletedDateKey);
+    final String? lastCompletedDate = prefs.getString(_lastCompletedDateKey);
     final DateTime now = DateTime.now();
     final String today =
         '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
@@ -35,14 +34,15 @@ class StreakService {
     if (lastCompletedDate != null) {
       final DateTime lastDate = DateTime.parse(lastCompletedDate);
 
-      final DateTime lastDateOnly =
-      DateTime(lastDate.year, lastDate.month, lastDate.day);
+      final DateTime lastDateOnly = DateTime(
+        lastDate.year,
+        lastDate.month,
+        lastDate.day,
+      );
 
-      final DateTime todayOnly =
-      DateTime(now.year, now.month, now.day);
+      final DateTime todayOnly = DateTime(now.year, now.month, now.day);
 
-      final int difference =
-          todayOnly.difference(lastDateOnly).inDays;
+      final int difference = todayOnly.difference(lastDateOnly).inDays;
 
       if (difference == 1) {
         // Consecutive day.

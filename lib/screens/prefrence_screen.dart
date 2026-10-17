@@ -68,8 +68,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   void _save() {
     // TODO: save these values to Firestore (for example users/{uid}/preferences).
     setState(() => _changed = false);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Preferences saved')));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Preferences saved')));
   }
 
   @override
@@ -87,9 +88,13 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(CupertinoIcons.back, color: Colors.white),
         ),
-        title: Text('Preferences',
-            style: t.titleLarge!
-                .copyWith(color: _text, fontWeight: FontWeight.w600)),
+        title: Text(
+          'Preferences',
+          style: t.titleLarge!.copyWith(
+            color: _text,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
@@ -98,11 +103,21 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
           const SizedBox(height: 24),
           _sectionTitle(t, Icons.straighten_rounded, 'Units'),
           _card([
-            _segmentRow(t, 'Weight', ['kg', 'lb'], _weightUnit,
-                    (i) => _update(() => _weightUnit = i)),
+            _segmentRow(
+              t,
+              'Weight',
+              ['kg', 'lb'],
+              _weightUnit,
+              (i) => _update(() => _weightUnit = i),
+            ),
             _divider(),
-            _segmentRow(t, 'Height', ['cm', 'ft'], _heightUnit,
-                    (i) => _update(() => _heightUnit = i)),
+            _segmentRow(
+              t,
+              'Height',
+              ['cm', 'ft'],
+              _heightUnit,
+              (i) => _update(() => _heightUnit = i),
+            ),
           ]),
           const SizedBox(height: 24),
           _sectionTitle(t, Icons.flag_outlined, 'Workout'),
@@ -112,11 +127,15 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Weight loss goal',
-                      style: t.bodyLarge!.copyWith(color: _text)),
+                  Text(
+                    'Weight loss goal',
+                    style: t.bodyLarge!.copyWith(color: _text),
+                  ),
                   const SizedBox(height: 4),
-                  Text('Changes the intensity of your daily plan',
-                      style: t.bodySmall!.copyWith(color: _muted)),
+                  Text(
+                    'Changes the intensity of your daily plan',
+                    style: t.bodySmall!.copyWith(color: _muted),
+                  ),
                   const SizedBox(height: 14),
                   Row(
                     children: List.generate(3, (i) {
@@ -136,14 +155,18 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                                   : Colors.white.withOpacity(0.05),
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(
-                                  color: sel
-                                      ? _amber.withOpacity(0.6)
-                                      : Colors.transparent),
+                                color: sel
+                                    ? _amber.withOpacity(0.6)
+                                    : Colors.transparent,
+                              ),
                             ),
-                            child: Text(labels[i],
-                                style: t.titleSmall!.copyWith(
-                                    color: sel ? _amber : _text,
-                                    fontWeight: FontWeight.w600)),
+                            child: Text(
+                              labels[i],
+                              style: t.titleSmall!.copyWith(
+                                color: sel ? _amber : _text,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ),
                         ),
                       );
@@ -160,12 +183,18 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 children: [
                   Row(
                     children: [
-                      Text('Daily step goal',
-                          style: t.bodyLarge!.copyWith(color: _text)),
+                      Text(
+                        'Daily step goal',
+                        style: t.bodyLarge!.copyWith(color: _text),
+                      ),
                       const Spacer(),
-                      Text('${_stepGoal.round()} steps',
-                          style: t.bodyMedium!.copyWith(
-                              color: _amber, fontWeight: FontWeight.w600)),
+                      Text(
+                        '${_stepGoal.round()} steps',
+                        style: t.bodyMedium!.copyWith(
+                          color: _amber,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
                   SliderTheme(
@@ -188,29 +217,59 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
               ),
             ),
             _divider(),
-            _navRow(t, Icons.schedule_rounded, 'Workout reminder time',
-                _reminderTime.format(context), _pickTime),
+            _navRow(
+              t,
+              Icons.schedule_rounded,
+              'Workout reminder time',
+              _reminderTime.format(context),
+              _pickTime,
+            ),
           ]),
           const SizedBox(height: 24),
           _sectionTitle(t, Icons.notifications_none_rounded, 'Notifications'),
           _card([
-            _switchRow(t, 'Workout reminder', 'A daily nudge at your set time',
-                _workoutReminder, (v) => _update(() => _workoutReminder = v)),
+            _switchRow(
+              t,
+              'Workout reminder',
+              'A daily nudge at your set time',
+              _workoutReminder,
+              (v) => _update(() => _workoutReminder = v),
+            ),
             _divider(),
-            _switchRow(t, 'Water reminder', 'Reminders to drink water',
-                _waterReminder, (v) => _update(() => _waterReminder = v)),
+            _switchRow(
+              t,
+              'Water reminder',
+              'Reminders to drink water',
+              _waterReminder,
+              (v) => _update(() => _waterReminder = v),
+            ),
             _divider(),
-            _switchRow(t, 'Weekly summary', 'Your progress every Sunday',
-                _weeklySummary, (v) => _update(() => _weeklySummary = v)),
+            _switchRow(
+              t,
+              'Weekly summary',
+              'Your progress every Sunday',
+              _weeklySummary,
+              (v) => _update(() => _weeklySummary = v),
+            ),
           ]),
           const SizedBox(height: 24),
           _sectionTitle(t, Icons.tune_rounded, 'App'),
           _card([
-            _switchRow(t, 'Haptic feedback', 'Small vibrations when you tap',
-                _haptics, (v) => _update(() => _haptics = v)),
+            _switchRow(
+              t,
+              'Haptic feedback',
+              'Small vibrations when you tap',
+              _haptics,
+              (v) => _update(() => _haptics = v),
+            ),
             _divider(),
-            _switchRow(t, 'Keep screen on', 'While you are in a workout',
-                _keepAwake, (v) => _update(() => _keepAwake = v)),
+            _switchRow(
+              t,
+              'Keep screen on',
+              'While you are in a workout',
+              _keepAwake,
+              (v) => _update(() => _keepAwake = v),
+            ),
           ]),
         ],
       ),
@@ -228,10 +287,16 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                 // disabledForegroundColor: _muted,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
-              child: Text('Save changes',
-                  style: t.titleMedium!.copyWith(fontWeight: FontWeight.w600, color: Colors.black)),
+              child: Text(
+                'Save changes',
+                style: t.titleMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
             ),
           ),
         ),
@@ -270,12 +335,18 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Make it yours',
-                    style: t.titleMedium!.copyWith(
-                        color: _text, fontWeight: FontWeight.w700)),
+                Text(
+                  'Make it yours',
+                  style: t.titleMedium!.copyWith(
+                    color: _text,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 const SizedBox(height: 2),
-                Text('Units, goals and reminders',
-                    style: t.bodySmall!.copyWith(color: _muted)),
+                Text(
+                  'Units, goals and reminders',
+                  style: t.bodySmall!.copyWith(color: _muted),
+                ),
               ],
             ),
           ),
@@ -291,9 +362,13 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         children: [
           Icon(icon, size: 20, color: _amber),
           const SizedBox(width: 8),
-          Text(title,
-              style: t.titleMedium!
-                  .copyWith(color: _amber, fontWeight: FontWeight.w700)),
+          Text(
+            title,
+            style: t.titleMedium!.copyWith(
+              color: _amber,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );
@@ -310,11 +385,21 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     );
   }
 
-  Widget _divider() =>
-      const Divider(height: 1, thickness: 1, color: _line, indent: 16, endIndent: 16);
+  Widget _divider() => const Divider(
+    height: 1,
+    thickness: 1,
+    color: _line,
+    indent: 16,
+    endIndent: 16,
+  );
 
-  Widget _segmentRow(TextTheme t, String label, List<String> options,
-      int selected, ValueChanged<int> onChanged) {
+  Widget _segmentRow(
+    TextTheme t,
+    String label,
+    List<String> options,
+    int selected,
+    ValueChanged<int> onChanged,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -334,16 +419,21 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
                   onTap: () => onChanged(i),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: sel ? _amber : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text(options[i],
-                        style: t.bodyMedium!.copyWith(
-                            color: sel ? _onAmber : _muted,
-                            fontWeight: FontWeight.w600)),
+                    child: Text(
+                      options[i],
+                      style: t.bodyMedium!.copyWith(
+                        color: sel ? _onAmber : _muted,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 );
               }),
@@ -354,8 +444,13 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     );
   }
 
-  Widget _switchRow(TextTheme t, String title, String subtitle, bool value,
-      ValueChanged<bool> onChanged) {
+  Widget _switchRow(
+    TextTheme t,
+    String title,
+    String subtitle,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
@@ -384,8 +479,13 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     );
   }
 
-  Widget _navRow(TextTheme t, IconData icon, String title, String value,
-      VoidCallback onTap) {
+  Widget _navRow(
+    TextTheme t,
+    IconData icon,
+    String title,
+    String value,
+    VoidCallback onTap,
+  ) {
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
@@ -396,11 +496,15 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
             Icon(icon, color: _muted, size: 22),
             const SizedBox(width: 12),
             Expanded(
-                child: Text(title,
-                    style: t.bodyLarge!.copyWith(color: _text))),
-            Text(value,
-                style: t.bodyMedium!
-                    .copyWith(color: _amber, fontWeight: FontWeight.w600)),
+              child: Text(title, style: t.bodyLarge!.copyWith(color: _text)),
+            ),
+            Text(
+              value,
+              style: t.bodyMedium!.copyWith(
+                color: _amber,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(width: 6),
             const Icon(Icons.chevron_right_rounded, color: _muted),
           ],

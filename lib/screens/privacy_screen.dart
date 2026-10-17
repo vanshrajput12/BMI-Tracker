@@ -29,8 +29,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
   User? get _user => FirebaseAuth.instance.currentUser;
 
-  void _toast(String msg) => ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text(msg)));
+  void _toast(String msg) =>
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 
   // ---------- actions ----------
 
@@ -58,9 +58,13 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       builder: (_) => AlertDialog(
         backgroundColor: _surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        title: Text('Delete your account?',
-            style: t.titleMedium!
-                .copyWith(color: _text, fontWeight: FontWeight.w600)),
+        title: Text(
+          'Delete your account?',
+          style: t.titleMedium!.copyWith(
+            color: _text,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         content: Text(
           'This permanently deletes your account and your workout progress. You cannot undo this.',
           style: t.bodyMedium!.copyWith(color: _muted, height: 1.5),
@@ -72,9 +76,13 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text('Delete',
-                style: t.titleSmall!
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600)),
+            child: Text(
+              'Delete',
+              style: t.titleSmall!.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ],
       ),
@@ -115,9 +123,13 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(CupertinoIcons.back, color: Colors.white),
         ),
-        title: Text('Privacy',
-            style: t.titleLarge!
-                .copyWith(color: _text, fontWeight: FontWeight.w600)),
+        title: Text(
+          'Privacy',
+          style: t.titleLarge!.copyWith(
+            color: _text,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -128,37 +140,48 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               const SizedBox(height: 24),
               _sectionTitle(t, Icons.lock_outline_rounded, 'Security'),
               _card([
-                _navRow(t, Icons.mail_outline_rounded, 'Signed in as',
-                    _user?.email ?? 'Not available',
-                    showChevron: false),
+                _navRow(
+                  t,
+                  Icons.mail_outline_rounded,
+                  'Signed in as',
+                  _user?.email ?? 'Not available',
+                  showChevron: false,
+                ),
                 _divider(),
-                _navRow(t, Icons.key_rounded, 'Change password',
-                    'Send reset link',
-                    onTap: _sendPasswordReset),
+                _navRow(
+                  t,
+                  Icons.key_rounded,
+                  'Change password',
+                  'Send reset link',
+                  onTap: _sendPasswordReset,
+                ),
               ]),
               const SizedBox(height: 24),
               _sectionTitle(t, Icons.shield_outlined, 'Data sharing'),
               _card([
                 _switchRow(
-                    t,
-                    'Usage data',
-                    'Anonymous stats that help us improve the app',
-                    _usageData,
-                        (v) => setState(() => _usageData = v)),
+                  t,
+                  'Usage data',
+                  'Anonymous stats that help us improve the app',
+                  _usageData,
+                  (v) => setState(() => _usageData = v),
+                ),
                 _divider(),
                 _switchRow(
-                    t,
-                    'Crash reports',
-                    'Send error logs when the app crashes',
-                    _crashReports,
-                        (v) => setState(() => _crashReports = v)),
+                  t,
+                  'Crash reports',
+                  'Send error logs when the app crashes',
+                  _crashReports,
+                  (v) => setState(() => _crashReports = v),
+                ),
                 _divider(),
                 _switchRow(
-                    t,
-                    'Personalised tips',
-                    'Use your goal and progress to suggest tips',
-                    _personalTips,
-                        (v) => setState(() => _personalTips = v)),
+                  t,
+                  'Personalised tips',
+                  'Use your goal and progress to suggest tips',
+                  _personalTips,
+                  (v) => setState(() => _personalTips = v),
+                ),
               ]),
               const SizedBox(height: 24),
               _sectionTitle(t, Icons.warning_amber_rounded, 'Danger zone'),
@@ -176,30 +199,42 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Delete account',
-                        style: t.bodyLarge!.copyWith(
-                            color: _text, fontWeight: FontWeight.w600)),
+                    Text(
+                      'Delete account',
+                      style: t.bodyLarge!.copyWith(
+                        color: _text,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const SizedBox(height: 4),
                     Text(
-                        'Permanently remove your account and all workout progress.',
-                        style: t.bodySmall!
-                            .copyWith(color: _muted, height: 1.4)),
+                      'Permanently remove your account and all workout progress.',
+                      style: t.bodySmall!.copyWith(color: _muted, height: 1.4),
+                    ),
                     const SizedBox(height: 14),
                     SizedBox(
                       width: double.infinity,
                       height: 46,
                       child: OutlinedButton.icon(
                         onPressed: _busy ? null : _confirmDelete,
-                        icon: const Icon(Icons.delete_outline_rounded,
-                            size: 20),
-                        label: Text('Delete my account',
-                            style: t.titleSmall!
-                                .copyWith(fontWeight: FontWeight.w600)),
+                        icon: const Icon(
+                          Icons.delete_outline_rounded,
+                          size: 20,
+                        ),
+                        label: Text(
+                          'Delete my account',
+                          style: t.titleSmall!.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          side: BorderSide(color: Colors.white.withOpacity(0.6)),
+                          side: BorderSide(
+                            color: Colors.white.withOpacity(0.6),
+                          ),
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14)),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                         ),
                       ),
                     ),
@@ -213,7 +248,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               child: Container(
                 color: Colors.black54,
                 child: const Center(
-                    child: CircularProgressIndicator(color: _amber)),
+                  child: CircularProgressIndicator(color: _amber),
+                ),
               ),
             ),
         ],
@@ -244,21 +280,29 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
               color: _amber.withOpacity(0.12),
               borderRadius: BorderRadius.circular(14),
             ),
-            child: const Icon(Icons.verified_user_outlined,
-                color: _amber, size: 24),
+            child: const Icon(
+              Icons.verified_user_outlined,
+              color: _amber,
+              size: 24,
+            ),
           ),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Your data stays yours',
-                    style: t.titleSmall!.copyWith(
-                        color: _text, fontWeight: FontWeight.w600)),
+                Text(
+                  'Your data stays yours',
+                  style: t.titleSmall!.copyWith(
+                    color: _text,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
-                    'Choose what you share and manage your account security here.',
-                    style: t.bodySmall!.copyWith(color: _muted, height: 1.4)),
+                  'Choose what you share and manage your account security here.',
+                  style: t.bodySmall!.copyWith(color: _muted, height: 1.4),
+                ),
               ],
             ),
           ),
@@ -274,9 +318,13 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         children: [
           Icon(icon, size: 20, color: _amber),
           const SizedBox(width: 8),
-          Text(title,
-              style: t.titleMedium!
-                  .copyWith(color: _amber, fontWeight: FontWeight.w700)),
+          Text(
+            title,
+            style: t.titleMedium!.copyWith(
+              color: _amber,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );
@@ -294,10 +342,20 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
   }
 
   Widget _divider() => const Divider(
-      height: 1, thickness: 1, color: _line, indent: 16, endIndent: 16);
+    height: 1,
+    thickness: 1,
+    color: _line,
+    indent: 16,
+    endIndent: 16,
+  );
 
-  Widget _switchRow(TextTheme t, String title, String subtitle, bool value,
-      ValueChanged<bool> onChanged) {
+  Widget _switchRow(
+    TextTheme t,
+    String title,
+    String subtitle,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
@@ -326,8 +384,14 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
     );
   }
 
-  Widget _navRow(TextTheme t, IconData icon, String title, String value,
-      {VoidCallback? onTap, bool showChevron = true}) {
+  Widget _navRow(
+    TextTheme t,
+    IconData icon,
+    String title,
+    String value, {
+    VoidCallback? onTap,
+    bool showChevron = true,
+  }) {
     return InkWell(
       borderRadius: BorderRadius.circular(20),
       onTap: onTap,
@@ -340,10 +404,12 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             Text(title, style: t.bodyLarge!.copyWith(color: _text)),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(value,
-                  textAlign: TextAlign.right,
-                  overflow: TextOverflow.ellipsis,
-                  style: t.bodyMedium!.copyWith(color: _amber)),
+              child: Text(
+                value,
+                textAlign: TextAlign.right,
+                overflow: TextOverflow.ellipsis,
+                style: t.bodyMedium!.copyWith(color: _amber),
+              ),
             ),
             if (showChevron) ...[
               const SizedBox(width: 6),

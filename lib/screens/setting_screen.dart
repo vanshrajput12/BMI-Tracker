@@ -85,12 +85,12 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _sectionTitle( 'General', Icons.settings_outlined,),
-              SizedBox(height: 20,),
+              _sectionTitle('General', Icons.settings_outlined),
+              SizedBox(height: 20),
               _generalCard(t),
               const SizedBox(height: 28),
-              _sectionTitle(  'Account',Icons.person_outline_rounded,),
-              SizedBox(height: 20,),
+              _sectionTitle('Account', Icons.person_outline_rounded),
+              SizedBox(height: 20),
               _logoutButton(t),
               const SizedBox(height: 28),
               Center(
@@ -108,7 +108,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   // ---------- pieces ------ //
 
-  Widget _sectionTitle(String title, IconData icon, ) {
+  Widget _sectionTitle(String title, IconData icon) {
     return Row(
       children: [
         Container(

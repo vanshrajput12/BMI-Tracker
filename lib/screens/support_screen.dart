@@ -24,16 +24,26 @@ class _Faq {
 }
 
 const _faqs = <_Faq>[
-  _Faq('How do I change my weight loss goal?',
-      'Go to Settings > Preferences and choose 1-2 kg, 3-4 kg or 5 kg. Your daily workouts adjust to the new goal.'),
-  _Faq('Are the calories exact?',
-      'No. Calories shown on the workout screens are rough estimates. Your real burn depends on your weight, pace and effort.'),
-  _Faq('Can I skip a day?',
-      'Yes, but try not to skip two in a row. If you feel tired, do the light version of the day or take a rest day.'),
-  _Faq('How fast should I lose weight?',
-      'A safe pace is about 0.5-1 kg per week. Faster loss is hard to keep and can hurt your health.'),
-  _Faq('How do I reset my progress?',
-      'Contact us with the form below and we will reset it for you.'),
+  _Faq(
+    'How do I change my weight loss goal?',
+    'Go to Settings > Preferences and choose 1-2 kg, 3-4 kg or 5 kg. Your daily workouts adjust to the new goal.',
+  ),
+  _Faq(
+    'Are the calories exact?',
+    'No. Calories shown on the workout screens are rough estimates. Your real burn depends on your weight, pace and effort.',
+  ),
+  _Faq(
+    'Can I skip a day?',
+    'Yes, but try not to skip two in a row. If you feel tired, do the light version of the day or take a rest day.',
+  ),
+  _Faq(
+    'How fast should I lose weight?',
+    'A safe pace is about 0.5-1 kg per week. Faster loss is hard to keep and can hurt your health.',
+  ),
+  _Faq(
+    'How do I reset my progress?',
+    'Contact us with the form below and we will reset it for you.',
+  ),
 ];
 
 class SupportScreen extends StatefulWidget {
@@ -56,8 +66,8 @@ class _SupportScreenState extends State<SupportScreen> {
     super.dispose();
   }
 
-  void _toast(String msg) => ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text(msg)));
+  void _toast(String msg) =>
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 
   Future<void> _copyEmail() async {
     await Clipboard.setData(const ClipboardData(text: _supportEmail));
@@ -105,9 +115,13 @@ class _SupportScreenState extends State<SupportScreen> {
           onPressed: () => Navigator.pop(context),
           icon: const Icon(CupertinoIcons.back, color: Colors.white),
         ),
-        title: Text('Support',
-            style: t.titleLarge!
-                .copyWith(color: _text, fontWeight: FontWeight.w600)),
+        title: Text(
+          'Support',
+          style: t.titleLarge!.copyWith(
+            color: _text,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -125,8 +139,10 @@ class _SupportScreenState extends State<SupportScreen> {
             _messageForm(t),
             const SizedBox(height: 28),
             Center(
-              child: Text('Fitness app  |  Version 1.0.0',
-                  style: t.bodySmall!.copyWith(color: _muted)),
+              child: Text(
+                'Fitness app  |  Version 1.0.0',
+                style: t.bodySmall!.copyWith(color: _muted),
+              ),
             ),
           ],
         ),
@@ -156,20 +172,29 @@ class _SupportScreenState extends State<SupportScreen> {
               color: _amber.withOpacity(0.15),
               borderRadius: BorderRadius.circular(18),
             ),
-            child: const Icon(Icons.support_agent_rounded,
-                color: _amber, size: 30),
+            child: const Icon(
+              Icons.support_agent_rounded,
+              color: _amber,
+              size: 30,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('How can we help?',
-                    style: t.titleMedium!.copyWith(
-                        color: _text, fontWeight: FontWeight.w700)),
+                Text(
+                  'How can we help?',
+                  style: t.titleMedium!.copyWith(
+                    color: _text,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text('Read the answers below or send us a message.',
-                    style: t.bodySmall!.copyWith(color: _muted, height: 1.4)),
+                Text(
+                  'Read the answers below or send us a message.',
+                  style: t.bodySmall!.copyWith(color: _muted, height: 1.4),
+                ),
               ],
             ),
           ),
@@ -184,14 +209,21 @@ class _SupportScreenState extends State<SupportScreen> {
       child: Row(
         children: [
           Container(
-              width: 8,
-              height: 8,
-              decoration:
-              const BoxDecoration(color: _amber, shape: BoxShape.circle)),
+            width: 8,
+            height: 8,
+            decoration: const BoxDecoration(
+              color: _amber,
+              shape: BoxShape.circle,
+            ),
+          ),
           const SizedBox(width: 10),
-          Text(title,
-              style: t.titleMedium!
-                  .copyWith(color: _amber, fontWeight: FontWeight.w700)),
+          Text(
+            title,
+            style: t.titleMedium!.copyWith(
+              color: _amber,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );
@@ -212,27 +244,32 @@ class _SupportScreenState extends State<SupportScreen> {
               children: [
                 ExpansionTile(
                   tilePadding: const EdgeInsets.symmetric(horizontal: 18),
-                  childrenPadding:
-                  const EdgeInsets.fromLTRB(18, 0, 18, 16),
+                  childrenPadding: const EdgeInsets.fromLTRB(18, 0, 18, 16),
                   iconColor: _amber,
                   collapsedIconColor: _muted,
                   expandedAlignment: Alignment.centerLeft,
-                  title: Text(f.q,
-                      style: t.bodyMedium!.copyWith(
-                          color: _text, fontWeight: FontWeight.w500)),
+                  title: Text(
+                    f.q,
+                    style: t.bodyMedium!.copyWith(
+                      color: _text,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                   children: [
-                    Text(f.a,
-                        style: t.bodySmall!
-                            .copyWith(color: _muted, height: 1.5)),
+                    Text(
+                      f.a,
+                      style: t.bodySmall!.copyWith(color: _muted, height: 1.5),
+                    ),
                   ],
                 ),
                 if (i != _faqs.length - 1)
                   const Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: Color(0x14FFFFFF),
-                      indent: 18,
-                      endIndent: 18),
+                    height: 1,
+                    thickness: 1,
+                    color: Color(0x14FFFFFF),
+                    indent: 18,
+                    endIndent: 18,
+                  ),
               ],
             );
           }),
@@ -260,19 +297,28 @@ class _SupportScreenState extends State<SupportScreen> {
                 color: _amber.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: const Icon(Icons.mail_outline_rounded,
-                  color: _amber, size: 22),
+              child: const Icon(
+                Icons.mail_outline_rounded,
+                color: _amber,
+                size: 22,
+              ),
             ),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Email us',
-                      style: t.bodyLarge!.copyWith(
-                          color: _text, fontWeight: FontWeight.w500)),
-                  Text(_supportEmail,
-                      style: t.bodySmall!.copyWith(color: _amber)),
+                  Text(
+                    'Email us',
+                    style: t.bodyLarge!.copyWith(
+                      color: _text,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    _supportEmail,
+                    style: t.bodySmall!.copyWith(color: _amber),
+                  ),
                 ],
               ),
             ),
@@ -293,9 +339,13 @@ class _SupportScreenState extends State<SupportScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Send us a message',
-              style: t.bodyLarge!
-                  .copyWith(color: _text, fontWeight: FontWeight.w600)),
+          Text(
+            'Send us a message',
+            style: t.bodyLarge!.copyWith(
+              color: _text,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           const SizedBox(height: 14),
           Wrap(
             spacing: 8,
@@ -306,22 +356,26 @@ class _SupportScreenState extends State<SupportScreen> {
                 onTap: () => setState(() => _category = i),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: sel
                         ? _amber.withOpacity(0.18)
                         : Colors.white.withOpacity(0.06),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                        color: sel
-                            ? _amber.withOpacity(0.7)
-                            : Colors.transparent),
+                      color: sel ? _amber.withOpacity(0.7) : Colors.transparent,
+                    ),
                   ),
-                  child: Text(_categories[i],
-                      style: t.bodySmall!.copyWith(
-                          color: sel ? _amber : _muted,
-                          fontWeight: FontWeight.w600)),
+                  child: Text(
+                    _categories[i],
+                    style: t.bodySmall!.copyWith(
+                      color: sel ? _amber : _muted,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               );
             }),
@@ -361,17 +415,25 @@ class _SupportScreenState extends State<SupportScreen> {
                 disabledBackgroundColor: const Color(0xFF2A2A2D),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
               child: _sending
                   ? const SizedBox(
-                  width: 22,
-                  height: 22,
-                  child: CircularProgressIndicator(
-                      strokeWidth: 2.5, color: Color(0xFF111113)))
-                  : Text('Send message',
-                  style: t.titleSmall!
-                      .copyWith(fontWeight: FontWeight.w600, color: Colors.black)),
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        color: Color(0xFF111113),
+                      ),
+                    )
+                  : Text(
+                      'Send message',
+                      style: t.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
             ),
           ),
         ],
