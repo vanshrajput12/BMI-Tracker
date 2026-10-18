@@ -237,31 +237,31 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  // Widget _logoutButton(TextTheme t) {
-  //   return SizedBox(
-  //     width: double.infinity,
-  //     height: 54,
-  //     child: ElevatedButton.icon(
-  //       onPressed: _logout,
-  //       icon: const Icon(Icons.logout_rounded, size: 20),
-  //       label: Text(
-  //         'Log Out',
-  //         style: t.titleSmall!.copyWith(
-  //           fontWeight: FontWeight.w600,
-  //           color: Colors.black,
-  //         ),
-  //       ),
-  //       style: ElevatedButton.styleFrom(
-  //         backgroundColor: Colors.white,
-  //         foregroundColor: _onWhite,
-  //         elevation: 0,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(34),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget _logoutButton(TextTheme t) {
+    return SizedBox(
+      width: double.infinity,
+      height: 54,
+      child: ElevatedButton.icon(
+        onPressed: _logout,
+        icon: const Icon(Icons.logout_rounded, size: 20),
+        label: Text(
+          'Log Out',
+          style: t.titleSmall!.copyWith(
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: _onWhite,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(34),
+          ),
+        ),
+      ),
+    );
+  }
 
   // ---------- actions ----------
 
