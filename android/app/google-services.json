@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "246066529696-mi8dmd9ds33fhrahgk7inrocpmd54p30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vansh.apps",
+            "certificate_hash": "900ddb72ddfb677293b327550b0742e875b04689"
+          }
+        },
+        {
           "client_id": "246066529696-8ebfhta3m08bd5frsfngbsp73umgr56a.apps.googleusercontent.com",
           "client_type": 3
         }
