@@ -638,7 +638,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 20),
                   _sectionTitle('Body Data', Icons.monitor_weight_outlined),
                   const SizedBox(height: 14),
-                  // _bodyDataCard(),
+                  _bodyDataCard(),
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
