@@ -45,7 +45,7 @@ class _BottomNavState extends State<BottomNav> {
   List<Widget> get pages => [
     const DashboardScreen(),
     const StepCounterScreen(),
-
+    const TrainingScheduleScreen(),
     const NotificationPage(),
     const ProfileScreen(),
   ];
