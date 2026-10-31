@@ -1,3 +1,4 @@
+import 'package:bmi_project/screens/training_goal_selection_screen.dart';
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _BottomNavState extends State<BottomNav> {
   List<Widget> get pages => [
     const DashboardScreen(),
     const StepCounterScreen(),
-    const TrainingScheduleScreen(),
+    const TrainingGoalScreen(),
     const NotificationPage(),
     const ProfileScreen(),
   ];
