@@ -11,10 +11,8 @@ import '../days/Day7.dart';
 
 const _bg = Color(0xFF121212);
 const _card = Color(0xFF1C1C1E);
-const _red = Color(0xFFFF4D3D);
 const _amber = Color(0xFFFFB400);
 const _text = Color(0xFFEDEAF2);
-const _muted = Color(0xFF9A98A3);
 
 enum Goal { loss, gain }
 
@@ -67,37 +65,22 @@ class GoalSelectionScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: t.bodyMedium!.copyWith(color: _amber)),
-              const SizedBox(height: 6),
               Text('What is your goal?',
-                  style: t.headlineMedium!.copyWith(
-                      color: _text, fontWeight: FontWeight.w700, height: 1.2)),
-              const SizedBox(height: 8),
-              Text(
-                'Your workout will be matched to the goal you choose.',
-                style: t.bodyMedium!.copyWith(color: _muted, height: 1.4),
+                  style: t.headlineSmall!
+                      .copyWith(color: _text, fontWeight: FontWeight.w700)),
+              const SizedBox(height: 24),
+              _GoalCard(
+                t: t,
+                icon: Icons.trending_down_rounded,
+                title: 'Weight Loss',
+                onTap: () => _select(context, Goal.loss),
               ),
-              const SizedBox(height: 28),
-              Expanded(
-                child: _GoalCard(
-                  t: t,
-                  icon: Icons.trending_down_rounded,
-                  title: 'Weight Loss',
-                  subtitle: 'Burn fat with cardio, intervals and core work.',
-                  tags: const ['Higher cardio', 'Calorie burn'],
-                  onTap: () => _select(context, Goal.loss),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: _GoalCard(
-                  t: t,
-                  icon: Icons.trending_up_rounded,
-                  title: 'Weight Gain',
-                  subtitle: 'Build muscle with heavier sets and less cardio.',
-                  tags: const ['More strength', 'Muscle build'],
-                  onTap: () => _select(context, Goal.gain),
-                ),
+              const SizedBox(height: 14),
+              _GoalCard(
+                t: t,
+                icon: Icons.trending_up_rounded,
+                title: 'Weight Gain',
+                onTap: () => _select(context, Goal.gain),
               ),
             ],
           ),
@@ -111,90 +94,35 @@ class _GoalCard extends StatelessWidget {
   final TextTheme t;
   final IconData icon;
   final String title;
-  final String subtitle;
-  final List<String> tags;
   final VoidCallback onTap;
 
   const _GoalCard({
     required this.t,
     required this.icon,
     required this.title,
-    required this.subtitle,
-    required this.tags,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: _card,
+      borderRadius: BorderRadius.circular(20),
       child: InkWell(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(20),
         onTap: onTap,
-        child: Ink(
-          padding: const EdgeInsets.all(22),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(28),
-            // Mostly amber, with only a slight hint of red at the far corner.
-            gradient: LinearGradient(
-              colors: [
-                _amber.withOpacity(0.22),
-                _card,
-                _red.withOpacity(0.07),
-              ],
-              stops: const [0.0, 0.65, 1.0],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            border: Border.all(color: _amber.withOpacity(0.35)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
+          child: Row(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: _amber.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Icon(icon, color: _amber, size: 30),
-                  ),
-                  const Icon(Icons.arrow_forward_rounded, color: _amber),
-                ],
+              Icon(icon, color: _amber, size: 28),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(title,
+                    style: t.titleMedium!
+                        .copyWith(color: _text, fontWeight: FontWeight.w600)),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title,
-                      style: t.titleLarge!.copyWith(
-                          color: _text, fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 6),
-                  Text(subtitle,
-                      style: t.bodyMedium!.copyWith(color: _muted, height: 1.4)),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: tags
-                        .map((s) => Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.07),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(s,
-                          style: t.bodySmall!.copyWith(color: _text)),
-                    ))
-                        .toList(),
-                  ),
-                ],
-              ),
+              const Icon(Icons.chevron_right_rounded, color: _amber),
             ],
           ),
         ),
