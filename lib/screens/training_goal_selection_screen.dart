@@ -1,139 +1,49 @@
-// pubspec.yaml -> dependencies: google_fonts, shared_preferences, firebase_auth
-import 'package:bmi_project/screens/trainingScheduleScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../days/Day 1.dart';
+import '../days/Day2.dart';
+import '../days/Day3.dart';
+import '../days/Day4.dart';
+import '../days/Day5.dart';
+import '../days/Day6.dart';
+import '../days/Day7.dart';
 
 const _bg = Color(0xFF121212);
-const _card = Color(0xFF1C1C1C);
-const _orange = Color(0xFFFF8A00);
+const _card = Color(0xFF1C1C1E);
+const _red = Color(0xFFFF4D3D);
 const _amber = Color(0xFFFFB400);
-const _text = Colors.white;
+const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
-const _redTint = Color(0xFF3A1815);
 
-enum TrainingGoal { loss, gain }
+enum Goal { loss, gain }
 
-class _GoalInfo {
-  final TrainingGoal goal;
+/// Returns the right day screen. The goal will be passed in the next step.
+Widget buildDayPage(int day, {Goal? goal}) {
+  return switch (day) {
+    1 => const DayWorkoutScreen(),
+    2 => const DayStrengthScreen(),
+    3 => const DayFlexibilityScreen(),
+    4 => const DayHiitScreen(),
+    5 => const DayStrengthTrainingScreen(),
+    6 => const DayRecoveryScreen(),
+    _ => const DayRestScreen(),
+  };
+}
+
+class GoalSelectionScreen extends StatelessWidget {
+  final int day;
   final String title;
-  final String subtitle;
-  final IconData icon;
-  final List<String> tags;
-  final List<Color> gradient;
-  const _GoalInfo({
-    required this.goal,
-    required this.title,
-    required this.subtitle,
-    required this.icon,
-    required this.tags,
-    required this.gradient,
-  });
-}
+  const GoalSelectionScreen({super.key, required this.day, required this.title});
 
-const _goals = <_GoalInfo>[
-  _GoalInfo(
-    goal: TrainingGoal.loss,
-    title: 'Weight Loss',
-    subtitle: 'Burn fat and get lighter with a 7-day plan of cardio, HIIT and core.',
-    icon: Icons.trending_down_rounded,
-    tags: ['Cardio', 'HIIT', 'Core', '1-5 kg goals'],
-    // a slight red tint in the gradient
-    gradient: [Color(0xFF3A2812), _redTint, Color(0xFF1C1C1C)],
-  ),
-  _GoalInfo(
-    goal: TrainingGoal.gain,
-    title: 'Weight Gain',
-    subtitle: 'Build muscle and healthy weight with strength-focused training.',
-    icon: Icons.trending_up_rounded,
-    tags: ['Strength', 'Muscle', 'Healthy calories'],
-    gradient: [Color(0xFF3A2C12), Color(0xFF2A2012), Color(0xFF1C1C1C)],
-  ),
-];
-
-/// Lets the user choose between weight loss and weight gain training.
-///
-/// Pass [bmi] (optional) to show a suggestion:
-///   under 18.5 -> weight gain, 25 or more -> weight loss.
-class TrainingGoalScreen extends StatefulWidget {
-  final double? bmi;
-  const TrainingGoalScreen({super.key, this.bmi});
-
-  /// The goal the user chose last time (null if none yet).
-  static Future<TrainingGoal?> savedGoal() async {
-    final prefs = await SharedPreferences.getInstance();
-    final value = prefs.getString(_prefsKey);
-    return switch (value) {
-      'loss' => TrainingGoal.loss,
-      'gain' => TrainingGoal.gain,
-      _ => null,
-    };
+  Future<void> _select(BuildContext context, Goal goal) async {
+    final finished = await Navigator.push<bool>(
+      context,
+      MaterialPageRoute(builder: (_) => buildDayPage(day, goal: goal)),
+    );
+    // Pass "Complete Day" result back to the schedule screen.
+    if (context.mounted) Navigator.pop(context, finished);
   }
-
-  static String get _prefsKey =>
-      'training_goal_${FirebaseAuth.instance.currentUser?.uid ?? 'guest'}';
-
-  @override
-  State<TrainingGoalScreen> createState() => _TrainingGoalScreenState();
-}
-
-class _TrainingGoalScreenState extends State<TrainingGoalScreen> {
-  TrainingGoal? _selected;
-
-  @override
-  void initState() {
-    super.initState();
-    TrainingGoalScreen.savedGoal().then((g) {
-      if (mounted && g != null) setState(() => _selected = g);
-    });
-  }
-
-  // ---------- BMI helpers ----------
-
-  String? get _bmiCategory {
-    final b = widget.bmi;
-    if (b == null) return null;
-    if (b < 18.5) return 'Underweight';
-    if (b < 25) return 'Normal';
-    if (b < 30) return 'Overweight';
-    return 'Obese';
-  }
-
-  TrainingGoal? get _recommended {
-    final b = widget.bmi;
-    if (b == null) return null;
-    if (b < 18.5) return TrainingGoal.gain;
-    if (b >= 25) return TrainingGoal.loss;
-    return null;
-  }
-
-  // ---------- actions ----------
-
-  Future<void> _continue() async {
-    final goal = _selected;
-    if (goal == null) return;
-
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-        TrainingGoalScreen._prefsKey, goal == TrainingGoal.loss ? 'loss' : 'gain');
-    if (!mounted) return;
-
-    if (goal == TrainingGoal.loss) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const TrainingScheduleScreen()),
-      );
-    } else {
-      // TODO: replace with the weight gain schedule screen when it is ready.
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Weight gain plan is coming soon.')),
-      );
-    }
-  }
-
-  // ---------- screen ----------
 
   @override
   Widget build(BuildContext context) {
@@ -146,250 +56,147 @@ class _TrainingGoalScreenState extends State<TrainingGoalScreen> {
         surfaceTintColor: Colors.transparent,
         scrolledUnderElevation: 0,
         elevation: 0,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: _text),
-        title: Column(
-          children: [
-            Text('CHOOSE YOUR GOAL',
-                style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: _orange)),
-            const SizedBox(
-                width: 250, child: Divider(color: Colors.white, height: 8)),
-          ],
+        leading: const BackButton(color: _text),
+        title: Text('Day $day',
+            style: t.titleLarge!
+                .copyWith(color: _text, fontWeight: FontWeight.w600)),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: t.bodyMedium!.copyWith(color: _amber)),
+              const SizedBox(height: 6),
+              Text('What is your goal?',
+                  style: t.headlineMedium!.copyWith(
+                      color: _text, fontWeight: FontWeight.w700, height: 1.2)),
+              const SizedBox(height: 8),
+              Text(
+                'Your workout will be matched to the goal you choose.',
+                style: t.bodyMedium!.copyWith(color: _muted, height: 1.4),
+              ),
+              const SizedBox(height: 28),
+              Expanded(
+                child: _GoalCard(
+                  t: t,
+                  icon: Icons.trending_down_rounded,
+                  title: 'Weight Loss',
+                  subtitle: 'Burn fat with cardio, intervals and core work.',
+                  tags: const ['Higher cardio', 'Calorie burn'],
+                  onTap: () => _select(context, Goal.loss),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: _GoalCard(
+                  t: t,
+                  icon: Icons.trending_up_rounded,
+                  title: 'Weight Gain',
+                  subtitle: 'Build muscle with heavier sets and less cardio.',
+                  tags: const ['More strength', 'Muscle build'],
+                  onTap: () => _select(context, Goal.gain),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 120),
-        children: [
-          Text('What do you want to achieve?',
-              style: t.titleLarge!
-                  .copyWith(color: _text, fontWeight: FontWeight.w700)),
-          const SizedBox(height: 6),
-          Text('We will build your training plan around your goal.',
-              style: t.bodyMedium!.copyWith(color: _muted, height: 1.4)),
-          if (widget.bmi != null) ...[
-            const SizedBox(height: 18),
-            _bmiStrip(t),
-          ],
-          const SizedBox(height: 22),
-          ..._goals.map((g) => Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: _goalCard(t, g),
-          )),
-          const SizedBox(height: 4),
-          Center(
-            child: Text('You can change this later.',
-                style: t.bodySmall!.copyWith(color: _muted)),
+    );
+  }
+}
+
+class _GoalCard extends StatelessWidget {
+  final TextTheme t;
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final List<String> tags;
+  final VoidCallback onTap;
+
+  const _GoalCard({
+    required this.t,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.tags,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(28),
+        onTap: onTap,
+        child: Ink(
+          padding: const EdgeInsets.all(22),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(28),
+            // Mostly amber, with only a slight hint of red at the far corner.
+            gradient: LinearGradient(
+              colors: [
+                _amber.withOpacity(0.22),
+                _card,
+                _red.withOpacity(0.07),
+              ],
+              stops: const [0.0, 0.65, 1.0],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border.all(color: _amber.withOpacity(0.35)),
           ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-          child: SizedBox(
-            height: 58,
-            child: ElevatedButton(
-              onPressed: _selected == null ? null : _continue,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF111113),
-                disabledBackgroundColor: const Color(0xFF2A2A2D),
-                disabledForegroundColor: _muted,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                      _selected == null
-                          ? 'Select a goal'
-                          : 'Continue with ${_selected == TrainingGoal.loss ? 'Weight Loss' : 'Weight Gain'}',
-                      style: t.titleMedium!
-                          .copyWith(fontWeight: FontWeight.w700)),
-                  if (_selected != null) ...[
-                    const SizedBox(width: 8),
-                    const Icon(Icons.arrow_forward_rounded, size: 22),
-                  ],
+                  Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: _amber.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Icon(icon, color: _amber, size: 30),
+                  ),
+                  const Icon(Icons.arrow_forward_rounded, color: _amber),
                 ],
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ---------- pieces ----------
-
-  Widget _bmiStrip(TextTheme t) {
-    final rec = _recommended;
-    final suggestion = rec == null
-        ? 'Choose the goal that fits you best.'
-        : 'We suggest ${rec == TrainingGoal.loss ? 'Weight Loss' : 'Weight Gain'}. You can still pick either.';
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _card,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: _orange.withValues(alpha: 0.14),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: const Icon(Icons.monitor_weight_outlined,
-                color: _orange, size: 24),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text('Your BMI  ',
-                        style: t.bodySmall!.copyWith(color: _muted)),
-                    Text(widget.bmi!.toStringAsFixed(1),
-                        style: t.titleSmall!.copyWith(
-                            color: _text, fontWeight: FontWeight.w700)),
-                    const SizedBox(width: 8),
-                    Text(_bmiCategory ?? '',
-                        style: t.bodySmall!.copyWith(
-                            color: _orange, fontWeight: FontWeight.w600)),
-                  ],
-                ),
-                const SizedBox(height: 2),
-                Text(suggestion,
-                    style: t.bodySmall!.copyWith(color: _muted, height: 1.4)),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _goalCard(TextTheme t, _GoalInfo g) {
-    final selected = _selected == g.goal;
-    final recommended = _recommended == g.goal;
-
-    return GestureDetector(
-      onTap: () => setState(() => _selected = g.goal),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 220),
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(28),
-          gradient: LinearGradient(
-            colors: g.gradient,
-            stops: const [0.0, 0.5, 1.0],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          border: Border.all(
-            color: selected
-                ? _orange
-                : Colors.white.withValues(alpha: 0.06),
-            width: selected ? 1.8 : 1,
-          ),
-          boxShadow: selected
-              ? [
-            BoxShadow(
-                color: _orange.withValues(alpha: 0.22),
-                blurRadius: 22,
-                spreadRadius: 0),
-          ]
-              : const [],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 58,
-                  height: 58,
-                  decoration: BoxDecoration(
-                    color: _orange.withValues(alpha: 0.16),
-                    borderRadius: BorderRadius.circular(18),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: t.titleLarge!.copyWith(
+                          color: _text, fontWeight: FontWeight.w700)),
+                  const SizedBox(height: 6),
+                  Text(subtitle,
+                      style: t.bodyMedium!.copyWith(color: _muted, height: 1.4)),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: tags
+                        .map((s) => Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.07),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(s,
+                          style: t.bodySmall!.copyWith(color: _text)),
+                    ))
+                        .toList(),
                   ),
-                  child: Icon(g.icon, color: _orange, size: 32),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(g.title,
-                          style: t.titleLarge!.copyWith(
-                              color: _text, fontWeight: FontWeight.w700)),
-                      if (recommended) ...[
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: _amber.withValues(alpha: 0.18),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Text('Suggested for you',
-                              style: t.labelSmall!.copyWith(
-                                  color: _amber,
-                                  fontWeight: FontWeight.w600)),
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 220),
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: selected ? _orange : Colors.transparent,
-                    border: Border.all(
-                        color: selected ? _orange : Colors.white24, width: 2),
-                  ),
-                  child: selected
-                      ? const Icon(Icons.check_rounded,
-                      color: Color(0xFF1A1205), size: 20)
-                      : null,
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(g.subtitle,
-                style: t.bodyMedium!.copyWith(color: _muted, height: 1.5)),
-            const SizedBox(height: 14),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: g.tags
-                  .map((tag) => Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 12, vertical: 7),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.07),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(tag,
-                    style: t.bodySmall!.copyWith(
-                        color: _text.withValues(alpha: 0.85))),
-              ))
-                  .toList(),
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

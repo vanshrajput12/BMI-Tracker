@@ -1,6 +1,7 @@
 // pubspec.yaml -> dependencies: google_fonts: ^6.2.1
 import 'dart:async';
 
+import 'package:bmi_project/screens/training_goal_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -159,17 +160,14 @@ class _TrainingScheduleScreenState extends State<TrainingScheduleScreen>
   }
 
   Future<void> _openDay(int day) async {
-    final Widget page = switch (day) {
-      1 => const DayWorkoutScreen(),
-      2 => const DayStrengthScreen(),
-      3 => const DayFlexibilityScreen(),
-      4 => const DayHiitScreen(),
-      5 => const DayStrengthTrainingScreen(),
-      6 => const DayRecoveryScreen(),
-      _ => const DayRestScreen(),
-    };
+    final Widget page = day == 7
+        ? buildDayPage(7) // rest day: no goal needed
+        : GoalSelectionScreen(
+      day: day,
+      title: kWeekPlan.firstWhere((d) => d.number == day).title,
+    );
 
-    // The day screens return true from "Complete Day", nothing on back.
+    // Day screens return true from "Complete Day", nothing on back.
     final finished = await Navigator.push<bool>(
       context,
       MaterialPageRoute(builder: (_) => page),
