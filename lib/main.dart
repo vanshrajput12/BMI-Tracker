@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BMI Tracker',
-      home: BottomNav(),
+      home: const AuthWrapper(),
 
       theme: ThemeData(
         brightness: Brightness.dark,

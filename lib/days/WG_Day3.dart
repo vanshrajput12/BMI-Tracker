@@ -107,17 +107,17 @@ const _plans = <GainPlan>[
   ),
 ];
 
-class DayFlexibilityScreen extends StatefulWidget {
+class DayGainFlexibilityScreen extends StatefulWidget {
   final int day;
   final String title;
-  const DayFlexibilityScreen(
+  const DayGainFlexibilityScreen(
       {super.key, this.day = 3, this.title = 'Cardio + Flexibility'});
 
   @override
-  State<DayFlexibilityScreen> createState() => _DayFlexibilityScreenState();
+  State<DayGainFlexibilityScreen> createState() => _DayGainFlexibilityScreenState();
 }
 
-class _DayFlexibilityScreenState extends State<DayFlexibilityScreen> {
+class _DayGainFlexibilityScreenState extends State<DayGainFlexibilityScreen> {
   int _goal = 0;
   final Set<String> _done = {};
 
