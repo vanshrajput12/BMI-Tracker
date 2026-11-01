@@ -133,17 +133,17 @@ const _plans = <GainPlan>[
   ),
 ];
 
-class DayRecoveryScreen extends StatefulWidget {
+class DayGainRecoveryScreen extends StatefulWidget {
   final int day;
   final String title;
-  const DayRecoveryScreen(
+  const DayGainRecoveryScreen(
       {super.key, this.day = 6, this.title = 'Recovery + Strength'});
 
   @override
-  State<DayRecoveryScreen> createState() => _DayRecoveryScreenState();
+  State<DayGainRecoveryScreen> createState() => _DayGainRecoveryScreenState();
 }
 
-class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
+class _DayGainRecoveryScreenState extends State<DayGainRecoveryScreen> {
   int _goal = 0;
   final Set<String> _done = {};
 

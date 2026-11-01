@@ -111,16 +111,16 @@ const _plans = <GainPlan>[
   ),
 ];
 
-class DayHiitScreen extends StatefulWidget {
+class DayGainHiitScreen extends StatefulWidget {
   final int day;
   final String title;
-  const DayHiitScreen({super.key, this.day = 4, this.title = 'HIIT'});
+  const DayGainHiitScreen({super.key, this.day = 4, this.title = 'HIIT'});
 
   @override
-  State<DayHiitScreen> createState() => _DayHiitScreenState();
+  State<DayGainHiitScreen> createState() => _DayGainHiitScreenState();
 }
 
-class _DayHiitScreenState extends State<DayHiitScreen> {
+class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   int _goal = 0;
   final Set<String> _done = {};
 

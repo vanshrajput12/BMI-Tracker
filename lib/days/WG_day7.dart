@@ -2,60 +2,56 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const _bg = Color(0xFF121212);
-const _card = Color(0xFF1C1C1E);
-const _red = Color(0xFFFF4D3D);
-const _amber = Color(0xFFFFB400);
-const _text = Color(0xFFEDEAF2);
-const _muted = Color(0xFF9A98A3);
+const _bg = Color(0xFF000000);
+const _card = Color(0xFF151515);
+const _orange = Color(0xFFFF9800); // accent only
+const _text = Color(0xFFFFFFFF);
+const _muted = Color(0xFF9E9E9E);
 
-class _Item {
+class RestItem {
   final String title;
   final String detail;
   final IconData icon;
-  const _Item(this.title, this.detail, this.icon);
+  const RestItem(this.title, this.detail, this.icon);
 }
 
-const _habits = <_Item>[
-  _Item('Drink enough water', '2-3 litres through the day', Icons.water_drop_outlined),
-  _Item('Eat a balanced meal', 'Protein, vegetables and whole grains', Icons.restaurant_outlined),
-  _Item('Sleep well tonight', '7-8 hours', Icons.bedtime_outlined),
+const _checklist = <RestItem>[
+  RestItem('Eat 3 full meals + 2 snacks', 'Stay in your calorie surplus today',
+      Icons.restaurant_outlined),
+  RestItem('Protein with every meal', 'Eggs, dal, paneer, chicken or curd',
+      Icons.egg_outlined),
+  RestItem('Drink 2-3 litres of water', 'Keep a bottle with you',
+      Icons.water_drop_outlined),
+  RestItem('Sleep 8-9 hours tonight', 'Muscles grow while you sleep',
+      Icons.bedtime_outlined),
 ];
 
-const _optional = <_Item>[
-  _Item('Light stretching', '10-15 min, gentle and slow', Icons.self_improvement),
-  _Item('Easy walk', '20-30 min, relaxed pace', Icons.directions_walk),
+const _optional = <RestItem>[
+  RestItem('Easy walk', '15-20 min, relaxed pace', Icons.directions_walk),
+  RestItem('Full-body stretch', '10 min, slow and gentle', Icons.self_improvement),
+  RestItem('Deep breathing', '5 min, inhale 4 sec, exhale 6 sec',
+      Icons.spa_outlined),
 ];
 
 class DayGainRestScreen extends StatefulWidget {
   final int day;
   final String title;
-  const DayRestScreen({super.key, this.day = 7, this.title = 'Rest Day'});
+  const DayGainRestScreen({super.key, this.day = 7, this.title = 'Rest Day'});
 
   @override
-  State<DayRestScreen> createState() => _DayRestScreenState();
+  State<DayGainRestScreen> createState() => _DayGainRestScreenState();
 }
 
-class _DayRestScreenState extends State<DayRestScreen> {
+class _DayGainRestScreenState extends State<DayGainRestScreen> {
   final Set<String> _done = {};
 
-  int get _habitsDone => _habits.where((h) => _done.contains(h.title)).length;
-  double get _progress => _habitsDone / _habits.length;
+  int get _total => _checklist.length + _optional.length;
+  int get _completed => _done.length;
+  double get _progress =>
+      _total == 0 ? 0 : (_completed / _total).clamp(0.0, 1.0);
 
   void _toggle(String key) => setState(() {
     _done.contains(key) ? _done.remove(key) : _done.add(key);
-  });
-
-  // Optional activity is "pick one".
-  void _toggleOptional(String key) => setState(() {
-    if (_done.contains(key)) {
-      _done.remove(key);
-    } else {
-      for (final o in _optional) {
-        _done.remove(o.title);
-      }
-      _done.add(key);
-    }
   });
 
   @override
@@ -65,10 +61,10 @@ class _DayRestScreenState extends State<DayRestScreen> {
     return Scaffold(
       backgroundColor: _bg,
       appBar: AppBar(
-        backgroundColor: _bg,
-        elevation: 0,
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
+        backgroundColor: _bg,
+        elevation: 0,
         leading: const BackButton(color: _text),
         title: Text('Day ${widget.day}',
             style: t.titleLarge!
@@ -79,42 +75,54 @@ class _DayRestScreenState extends State<DayRestScreen> {
         children: [
           _header(t),
           const SizedBox(height: 20),
-          _message(t),
+          _statsRow(t),
           const SizedBox(height: 24),
           _section(
             t,
-            title: 'Rest day checklist',
-            subtitle: '$_habitsDone of ${_habits.length}',
+            title: 'Why rest matters',
+            subtitle: '',
+            child: Text(
+              'Your muscles do not grow in the gym. They grow while you recover. Today your body repairs the work from this week, so take it easy and eat well.',
+              style: t.bodyMedium!.copyWith(color: _muted, height: 1.5),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _section(
+            t,
+            title: 'Recovery checklist',
+            subtitle: 'important',
             child: Column(
-              children: _habits
-                  .map((e) => _tile(
-                  t, e, _done.contains(e.title), () => _toggle(e.title)))
+              children: _checklist
+                  .map((e) => _tile(t, e, _done.contains('rec:${e.title}'),
+                      () => _toggle('rec:${e.title}')))
                   .toList(),
             ),
           ),
           const SizedBox(height: 16),
           _section(
             t,
-            title: 'If you feel active',
-            subtitle: 'optional  |  pick one',
-            note: 'Keep it gentle. Today is about recovery, not effort.',
+            title: 'Gentle movement',
+            subtitle: 'optional',
+            note: 'Keep it easy. If you feel very tired, skip these.',
             child: Column(
               children: _optional
-                  .map((e) => _tile(t, e, _done.contains(e.title),
-                      () => _toggleOptional(e.title)))
+                  .map((e) => _tile(t, e, _done.contains('opt:${e.title}'),
+                      () => _toggle('opt:${e.title}')))
                   .toList(),
             ),
           ),
+          const SizedBox(height: 16),
+          _meals(t),
           const SizedBox(height: 16),
           _tips(t),
           const SizedBox(height: 24),
-          _thankYou(t),
+          _quote(t),
           const SizedBox(height: 10),
           Center(
             child: SizedBox(
                 height: MediaQuery.of(context).size.height / 4,
                 width: MediaQuery.of(context).size.width / 1.5,
-                child: Image.asset("assets/images/thank-you.png")),
+                child: Image.asset("assets/images/workGym.png")),
           )
         ],
       ),
@@ -124,21 +132,25 @@ class _DayRestScreenState extends State<DayRestScreen> {
           child: SizedBox(
             height: 54,
             child: ElevatedButton(
+              // A rest day can always be completed. The checklist is a guide.
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Day ${widget.day} complete!')));
                 // TODO: save progress to Firestore here.
-                Navigator.maybePop(context);
+                Navigator.pop(context, true); // schedule marks it done
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: _red,
-                foregroundColor: Colors.white,
+                backgroundColor: _orange,
+                foregroundColor: Colors.black,
+                elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16)),
               ),
-              child: Text('Complete Day ${widget.day}',
-                  style: t.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w600, color: Colors.white)),
+              child: Text(
+                'Complete Day ${widget.day}',
+                style: t.titleMedium!.copyWith(
+                    fontWeight: FontWeight.w600, color: Colors.black),
+              ),
             ),
           ),
         ),
@@ -150,13 +162,9 @@ class _DayRestScreenState extends State<DayRestScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
+        color: _card,
         borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF3A1511), Color(0xFF1C1C1E)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        border: Border.all(color: _red.withOpacity(0.25)),
+        border: Border.all(color: Colors.white12),
       ),
       child: Row(
         children: [
@@ -164,6 +172,8 @@ class _DayRestScreenState extends State<DayRestScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text('Weight Gain', style: t.bodySmall!.copyWith(color: _muted)),
+                const SizedBox(height: 2),
                 Text(widget.title,
                     style: t.headlineSmall!
                         .copyWith(color: _text, fontWeight: FontWeight.w700)),
@@ -177,7 +187,7 @@ class _DayRestScreenState extends State<DayRestScreen> {
                     value: _progress,
                     minHeight: 8,
                     backgroundColor: Colors.white12,
-                    valueColor: const AlwaysStoppedAnimation(_amber),
+                    valueColor: const AlwaysStoppedAnimation(_orange),
                   ),
                 ),
               ],
@@ -190,15 +200,19 @@ class _DayRestScreenState extends State<DayRestScreen> {
             child: Stack(
               alignment: Alignment.center,
               children: [
-                CircularProgressIndicator(
-                  value: _progress,
-                  strokeWidth: 6,
-                  backgroundColor: Colors.white12,
-                  valueColor: const AlwaysStoppedAnimation(_red),
+                SizedBox(
+                  width: 64,
+                  height: 64,
+                  child: CircularProgressIndicator(
+                    value: _progress,
+                    strokeWidth: 6,
+                    backgroundColor: Colors.white12,
+                    valueColor: const AlwaysStoppedAnimation(_orange),
+                  ),
                 ),
                 Text('${(_progress * 100).round()}%',
-                    style: t.titleSmall!.copyWith(
-                        color: _text, fontWeight: FontWeight.w600)),
+                    style: t.titleSmall!
+                        .copyWith(color: _text, fontWeight: FontWeight.w600)),
               ],
             ),
           ),
@@ -207,27 +221,33 @@ class _DayRestScreenState extends State<DayRestScreen> {
     );
   }
 
-  Widget _message(TextTheme t) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: _card,
-        borderRadius: BorderRadius.circular(20),
+  Widget _statsRow(TextTheme t) {
+    Widget stat(IconData icon, String value, String label) => Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+            color: _card, borderRadius: BorderRadius.circular(16)),
+        child: Column(
+          children: [
+            Icon(icon, color: _text, size: 22),
+            const SizedBox(height: 6),
+            Text(value,
+                style: t.titleMedium!
+                    .copyWith(color: _text, fontWeight: FontWeight.w600)),
+            Text(label, style: t.bodySmall!.copyWith(color: _muted)),
+          ],
+        ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Icon(Icons.bedtime_outlined, color: _amber, size: 28),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              "It's important to let your body recover. If you feel active, try light stretching or a 20-30 minute walk.",
-              style: t.bodyLarge!.copyWith(
-                  color: _amber, fontWeight: FontWeight.w600, height: 1.5),
-            ),
-          ),
-        ],
-      ),
+    );
+
+    return Row(
+      children: [
+        stat(Icons.bedtime_outlined, '8-9 hrs', 'Sleep'),
+        const SizedBox(width: 10),
+        stat(Icons.restaurant_outlined, '+250-500', 'kcal surplus'),
+        const SizedBox(width: 10),
+        stat(Icons.bolt_outlined, 'Rest', 'Level'),
+      ],
     );
   }
 
@@ -238,8 +258,8 @@ class _DayRestScreenState extends State<DayRestScreen> {
         required Widget child}) {
     return Container(
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-          color: _card, borderRadius: BorderRadius.circular(20)),
+      decoration:
+      BoxDecoration(color: _card, borderRadius: BorderRadius.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -249,17 +269,13 @@ class _DayRestScreenState extends State<DayRestScreen> {
                   width: 8,
                   height: 8,
                   decoration: const BoxDecoration(
-                      color: _red, shape: BoxShape.circle)),
+                      color: _orange, shape: BoxShape.circle)),
               const SizedBox(width: 10),
-              Flexible(
-                flex: 3,
-                child: Text(title,
-                    style: t.titleMedium!
-                        .copyWith(color: _red, fontWeight: FontWeight.w700)),
-              ),
-              const Spacer(),
-              Flexible(
-                flex: 2,
+              Text(title,
+                  style: t.titleMedium!
+                      .copyWith(color: _text, fontWeight: FontWeight.w700)),
+              const SizedBox(width: 10),
+              Expanded(
                 child: Text(subtitle,
                     textAlign: TextAlign.right,
                     style: t.bodySmall!.copyWith(color: _muted)),
@@ -268,8 +284,7 @@ class _DayRestScreenState extends State<DayRestScreen> {
           ),
           if (note != null) ...[
             const SizedBox(height: 8),
-            Text(note,
-                style: t.bodySmall!.copyWith(color: _muted, height: 1.4)),
+            Text(note, style: t.bodySmall!.copyWith(color: _muted, height: 1.4)),
           ],
           const SizedBox(height: 12),
           child,
@@ -278,7 +293,7 @@ class _DayRestScreenState extends State<DayRestScreen> {
     );
   }
 
-  Widget _tile(TextTheme t, _Item e, bool done, VoidCallback onTap) {
+  Widget _tile(TextTheme t, RestItem e, bool done, VoidCallback onTap) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: onTap,
@@ -290,10 +305,10 @@ class _DayRestScreenState extends State<DayRestScreen> {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: (done ? _amber : _red).withOpacity(0.15),
+                color: Colors.white10,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(e.icon, color: done ? _amber : _red, size: 22),
+              child: Icon(e.icon, color: done ? _muted : _text, size: 22),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -306,25 +321,61 @@ class _DayRestScreenState extends State<DayRestScreen> {
                           fontWeight: FontWeight.w500,
                           decoration:
                           done ? TextDecoration.lineThrough : null)),
-                  Text(e.detail,
-                      style: t.bodySmall!.copyWith(color: _muted)),
+                  Text(e.detail, style: t.bodySmall!.copyWith(color: _muted)),
                 ],
               ),
             ),
             Icon(done ? Icons.check_circle : Icons.circle_outlined,
-                color: done ? _amber : Colors.white24),
+                color: done ? _orange : Colors.white24),
           ],
         ),
       ),
     );
   }
 
+  Widget _meals(TextTheme t) {
+    const meals = [
+      ['Breakfast', 'Paneer or egg paratha, curd and a banana'],
+      ['Lunch', 'Rice or roti, dal, vegetables and chicken or paneer'],
+      ['Snack', 'Banana shake with peanut butter, or a handful of nuts'],
+      ['Dinner', 'Roti, dal or chicken curry, salad and a glass of milk'],
+    ];
+    return _section(
+      t,
+      title: 'Sample meals',
+      subtitle: 'ideas only',
+      child: Column(
+        children: meals
+            .map((m) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 84,
+                child: Text(m[0],
+                    style: t.bodyMedium!.copyWith(
+                        color: _text, fontWeight: FontWeight.w600)),
+              ),
+              Expanded(
+                child: Text(m[1],
+                    style: t.bodyMedium!
+                        .copyWith(color: _muted, height: 1.4)),
+              ),
+            ],
+          ),
+        ))
+            .toList(),
+      ),
+    );
+  }
+
   Widget _tips(TextTheme t) {
     const tips = [
-      'Muscles grow and fat loss continues while you rest. Rest is part of the plan.',
-      'A safe pace is about 0.5-1 kg per week. Weigh yourself at the same time each week.',
-      'Plan your meals and workout time for next week today.',
-      'Mild soreness is normal. If pain lasts more than a few days, see a doctor.',
+      'Do not train hard today. A real rest day makes next week stronger.',
+      'Soreness is normal. Sharp or lasting pain is not. See a doctor if it continues.',
+      'Weigh yourself at the same time each week, not every day.',
+      'Plan your meals for the coming week so you do not miss your surplus.',
     ];
     return _section(
       t,
@@ -337,7 +388,7 @@ class _DayRestScreenState extends State<DayRestScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.check, color: _amber, size: 18),
+              const Icon(Icons.check, color: _orange, size: 18),
               const SizedBox(width: 10),
               Expanded(
                   child: Text(s,
@@ -351,25 +402,23 @@ class _DayRestScreenState extends State<DayRestScreen> {
     );
   }
 
-  Widget _thankYou(TextTheme t) {
+  Widget _quote(TextTheme t) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 18),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _amber.withOpacity(0.5)),
+        border: Border.all(color: Colors.white24),
       ),
-      child: Column(
+      child: Row(
         children: [
-          const Icon(Icons.emoji_events_outlined, color: _amber, size: 36),
-          const SizedBox(height: 10),
-          Text('Thank you',
-              style: t.headlineMedium!
-                  .copyWith(color: _amber, fontWeight: FontWeight.w800)),
-          const SizedBox(height: 6),
-          Text(
-            'You finished a full week of training. See you next week!',
-            textAlign: TextAlign.center,
-            style: t.bodyMedium!.copyWith(color: _muted, height: 1.4),
+          const Icon(Icons.bedtime_outlined, color: _orange, size: 30),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              'Rest today. Come back stronger.',
+              style: t.titleMedium!
+                  .copyWith(color: _text, fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),
