@@ -160,17 +160,14 @@ class _TrainingScheduleScreenState extends State<TrainingScheduleScreen>
   }
 
   Future<void> _openDay(int day) async {
-    final Widget page = day == 7
-        ? buildDayPage(7) // rest day: no goal needed
-        : GoalSelectionScreen(
-      day: day,
-      title: kWeekPlan.firstWhere((d) => d.number == day).title,
-    );
+    final title = kWeekPlan.firstWhere((d) => d.number == day).title;
 
-    // Day screens return true from "Complete Day", nothing on back.
+    // The day screens return true from "Complete Day", nothing on back.
     final finished = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(builder: (_) => page),
+      MaterialPageRoute(
+        builder: (_) => GoalSelectionScreen(day: day, title: title),
+      ),
     );
     if (finished != true) return;
 
