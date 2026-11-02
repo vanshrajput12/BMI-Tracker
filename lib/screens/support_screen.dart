@@ -24,10 +24,10 @@ class _Faq {
 }
 
 const _faqs = <_Faq>[
-  _Faq(
-    'How do I change my weight loss goal?',
-    'Go to Settings > Preferences and choose 1-2 kg, 3-4 kg or 5 kg. Your daily workouts adjust to the new goal.',
-  ),
+  // _Faq(
+  //   'How do I change my weight loss goal?',
+  //   'Go to Settings > Preferences and choose 1-2 kg, 3-4 kg or 5 kg. Your daily workouts adjust to the new goal.',
+  // ),
   _Faq(
     'Are the calories exact?',
     'No. Calories shown on the workout screens are rough estimates. Your real burn depends on your weight, pace and effort.',
