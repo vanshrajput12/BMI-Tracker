@@ -15,7 +15,7 @@ const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 
 // TODO: change this to your real support email.
-const _supportEmail = 'support@yourapp.com';
+const _supportEmail = 'vr588424@gmail.com';
 
 class _Faq {
   final String q;
