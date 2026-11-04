@@ -9,7 +9,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class Exercise {
   final String title;
@@ -162,7 +161,11 @@ const _plans = <GainPlan>[
         '3 sets x 8 reps',
         Icons.expand_less,
       ),
-      Exercise('Triceps dips', '3 sets x 10 reps', Icons.arrow_downward),
+      Exercise(
+        'Triceps dips',
+        '3 sets x 10 reps',
+        Icons.arrow_downward,
+      ),
     ],
     lower: [
       Exercise(
@@ -263,21 +266,20 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
           ),
         ),
       ),
-
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
           _header(t),
-          const SizedBox(height: 22),
+          const SizedBox(height: 26),
 
           _goalTitle(t),
           const SizedBox(height: 12),
 
           _goalSelector(t),
-          const SizedBox(height: 20),
+          const SizedBox(height: 22),
 
           _statsRow(t),
-          const SizedBox(height: 24),
+          const SizedBox(height: 28),
 
           _section(
             t,
@@ -291,7 +293,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _group(
             t,
@@ -303,7 +305,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             icon: Icons.fitness_center,
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _group(
             t,
@@ -314,7 +316,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             icon: Icons.directions_walk,
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _group(
             t,
@@ -325,7 +327,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             icon: Icons.accessibility_new,
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _section(
             t,
@@ -339,7 +341,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _tips(t),
           const SizedBox(height: 20),
@@ -359,10 +361,9 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
           ),
         ],
       ),
-
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
           decoration: BoxDecoration(
             color: _bg,
             border: Border(
@@ -372,7 +373,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             ),
           ),
           child: SizedBox(
-            height: 56,
+            height: 64,
             child: ElevatedButton(
               onPressed: _finished
                   ? () {
@@ -392,31 +393,28 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                   : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: _orange,
-                disabledBackgroundColor: const Color(0xFF252525),
+                disabledBackgroundColor: const Color(0xFF292929),
                 foregroundColor: Colors.white,
                 disabledForegroundColor: _muted,
                 elevation: _finished ? 3 : 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(17),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    _finished
-                        ? Icons.check_circle_outline
-                        : Icons.pending_actions,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 9),
+                  if (_finished) ...[
+                    const Icon(Icons.check_circle_outline, size: 20),
+                    const SizedBox(width: 9),
+                  ],
                   Text(
                     _finished
                         ? 'Complete Day ${widget.day}'
                         : '$_completed of $_total exercises done',
                     style: t.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: _finished ? Colors.white : _muted,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -429,6 +427,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Progress header
+
   Widget _header(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -436,15 +435,15 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
         borderRadius: BorderRadius.circular(24),
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF3A2417),
-            Color(0xFF211B18),
-            _card,
+            Color(0xFF302116),
+            Color(0xFF211D19),
+            Color(0xFF1C1C1E),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: _orange.withOpacity(0.25),
+          color: _orange.withOpacity(0.22),
         ),
       ),
       child: Row(
@@ -461,8 +460,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                     letterSpacing: 1.5,
                   ),
                 ),
-                const SizedBox(height: 5),
-
+                const SizedBox(height: 8),
                 Text(
                   widget.title,
                   style: t.headlineSmall?.copyWith(
@@ -470,14 +468,12 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 12),
                 Text(
                   "Today's progress",
                   style: t.bodySmall?.copyWith(color: _muted),
                 ),
-                const SizedBox(height: 13),
-
+                const SizedBox(height: 12),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
@@ -488,8 +484,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                     const AlwaysStoppedAnimation(_orange),
                   ),
                 ),
-                const SizedBox(height: 8),
-
+                const SizedBox(height: 9),
                 Text(
                   '$_completed / $_total exercises completed',
                   style: t.bodySmall?.copyWith(
@@ -500,9 +495,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
               ],
             ),
           ),
-
-          const SizedBox(width: 18),
-
+          const SizedBox(width: 16),
           SizedBox(
             width: 68,
             height: 68,
@@ -535,27 +528,19 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Goal selector heading
+
   Widget _goalTitle(TextTheme t) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Your weight gain goal',
-          style: t.titleMedium?.copyWith(
-            color: _text,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Choose your target to adjust workout intensity.',
-          style: t.bodySmall?.copyWith(color: _muted),
-        ),
-      ],
+    return Text(
+      'Your weight gain goal',
+      style: t.titleMedium?.copyWith(
+        color: _text,
+        fontWeight: FontWeight.w600,
+      ),
     );
   }
 
   // Goal selector
+
   Widget _goalSelector(TextTheme t) {
     return Row(
       children: List.generate(_plans.length, (i) {
@@ -570,14 +555,14 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                 right: i == _plans.length - 1 ? 0 : 10,
               ),
               padding: const EdgeInsets.symmetric(
-                vertical: 14,
+                vertical: 16,
                 horizontal: 5,
               ),
               decoration: BoxDecoration(
                 color: selected
-                    ? _orange.withOpacity(0.15)
+                    ? const Color(0xFF382516)
                     : _card,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(17),
                 border: Border.all(
                   color: selected ? _orange : _border,
                   width: selected ? 1.4 : 1,
@@ -588,26 +573,17 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                   Text(
                     _plans[i].label,
                     style: t.titleSmall?.copyWith(
-                      color: selected ? _softOrange : _text,
+                      color: selected ? _orange : _text,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 5),
                   Text(
                     _plans[i].intensity,
                     style: t.bodySmall?.copyWith(
-                      color: selected ? _orange : _muted,
-                      fontSize: 11,
+                      color: selected ? _softOrange : _muted,
                     ),
                   ),
-                  if (selected) ...[
-                    const SizedBox(height: 6),
-                    const Icon(
-                      Icons.check_circle,
-                      color: _orange,
-                      size: 17,
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -618,27 +594,24 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Workout statistics
+
   Widget _statsRow(TextTheme t) {
-    Widget stat(
-        IconData icon,
-        String value,
-        String label,
-        ) {
+    Widget stat(IconData icon, String value, String label) {
       return Expanded(
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: 15,
+            vertical: 17,
             horizontal: 5,
           ),
           decoration: BoxDecoration(
             color: _card,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(color: _border),
           ),
           child: Column(
             children: [
-              Icon(icon, color: _orange, size: 21),
-              const SizedBox(height: 8),
+              Icon(icon, color: _orange, size: 22),
+              const SizedBox(height: 10),
               Text(
                 value,
                 maxLines: 1,
@@ -647,7 +620,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 4),
               Text(
                 label,
                 textAlign: TextAlign.center,
@@ -671,21 +644,18 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
         stat(Icons.timer_outlined, '$total min', 'Total time'),
         const SizedBox(width: 9),
         stat(
-          Icons.restaurant_outlined,
+          Icons.local_fire_department_outlined,
           '+${_plan.kcalSurplus}',
           'kcal surplus',
         ),
         const SizedBox(width: 9),
-        stat(
-          Icons.bolt_outlined,
-          _plan.intensity,
-          'Intensity',
-        ),
+        stat(Icons.bolt_outlined, _plan.intensity, 'Intensity'),
       ],
     );
   }
 
   // Workout group
+
   Widget _group(
       TextTheme t, {
         required String title,
@@ -717,6 +687,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Common section card
+
   Widget _section(
       TextTheme t, {
         required String title,
@@ -729,7 +700,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: _card,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(22),
         border: Border.all(color: _border),
       ),
       child: Column(
@@ -738,20 +709,19 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
           Row(
             children: [
               Container(
-                width: 38,
-                height: 38,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: _orange.withOpacity(0.13),
-                  borderRadius: BorderRadius.circular(12),
+                  color: _orange.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(13),
                 ),
                 child: Icon(
                   icon,
                   color: _orange,
-                  size: 20,
+                  size: 21,
                 ),
               ),
-              const SizedBox(width: 11),
-
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -776,13 +746,12 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
               ),
             ],
           ),
-
           if (note != null) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: 14),
             Container(
-              padding: const EdgeInsets.all(11),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _orange.withOpacity(0.07),
+                color: Colors.white.withOpacity(0.035),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -791,9 +760,9 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                   const Icon(
                     Icons.info_outline,
                     color: _orange,
-                    size: 17,
+                    size: 18,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 9),
                   Expanded(
                     child: Text(
                       note,
@@ -807,7 +776,6 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
               ),
             ),
           ],
-
           const SizedBox(height: 12),
           child,
         ],
@@ -816,16 +784,25 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Warm-up and cool-down description
+
   Widget _description(TextTheme t, String description) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(
-          Icons.check_circle_outline,
-          color: _orange,
-          size: 19,
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: _orange.withOpacity(0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Icon(
+            Icons.check_circle_outline,
+            color: _orange,
+            size: 20,
+          ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 12),
         Expanded(
           child: Text(
             description,
@@ -840,6 +817,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Exercise tile
+
   Widget _exerciseTile(
       TextTheme t,
       Exercise e,
@@ -848,40 +826,39 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
       ) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
-      child: Container(
+      borderRadius: BorderRadius.circular(15),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(
-          vertical: 11,
-          horizontal: 9,
+          vertical: 12,
+          horizontal: 10,
         ),
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           color: done
-              ? _orange.withOpacity(0.07)
+              ? _orange.withOpacity(0.09)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
-              width: 44,
-              height: 44,
+              width: 46,
+              height: 46,
               decoration: BoxDecoration(
                 color: done
-                    ? _success.withOpacity(0.13)
-                    : _orange.withOpacity(0.13),
-                borderRadius: BorderRadius.circular(13),
+                    ? _orange.withOpacity(0.15)
+                    : const Color(0xFF29292C),
+                borderRadius: BorderRadius.circular(14),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
+                color: done ? _orange : _text,
                 size: 22,
               ),
             ),
-
             const SizedBox(width: 13),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -896,7 +873,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                           : null,
                     ),
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 4),
                   Text(
                     e.detail,
                     style: t.bodySmall?.copyWith(
@@ -907,15 +884,26 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                 ],
               ),
             ),
-
             const SizedBox(width: 8),
-
-            Icon(
-              done
-                  ? Icons.check_circle
-                  : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
-              size: 22,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: done ? _orange : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: done ? _orange : Colors.white30,
+                  width: done ? 0 : 1.5,
+                ),
+              ),
+              child: done
+                  ? const Icon(
+                Icons.check,
+                color: Colors.black,
+                size: 17,
+              )
+                  : null,
             ),
           ],
         ),
@@ -924,6 +912,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Daily tips
+
   Widget _tips(TextTheme t) {
     const tips = [
       'Eat protein within 1-2 hours after training: eggs, paneer, dal, chicken or curd.',
@@ -941,7 +930,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
       child: Column(
         children: tips.map((s) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -950,7 +939,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
                   color: _orange,
                   size: 18,
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(width: 11),
                 Expanded(
                   child: Text(
                     s,
@@ -969,6 +958,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
   }
 
   // Motivational quote
+
   Widget _quote(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(19),
@@ -983,7 +973,7 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: _orange.withOpacity(0.25),
+          color: _orange.withOpacity(0.22),
         ),
       ),
       child: Row(
@@ -1002,7 +992,6 @@ class _DayGainStrengthScreenState extends State<DayGainStrengthScreen> {
             ),
           ),
           const SizedBox(width: 14),
-
           Expanded(
             child: Text(
               'Strong today, stronger tomorrow.',

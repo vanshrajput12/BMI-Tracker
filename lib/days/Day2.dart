@@ -9,7 +9,7 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
+const _success = _orange;
 
 class _Exercise {
   final String title;
@@ -178,23 +178,23 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
           _header(t),
-          const SizedBox(height: 22),
+          const SizedBox(height: 26),
 
-          _sectionHeading(t, 'Choose your target'),
-          const SizedBox(height: 10),
+          _sectionHeading(t, 'Your weight loss goal'),
+          const SizedBox(height: 12),
           _goalSelector(t),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 22),
           _statsRow(t),
 
-          const SizedBox(height: 26),
+          const SizedBox(height: 28),
           _section(
             t,
             title: 'Warm-up',
-            subtitle: '${_plan.warmupMin} min  •  Pick one',
+            subtitle: '${_plan.warmupMin} min • Pick one',
             note: 'Prepare your body before strength training.',
             icon: Icons.directions_walk,
             child: Column(
@@ -209,7 +209,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
           _section(
             t,
             title: 'Strength training',
@@ -228,7 +228,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
           _section(
             t,
             title: 'Cool-down',
@@ -264,8 +264,16 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
         ],
       ),
       bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+          decoration: BoxDecoration(
+            color: _bg,
+            border: Border(
+              top: BorderSide(
+                color: _border.withOpacity(0.6),
+              ),
+            ),
+          ),
           child: SizedBox(
             height: 56,
             child: ElevatedButton(
@@ -275,8 +283,10 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                   SnackBar(
                     content: Text('Day ${widget.day} complete!'),
                     backgroundColor: _card,
+                    behavior: SnackBarBehavior.floating,
                   ),
                 );
+
                 // TODO: Save progress to Firestore.
                 Navigator.maybePop(context);
               }
@@ -288,7 +298,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                 disabledForegroundColor: _muted,
                 elevation: finished ? 4 : 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(16),
                 ),
               ),
               child: Row(
@@ -315,6 +325,8 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
     );
   }
 
+  // Progress header
+
   Widget _header(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -329,7 +341,9 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: _orange.withOpacity(0.18)),
+        border: Border.all(
+          color: _orange.withOpacity(0.22),
+        ),
       ),
       child: Row(
         children: [
@@ -355,14 +369,11 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-
-
                 Text(
                   "Today's progress",
                   style: t.bodySmall?.copyWith(color: _muted),
                 ),
                 const SizedBox(height: 13),
-
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
@@ -374,7 +385,6 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-
                 Text(
                   '$_completed / $_total exercises completed',
                   style: t.bodySmall?.copyWith(
@@ -417,15 +427,19 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
     );
   }
 
+  // Section heading
+
   Widget _sectionHeading(TextTheme t, String title) {
     return Text(
       title,
-      style: t.titleSmall!.copyWith(
-        color: _muted,
-        fontWeight: FontWeight.w500,
+      style: t.titleMedium!.copyWith(
+        color: _text,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
+
+  // Goal selector
 
   Widget _goalSelector(TextTheme t) {
     return Row(
@@ -445,12 +459,12 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
               margin: EdgeInsets.only(
                 right: i == _plans.length - 1 ? 0 : 10,
               ),
-              padding: const EdgeInsets.symmetric(vertical: 13),
+              padding: const EdgeInsets.symmetric(vertical: 15),
               decoration: BoxDecoration(
                 color: selected
-                    ? _orange.withOpacity(0.15)
+                    ? const Color(0xFF382516)
                     : _card,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(17),
                 border: Border.all(
                   color: selected ? _orange : _border,
                   width: selected ? 1.3 : 1,
@@ -461,11 +475,11 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                   Text(
                     _plans[i].label,
                     style: t.titleSmall!.copyWith(
-                      color: selected ? _softOrange : _text,
+                      color: selected ? _orange : _text,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 4),
                   Text(
                     _plans[i].intensity,
                     style: t.bodySmall!.copyWith(
@@ -481,20 +495,25 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
     );
   }
 
+  // Statistics
+
   Widget _statsRow(TextTheme t) {
     Widget stat(IconData icon, String value, String label) {
       return Expanded(
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+          padding: const EdgeInsets.symmetric(
+            vertical: 17,
+            horizontal: 5,
+          ),
           decoration: BoxDecoration(
             color: _card,
-            borderRadius: BorderRadius.circular(17),
+            borderRadius: BorderRadius.circular(18),
             border: Border.all(color: _border),
           ),
           child: Column(
             children: [
               Icon(icon, color: _orange, size: 21),
-              const SizedBox(height: 8),
+              const SizedBox(height: 9),
               Text(
                 value,
                 style: t.titleMedium!.copyWith(
@@ -502,7 +521,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 2),
+              const SizedBox(height: 3),
               Text(
                 label,
                 style: t.bodySmall!.copyWith(
@@ -522,12 +541,18 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
       children: [
         stat(Icons.timer_outlined, '$total min', 'Total time'),
         const SizedBox(width: 10),
-        stat(Icons.local_fire_department_outlined, '~${_plan.kcal}', 'Kcal'),
+        stat(
+          Icons.local_fire_department_outlined,
+          '~${_plan.kcal}',
+          'Calories',
+        ),
         const SizedBox(width: 10),
         stat(Icons.bolt_outlined, _plan.intensity, 'Level'),
       ],
     );
   }
+
+  // Section card
 
   Widget _section(
       TextTheme t, {
@@ -541,7 +566,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: _card,
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: BorderRadius.circular(22),
         border: Border.all(color: _border),
       ),
       child: Column(
@@ -550,50 +575,83 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
           Row(
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   color: _orange.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(11),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, color: _orange, size: 19),
+                child: Icon(
+                  icon,
+                  color: _orange,
+                  size: 21,
+                ),
               ),
-              const SizedBox(width: 11),
+              const SizedBox(width: 12),
               Expanded(
-                child: Text(
-                  title,
-                  style: t.titleMedium!.copyWith(
-                    color: _text,
-                    fontWeight: FontWeight.w700,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: t.titleMedium!.copyWith(
+                        color: _text,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    if (subtitle.isNotEmpty) ...[
+                      const SizedBox(height: 3),
+                      Text(
+                        subtitle,
+                        style: t.bodySmall!.copyWith(
+                          color: _softOrange,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
-              if (subtitle.isNotEmpty)
-                Text(
-                  subtitle,
-                  style: t.bodySmall!.copyWith(
-                    color: _softOrange,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
             ],
           ),
           if (note != null) ...[
-            const SizedBox(height: 10),
-            Text(
-              note,
-              style: t.bodySmall!.copyWith(
-                color: _muted,
-                height: 1.5,
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.all(11),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.035),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.info_outline,
+                    color: _orange,
+                    size: 17,
+                  ),
+                  const SizedBox(width: 9),
+                  Expanded(
+                    child: Text(
+                      note,
+                      style: t.bodySmall!.copyWith(
+                        color: _muted,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
-          const SizedBox(height: 14),
+          const SizedBox(height: 12),
           child,
         ],
       ),
     );
   }
+
+  // Exercise tile
 
   Widget _exerciseTile(
       TextTheme t,
@@ -603,35 +661,36 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
       ) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(15),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
+        duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(
           horizontal: 10,
-          vertical: 11,
+          vertical: 12,
         ),
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
           color: done
-              ? _success.withOpacity(0.06)
+              ? _orange.withOpacity(0.09)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
-            Container(
-              width: 43,
-              height: 43,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 46,
+              height: 46,
               decoration: BoxDecoration(
                 color: done
-                    ? _success.withOpacity(0.12)
-                    : _orange.withOpacity(0.11),
-                borderRadius: BorderRadius.circular(13),
+                    ? _orange.withOpacity(0.15)
+                    : const Color(0xFF29292C),
+                borderRadius: BorderRadius.circular(14),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _softOrange,
-                size: 21,
+                color: done ? _orange : _text,
+                size: 22,
               ),
             ),
             const SizedBox(width: 13),
@@ -648,7 +707,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
                       done ? TextDecoration.lineThrough : null,
                     ),
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 4),
                   Text(
                     e.detail,
                     style: t.bodySmall!.copyWith(
@@ -659,16 +718,33 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
               ),
             ),
             const SizedBox(width: 8),
-            Icon(
-              done ? Icons.check_circle : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
-              size: 22,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: done ? _orange : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: done ? _orange : Colors.white30,
+                  width: done ? 0 : 1.5,
+                ),
+              ),
+              child: done
+                  ? const Icon(
+                Icons.check,
+                color: Colors.black,
+                size: 17,
+              )
+                  : null,
             ),
           ],
         ),
       ),
     );
   }
+
+  // Daily tips
 
   Widget _tips(TextTheme t) {
     const tips = [
@@ -681,12 +757,12 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
     return _section(
       t,
       title: 'Daily tips',
-      subtitle: '',
+      subtitle: 'Build healthy habits',
       icon: Icons.lightbulb_outline,
       child: Column(
         children: tips.map((s) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -713,6 +789,8 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
     );
   }
 
+  // Motivational quote
+
   Widget _quote(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(19),
@@ -725,7 +803,7 @@ class _DayStrengthScreenState extends State<DayStrengthScreen> {
           ],
         ),
         border: Border.all(
-          color: _orange.withOpacity(0.25),
+          color: _orange.withOpacity(0.22),
         ),
       ),
       child: Row(

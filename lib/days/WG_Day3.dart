@@ -9,7 +9,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class Exercise {
   final String title;
@@ -293,7 +292,6 @@ class _DayGainFlexibilityScreenState
           ),
         ),
       ),
-
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
         children: [
@@ -395,7 +393,6 @@ class _DayGainFlexibilityScreenState
           ),
         ],
       ),
-
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
@@ -465,6 +462,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Progress header
+
   Widget _header(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -573,6 +571,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Goal selector heading
+
   Widget _goalTitle(TextTheme t) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -596,6 +595,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Goal selector
+
   Widget _goalSelector(TextTheme t) {
     return Row(
       children: List.generate(_plans.length, (i) {
@@ -658,6 +658,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Workout statistics
+
   Widget _statsRow(TextTheme t) {
     Widget stat(
         IconData icon,
@@ -725,6 +726,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Common section card
+
   Widget _section(
       TextTheme t, {
         required String title,
@@ -823,6 +825,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Warm-up and cool-down description
+
   Widget _description(TextTheme t, String description) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -847,6 +850,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Exercise tile
+
   Widget _exerciseTile(
       TextTheme t,
       Exercise e,
@@ -875,14 +879,12 @@ class _DayGainFlexibilityScreenState
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: done
-                    ? _success.withOpacity(0.13)
-                    : _orange.withOpacity(0.13),
+                color: _orange.withOpacity(done ? 0.18 : 0.13),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
+                color: _orange,
                 size: 22,
               ),
             ),
@@ -921,7 +923,7 @@ class _DayGainFlexibilityScreenState
               done
                   ? Icons.check_circle
                   : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
+              color: done ? _orange : Colors.white24,
               size: 22,
             ),
           ],
@@ -931,6 +933,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Daily tips
+
   Widget _tips(TextTheme t) {
     const tips = [
       'Drink 2-3 litres of water throughout the day.',
@@ -976,6 +979,7 @@ class _DayGainFlexibilityScreenState
   }
 
   // Motivational quote
+
   Widget _quote(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(19),

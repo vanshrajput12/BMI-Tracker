@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,7 +9,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class _Exercise {
   final String title;
@@ -73,11 +73,17 @@ const _plans = <_GoalPlan>[
     cardioNote: 'Warm up 5 min, then alternate 3 min fast + 1 min easy.',
     stretchNote: 'Hold each stretch 30 sec, 2 rounds. Breathe slowly.',
     cardio: [
-      _Exercise('Jogging intervals', '35 min, 3 min fast + 1 min easy',
-          Icons.directions_run),
+      _Exercise(
+        'Jogging intervals',
+        '35 min, 3 min fast + 1 min easy',
+        Icons.directions_run,
+      ),
       _Exercise('Or dancing', '35 min, high energy', Icons.music_note),
-      _Exercise('Or power walk', '35 min, add hills or stairs',
-          Icons.directions_walk),
+      _Exercise(
+        'Or power walk',
+        '35 min, add hills or stairs',
+        Icons.directions_walk,
+      ),
     ],
     stretches: [
       _Exercise('Hamstring stretch', '30 sec each leg x 2', Icons.self_improvement),
@@ -96,11 +102,17 @@ const _plans = <_GoalPlan>[
     cardioNote: 'Warm up 5 min, then alternate 2 min hard + 1 min easy.',
     stretchNote: 'Hold each stretch 30 sec, 3 rounds. Breathe slowly.',
     cardio: [
-      _Exercise('Jogging / running intervals',
-          '45 min, 2 min hard + 1 min easy', Icons.directions_run),
+      _Exercise(
+        'Jogging / running intervals',
+        '45 min, 2 min hard + 1 min easy',
+        Icons.directions_run,
+      ),
       _Exercise('Or dance workout', '45 min, high intensity', Icons.music_note),
-      _Exercise('Or incline power walk', '45 min, fast with hills',
-          Icons.directions_walk),
+      _Exercise(
+        'Or incline power walk',
+        '45 min, fast with hills',
+        Icons.directions_walk,
+      ),
     ],
     stretches: [
       _Exercise('Hamstring stretch', '30 sec each leg x 3', Icons.self_improvement),
@@ -155,6 +167,7 @@ class _DayFlexibilityScreenState extends State<DayFlexibilityScreen> {
   void _toggleStretch(String name) {
     setState(() {
       final key = 'stretch:$name';
+
       if (_done.contains(key)) {
         _done.remove(key);
       } else {
@@ -585,8 +598,11 @@ class _DayFlexibilityScreenState extends State<DayFlexibilityScreen> {
       children: [
         stat(Icons.timer_outlined, '$total min', 'Total'),
         const SizedBox(width: 10),
-        stat(Icons.local_fire_department_outlined,
-            '~${_plan.kcal}', 'kcal'),
+        stat(
+          Icons.local_fire_department_outlined,
+          '~${_plan.kcal}',
+          'kcal',
+        ),
         const SizedBox(width: 10),
         stat(Icons.bolt_outlined, _plan.intensity, 'Level'),
       ],
@@ -713,13 +729,12 @@ class _DayFlexibilityScreenState extends State<DayFlexibilityScreen> {
               width: 43,
               height: 43,
               decoration: BoxDecoration(
-                color: (done ? _success : _orange)
-                    .withOpacity(0.11),
+                color: _orange.withOpacity(done ? 0.18 : 0.11),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
+                color: _orange,
                 size: 21,
               ),
             ),
@@ -761,7 +776,7 @@ class _DayFlexibilityScreenState extends State<DayFlexibilityScreen> {
                     ? Icons.check_circle
                     : Icons.circle_outlined,
                 key: ValueKey(done),
-                color: done ? _success : Colors.white24,
+                color: done ? _orange : Colors.white24,
                 size: 22,
               ),
             ),
