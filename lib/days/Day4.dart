@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -49,38 +50,14 @@ const _plans = <_GoalPlan>[
     hiitNote:
     'Do all 4 moves in a row as one round. Rest 1 min after each round and repeat 6 rounds.',
     warmup: [
-      _Exercise(
-        'Light jumping',
-        '5 min, easy skipping or small hops',
-        Icons.arrow_upward,
-      ),
-      _Exercise(
-        'Or walking',
-        '5 min, brisk pace',
-        Icons.directions_walk,
-      ),
+      _Exercise('Light jumping', '5 min, easy skipping or small hops', Icons.arrow_upward),
+      _Exercise('Or walking', '5 min, brisk pace', Icons.directions_walk),
     ],
     hiit: [
-      _Exercise(
-        'Jumping squats',
-        '6 rounds x 30 sec work, 30 sec rest',
-        Icons.airline_seat_legroom_extra,
-      ),
-      _Exercise(
-        'Mountain climbers',
-        '6 rounds x 30 sec work, 30 sec rest',
-        Icons.terrain,
-      ),
-      _Exercise(
-        'Burpees (step-back, no jump)',
-        '6 rounds x 30 sec work, 30 sec rest',
-        Icons.fitness_center,
-      ),
-      _Exercise(
-        'Jumping jacks',
-        '6 rounds x 30 sec work, 30 sec rest',
-        Icons.accessibility_new,
-      ),
+      _Exercise('Jumping squats', '6 rounds x 30 sec work, 30 sec rest', Icons.airline_seat_legroom_extra),
+      _Exercise('Mountain climbers', '6 rounds x 30 sec work, 30 sec rest', Icons.terrain),
+      _Exercise('Burpees (step-back, no jump)', '6 rounds x 30 sec work, 30 sec rest', Icons.fitness_center),
+      _Exercise('Jumping jacks', '6 rounds x 30 sec work, 30 sec rest', Icons.accessibility_new),
     ],
   ),
   _GoalPlan(
@@ -92,38 +69,14 @@ const _plans = <_GoalPlan>[
     hiitNote:
     'Do all 4 moves in a row as one round. Rest 1 min after each round and repeat 7 rounds.',
     warmup: [
-      _Exercise(
-        'Light jumping',
-        '8 min, skipping or jumping jacks',
-        Icons.arrow_upward,
-      ),
-      _Exercise(
-        'Or walking',
-        '8 min, brisk pace',
-        Icons.directions_walk,
-      ),
+      _Exercise('Light jumping', '8 min, skipping or jumping jacks', Icons.arrow_upward),
+      _Exercise('Or walking', '8 min, brisk pace', Icons.directions_walk),
     ],
     hiit: [
-      _Exercise(
-        'Jumping squats',
-        '7 rounds x 40 sec work, 20 sec rest',
-        Icons.airline_seat_legroom_extra,
-      ),
-      _Exercise(
-        'Mountain climbers',
-        '7 rounds x 40 sec work, 20 sec rest',
-        Icons.terrain,
-      ),
-      _Exercise(
-        'Burpees',
-        '7 rounds x 40 sec work, 20 sec rest',
-        Icons.fitness_center,
-      ),
-      _Exercise(
-        'Jumping jacks',
-        '7 rounds x 40 sec work, 20 sec rest',
-        Icons.accessibility_new,
-      ),
+      _Exercise('Jumping squats', '7 rounds x 40 sec work, 20 sec rest', Icons.airline_seat_legroom_extra),
+      _Exercise('Mountain climbers', '7 rounds x 40 sec work, 20 sec rest', Icons.terrain),
+      _Exercise('Burpees', '7 rounds x 40 sec work, 20 sec rest', Icons.fitness_center),
+      _Exercise('Jumping jacks', '7 rounds x 40 sec work, 20 sec rest', Icons.accessibility_new),
     ],
   ),
   _GoalPlan(
@@ -135,38 +88,14 @@ const _plans = <_GoalPlan>[
     hiitNote:
     'Do all 4 moves in a row as one round. Rest 1 min after each round and repeat 8 rounds. Slow down if your form breaks.',
     warmup: [
-      _Exercise(
-        'Light jumping',
-        '10 min, skipping and jumping jacks',
-        Icons.arrow_upward,
-      ),
-      _Exercise(
-        'Or brisk walk / jog',
-        '10 min, build up slowly',
-        Icons.directions_run,
-      ),
+      _Exercise('Light jumping', '10 min, skipping and jumping jacks', Icons.arrow_upward),
+      _Exercise('Or brisk walk / jog', '10 min, build up slowly', Icons.directions_run),
     ],
     hiit: [
-      _Exercise(
-        'Jumping squats',
-        '8 rounds x 45 sec work, 15 sec rest',
-        Icons.airline_seat_legroom_extra,
-      ),
-      _Exercise(
-        'Mountain climbers',
-        '8 rounds x 45 sec work, 15 sec rest',
-        Icons.terrain,
-      ),
-      _Exercise(
-        'Burpees',
-        '8 rounds x 45 sec work, 15 sec rest',
-        Icons.fitness_center,
-      ),
-      _Exercise(
-        'Jumping jacks',
-        '8 rounds x 45 sec work, 15 sec rest',
-        Icons.accessibility_new,
-      ),
+      _Exercise('Jumping squats', '8 rounds x 45 sec work, 15 sec rest', Icons.airline_seat_legroom_extra),
+      _Exercise('Mountain climbers', '8 rounds x 45 sec work, 15 sec rest', Icons.terrain),
+      _Exercise('Burpees', '8 rounds x 45 sec work, 15 sec rest', Icons.fitness_center),
+      _Exercise('Jumping jacks', '8 rounds x 45 sec work, 15 sec rest', Icons.accessibility_new),
     ],
   ),
 ];
@@ -219,7 +148,10 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme);
+    final t = GoogleFonts.poppinsTextTheme(
+      Theme.of(context).textTheme,
+    );
+
     final finished = _completed >= _total;
 
     return Scaffold(
@@ -242,7 +174,6 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
         children: [
           _header(t),
-
           const SizedBox(height: 22),
 
           Text(
@@ -252,21 +183,17 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
               fontWeight: FontWeight.w500,
             ),
           ),
-
           const SizedBox(height: 10),
           _goalSelector(t),
-
           const SizedBox(height: 20),
           _statsRow(t),
-
           const SizedBox(height: 26),
 
           _section(
             t,
             title: 'Warm-up',
             subtitle: '${_plan.warmupMin} min • Pick one',
-            note:
-            'Light cardio to get your heart rate up before the intervals.',
+            note: 'Light cardio to get your heart rate up before the intervals.',
             icon: Icons.directions_walk,
             child: Column(
               children: _plan.warmup.map((e) {
@@ -319,10 +246,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
 
           const SizedBox(height: 18),
           _tips(t),
-
           const SizedBox(height: 20),
           _quote(t),
-
           const SizedBox(height: 18),
 
           Center(
@@ -338,8 +263,14 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
         ],
       ),
       bottomNavigationBar: SafeArea(
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+          decoration: BoxDecoration(
+            color: _bg,
+            border: Border(
+              top: BorderSide(color: _border.withOpacity(0.6)),
+            ),
+          ),
           child: SizedBox(
             height: 56,
             child: ElevatedButton(
@@ -349,6 +280,7 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
                   SnackBar(
                     content: Text('Day ${widget.day} complete!'),
                     backgroundColor: _card,
+                    behavior: SnackBarBehavior.floating,
                   ),
                 );
 
@@ -390,6 +322,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
     );
   }
 
+  // Header with progress
+
   Widget _header(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -423,7 +357,6 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
                   ),
                 ),
                 const SizedBox(height: 5),
-
                 Text(
                   widget.title,
                   style: t.headlineSmall?.copyWith(
@@ -432,15 +365,11 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-
                 Text(
                   "Today's progress",
-                  style: t.bodySmall?.copyWith(
-                    color: _muted,
-                  ),
+                  style: t.bodySmall?.copyWith(color: _muted),
                 ),
                 const SizedBox(height: 13),
-
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
@@ -452,7 +381,6 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-
                 Text(
                   '$_completed / $_total activities completed',
                   style: t.bodySmall?.copyWith(
@@ -463,9 +391,7 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
               ],
             ),
           ),
-
           const SizedBox(width: 18),
-
           SizedBox(
             width: 68,
             height: 68,
@@ -496,6 +422,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
       ),
     );
   }
+
+  // Goal selector
 
   Widget _goalSelector(TextTheme t) {
     return Row(
@@ -550,6 +478,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
       }),
     );
   }
+
+  // Statistics
 
   Widget _statsRow(TextTheme t) {
     Widget stat(IconData icon, String value, String label) {
@@ -606,6 +536,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
     );
   }
 
+  // Reusable section card
+
   Widget _section(
       TextTheme t, {
         required String title,
@@ -630,7 +562,7 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: _orange.withValues(alpha: 0.12),
+                  color: _orange.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: _orange, size: 19),
@@ -675,6 +607,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
     );
   }
 
+  // Exercise tile
+
   Widget _exerciseTile(
       TextTheme t,
       _Exercise e,
@@ -703,7 +637,7 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
               height: 43,
               decoration: BoxDecoration(
                 color: done
-                    ? _orange.withValues(alpha: 0.14)
+                    ? _orange.withOpacity(0.14)
                     : const Color(0xFF29292C),
                 borderRadius: BorderRadius.circular(13),
               ),
@@ -762,6 +696,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
     );
   }
 
+  // Daily tips
+
   Widget _tips(TextTheme t) {
     const tips = [
       'HIIT is intense. Stop and rest if you feel dizzy, sick or have chest pain.',
@@ -804,6 +740,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
       ),
     );
   }
+
+  // Motivational quote
 
   Widget _quote(TextTheme t) {
     return Container(

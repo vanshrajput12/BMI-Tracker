@@ -9,7 +9,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class Exercise {
   final String title;
@@ -57,38 +56,14 @@ const _plans = <GainPlan>[
     'Go hard for the short burst, then rest fully. Rest is part of the plan.',
     finisherNote: 'Light dumbbells. Slow and controlled.',
     hiit: [
-      Exercise(
-        'Squat jumps',
-        '30 sec, land softly',
-        Icons.arrow_upward,
-      ),
-      Exercise(
-        'Push-ups',
-        '30 sec, steady pace',
-        Icons.fitness_center,
-      ),
-      Exercise(
-        'High knees',
-        '30 sec, fast',
-        Icons.directions_run,
-      ),
-      Exercise(
-        'Glute bridge',
-        '30 sec, squeeze at the top',
-        Icons.airline_seat_flat,
-      ),
+      Exercise('Squat jumps', '30 sec, land softly', Icons.arrow_upward),
+      Exercise('Push-ups', '30 sec, steady pace', Icons.fitness_center),
+      Exercise('High knees', '30 sec, fast', Icons.directions_run),
+      Exercise('Glute bridge', '30 sec, squeeze at the top', Icons.airline_seat_flat),
     ],
     finisher: [
-      Exercise(
-        'Dumbbell goblet squat',
-        '3 sets x 10 reps',
-        Icons.arrow_downward,
-      ),
-      Exercise(
-        'Dumbbell shoulder press',
-        '3 sets x 10 reps',
-        Icons.expand_less,
-      ),
+      Exercise('Dumbbell goblet squat', '3 sets x 10 reps', Icons.arrow_downward),
+      Exercise('Dumbbell shoulder press', '3 sets x 10 reps', Icons.expand_less),
     ],
   ),
   GainPlan(
@@ -102,48 +77,16 @@ const _plans = <GainPlan>[
     'Hard effort, but keep your form clean. Stop a set if it breaks down.',
     finisherNote: 'Moderate dumbbells. Last 2 reps should feel hard.',
     hiit: [
-      Exercise(
-        'Dumbbell thrusters',
-        '40 sec, light weight',
-        Icons.arrow_upward,
-      ),
-      Exercise(
-        'Jump squats',
-        '40 sec, land softly',
-        Icons.height,
-      ),
-      Exercise(
-        'Push-ups',
-        '40 sec, steady pace',
-        Icons.fitness_center,
-      ),
-      Exercise(
-        'Mountain climbers',
-        '40 sec, fast',
-        Icons.terrain,
-      ),
-      Exercise(
-        'Dumbbell swings',
-        '40 sec, hips drive the weight',
-        Icons.sync,
-      ),
+      Exercise('Dumbbell thrusters', '40 sec, light weight', Icons.arrow_upward),
+      Exercise('Jump squats', '40 sec, land softly', Icons.height),
+      Exercise('Push-ups', '40 sec, steady pace', Icons.fitness_center),
+      Exercise('Mountain climbers', '40 sec, fast', Icons.terrain),
+      Exercise('Dumbbell swings', '40 sec, hips drive the weight', Icons.sync),
     ],
     finisher: [
-      Exercise(
-        'Dumbbell Romanian deadlift',
-        '3 sets x 10 reps',
-        Icons.arrow_downward,
-      ),
-      Exercise(
-        'Dumbbell rows',
-        '3 sets x 10 reps each arm',
-        Icons.sync,
-      ),
-      Exercise(
-        'Plank',
-        '3 sets x 40 sec',
-        Icons.accessibility_new,
-      ),
+      Exercise('Dumbbell Romanian deadlift', '3 sets x 10 reps', Icons.arrow_downward),
+      Exercise('Dumbbell rows', '3 sets x 10 reps each arm', Icons.sync),
+      Exercise('Plank', '3 sets x 40 sec', Icons.accessibility_new),
     ],
   ),
   GainPlan(
@@ -157,53 +100,17 @@ const _plans = <GainPlan>[
     'Explosive reps with real rest. Keep the weight light enough to move fast.',
     finisherNote: 'Heavy and slow. This is where the muscle is built.',
     hiit: [
-      Exercise(
-        'Kettlebell or dumbbell swings',
-        '40 sec, explosive hips',
-        Icons.sync,
-      ),
-      Exercise(
-        'Dumbbell thrusters',
-        '40 sec, moderate weight',
-        Icons.arrow_upward,
-      ),
-      Exercise(
-        'Jump squats',
-        '40 sec, land softly',
-        Icons.height,
-      ),
-      Exercise(
-        'Burpees',
-        '40 sec, steady pace',
-        Icons.directions_run,
-      ),
-      Exercise(
-        'Push-ups',
-        '40 sec, fast and clean',
-        Icons.fitness_center,
-      ),
-      Exercise(
-        'Mountain climbers',
-        '40 sec, fast',
-        Icons.terrain,
-      ),
+      Exercise('Kettlebell or dumbbell swings', '40 sec, explosive hips', Icons.sync),
+      Exercise('Dumbbell thrusters', '40 sec, moderate weight', Icons.arrow_upward),
+      Exercise('Jump squats', '40 sec, land softly', Icons.height),
+      Exercise('Burpees', '40 sec, steady pace', Icons.directions_run),
+      Exercise('Push-ups', '40 sec, fast and clean', Icons.fitness_center),
+      Exercise('Mountain climbers', '40 sec, fast', Icons.terrain),
     ],
     finisher: [
-      Exercise(
-        'Barbell or dumbbell squat',
-        '4 sets x 8 reps',
-        Icons.arrow_downward,
-      ),
-      Exercise(
-        'Bent-over rows',
-        '4 sets x 8 reps',
-        Icons.sync,
-      ),
-      Exercise(
-        'Weighted plank',
-        '3 sets x 45 sec',
-        Icons.accessibility_new,
-      ),
+      Exercise('Barbell or dumbbell squat', '4 sets x 8 reps', Icons.arrow_downward),
+      Exercise('Bent-over rows', '4 sets x 8 reps', Icons.sync),
+      Exercise('Weighted plank', '3 sets x 45 sec', Icons.accessibility_new),
     ],
   ),
 ];
@@ -219,8 +126,7 @@ class DayGainHiitScreen extends StatefulWidget {
   });
 
   @override
-  State<DayGainHiitScreen> createState() =>
-      _DayGainHiitScreenState();
+  State<DayGainHiitScreen> createState() => _DayGainHiitScreenState();
 }
 
 class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
@@ -277,7 +183,6 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
           ),
         ),
       ),
-
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
         children: [
@@ -450,6 +355,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Progress header
+
   Widget _header(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -558,6 +464,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Goal selector heading
+
   Widget _goalTitle(TextTheme t) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -581,6 +488,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Goal selector
+
   Widget _goalSelector(TextTheme t) {
     return Row(
       children: List.generate(_plans.length, (i) {
@@ -643,6 +551,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Workout statistics
+
   Widget _statsRow(TextTheme t) {
     Widget stat(
         IconData icon,
@@ -710,6 +619,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Common section card
+
   Widget _section(
       TextTheme t, {
         required String title,
@@ -808,6 +718,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Warm-up and cool-down description
+
   Widget _description(TextTheme t, String description) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -832,6 +743,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Exercise tile
+
   Widget _exerciseTile(
       TextTheme t,
       Exercise e,
@@ -861,13 +773,13 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
               height: 44,
               decoration: BoxDecoration(
                 color: done
-                    ? _success.withOpacity(0.13)
+                    ? _orange.withOpacity(0.14)
                     : _orange.withOpacity(0.13),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
+                color: _orange,
                 size: 22,
               ),
             ),
@@ -906,7 +818,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
               done
                   ? Icons.check_circle
                   : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
+              color: done ? _orange : Colors.white24,
               size: 22,
             ),
           ],
@@ -916,6 +828,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Daily tips
+
   Widget _tips(TextTheme t) {
     const tips = [
       'Eat a small carb snack 1 hour before: banana, oats or toast with peanut butter.',
@@ -961,6 +874,7 @@ class _DayGainHiitScreenState extends State<DayGainHiitScreen> {
   }
 
   // Motivational quote
+
   Widget _quote(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(19),
