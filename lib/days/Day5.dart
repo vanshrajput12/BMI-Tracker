@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +8,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class _Exercise {
   final String title;
@@ -661,8 +659,8 @@ class _DayStrengthTrainingScreenState
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: _orange.withOpacity(0.13),
-                  borderRadius: BorderRadius.circular(11),
+                  color: _orange.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   icon,
@@ -744,14 +742,14 @@ class _DayStrengthTrainingScreenState
               height: 44,
               decoration: BoxDecoration(
                 color: done
-                    ? _success.withOpacity(0.13)
-                    : _orange.withOpacity(0.13),
+                    ? _orange.withValues(alpha: 0.14)
+                    : const Color(0xFF29292C),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
-                size: 22,
+                color: done ? _orange : _text,
+                size: 21,
               ),
             ),
 
@@ -785,12 +783,25 @@ class _DayStrengthTrainingScreenState
 
             const SizedBox(width: 8),
 
-            Icon(
-              done
-                  ? Icons.check_circle
-                  : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
-              size: 22,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                color: done ? _orange : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: done ? _orange : Colors.white24,
+                  width: 1.5,
+                ),
+              ),
+              child: done
+                  ? const Icon(
+                Icons.check,
+                color: Colors.black,
+                size: 16,
+              )
+                  : null,
             ),
           ],
         ),

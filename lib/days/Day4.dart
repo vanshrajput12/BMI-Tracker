@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +8,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class _Exercise {
   final String title;
@@ -632,8 +630,8 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: _orange.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(11),
+                  color: _orange.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: _orange, size: 19),
               ),
@@ -694,10 +692,9 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
         ),
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
-          color: done
-              ? _success.withOpacity(0.06)
-              : Colors.transparent,
+          color: _card,
           borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: _border),
         ),
         child: Row(
           children: [
@@ -706,13 +703,13 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
               height: 43,
               decoration: BoxDecoration(
                 color: done
-                    ? _success.withOpacity(0.12)
-                    : _orange.withOpacity(0.11),
+                    ? _orange.withValues(alpha: 0.14)
+                    : const Color(0xFF29292C),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _softOrange,
+                color: done ? _orange : _text,
                 size: 21,
               ),
             ),
@@ -739,10 +736,25 @@ class _DayHiitScreenState extends State<DayHiitScreen> {
               ),
             ),
             const SizedBox(width: 8),
-            Icon(
-              done ? Icons.check_circle : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
-              size: 22,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: 23,
+              height: 23,
+              decoration: BoxDecoration(
+                color: done ? _orange : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: done ? _orange : Colors.white24,
+                  width: 1.5,
+                ),
+              ),
+              child: done
+                  ? const Icon(
+                Icons.check,
+                color: Colors.black,
+                size: 16,
+              )
+                  : null,
             ),
           ],
         ),

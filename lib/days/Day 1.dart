@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +8,7 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
+const _success = _orange;
 
 class Exercise {
   final String title;
@@ -213,7 +212,7 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
           _sectionHeading(
             t,
             'Your weight loss goal',
-            'Choose your target',
+            '',
           ),
 
           const SizedBox(height: 12),
@@ -327,7 +326,7 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
             ),
           ),
           child: SizedBox(
-            height: 56,
+            height: 64,
             child: ElevatedButton(
               onPressed: finished
                   ? () {
@@ -480,10 +479,10 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
           const SizedBox(height: 24),
 
 
-              Text(
-                "Today's progress",
-                style: t.bodySmall!.copyWith(color: _muted),
-              ),
+          Text(
+            "Today's progress",
+            style: t.bodySmall!.copyWith(color: _muted),
+          ),
 
 
 
@@ -672,7 +671,7 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
       padding: const EdgeInsets.all(17),
       decoration: BoxDecoration(
         color: _card,
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(color: _border),
       ),
       child: Column(
@@ -808,8 +807,14 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(13),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 13),
+        decoration: BoxDecoration(
+          color: done ? _orange.withOpacity(0.09) : Colors.transparent,
+          borderRadius: BorderRadius.circular(17),
+        ),
         child: Row(
           children: [
             AnimatedContainer(
@@ -817,13 +822,14 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
               width: 43,
               height: 43,
               decoration: BoxDecoration(
-                color: (done ? _success : _orange)
-                    .withOpacity(0.11),
+                color: done
+                    ? _orange.withOpacity(0.15)
+                    : const Color(0xFF29292C),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
+                color: done ? _orange : _text,
                 size: 21,
               ),
             ),
@@ -865,7 +871,7 @@ class _DayWorkoutScreenState extends State<DayWorkoutScreen> {
                     ? Icons.check_circle
                     : Icons.circle_outlined,
                 key: ValueKey(done),
-                color: done ? _success : Colors.white24,
+                color: done ? _orange : Colors.white24,
                 size: 22,
               ),
             ),
