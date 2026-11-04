@@ -9,7 +9,7 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
+const _success = _orange;
 
 class Exercise {
   final String title;
@@ -196,8 +196,6 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
   double get _progress =>
       _total == 0 ? 0 : (_completed / _total).clamp(0.0, 1.0);
 
-  bool get _finished => _completed >= _total;
-
   void _toggleCardio(String name) {
     setState(() {
       final key = 'cardio:$name';
@@ -236,9 +234,10 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
       Theme.of(context).textTheme,
     );
 
+    final finished = _completed >= _total;
+
     return Scaffold(
       backgroundColor: _bg,
-
       appBar: AppBar(
         backgroundColor: _bg,
         elevation: 0,
@@ -247,47 +246,50 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
         leading: const BackButton(color: _text),
         title: Text(
           'Day ${widget.day}',
-          style: t.titleLarge?.copyWith(
+          style: t.titleLarge!.copyWith(
             color: _text,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
-
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         children: [
           _header(t),
-          const SizedBox(height: 22),
+          const SizedBox(height: 26),
 
-          _goalTitle(t),
+          _sectionHeading(
+            t,
+            'Your weight gain goal',
+            '',
+          ),
           const SizedBox(height: 12),
 
           _goalSelector(t),
-          const SizedBox(height: 20),
+          const SizedBox(height: 22),
 
           _statsRow(t),
-          const SizedBox(height: 24),
+          const SizedBox(height: 28),
 
           _section(
             t,
             title: 'Warm-up',
             subtitle: '5 min',
-            icon: Icons.directions_run,
-            child: _description(
+            icon: Icons.wb_sunny_outlined,
+            child: _descriptionTile(
               t,
-              'Arm circles, hip rotations and a slow walk. '
-                  'Get your heart rate up gently before you start.',
+              'Arm circles, hip rotations and a slow walk. Get your heart rate up gently before you start.',
+              Icons.directions_walk,
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _section(
             t,
             title: 'Cardio',
             subtitle: '${_plan.cardioMin} min • Pick one',
-            icon: Icons.favorite_border,
+            icon: Icons.directions_run,
             note: _plan.cardioNote,
             child: Column(
               children: _plan.cardio.map((e) {
@@ -301,7 +303,7 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _section(
             t,
@@ -321,27 +323,27 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _section(
             t,
             title: 'Cool-down',
             subtitle: '5 min',
             icon: Icons.self_improvement,
-            child: _description(
+            child: _descriptionTile(
               t,
-              'Slow walk, then stretch your hamstrings, hips and '
-                  'lower back. Hold each stretch for 20 seconds.',
+              'Slow walk, then stretch your hamstrings, hips and lower back. Hold each stretch for 20 seconds.',
+              Icons.spa_outlined,
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
 
           _tips(t),
-          const SizedBox(height: 20),
+          const SizedBox(height: 18),
 
           _quote(t),
-          const SizedBox(height: 16),
+          const SizedBox(height: 22),
 
           Center(
             child: SizedBox(
@@ -355,10 +357,9 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
           ),
         ],
       ),
-
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
           decoration: BoxDecoration(
             color: _bg,
             border: Border(
@@ -368,9 +369,9 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
             ),
           ),
           child: SizedBox(
-            height: 56,
+            height: 64,
             child: ElevatedButton(
-              onPressed: _finished
+              onPressed: finished
                   ? () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -388,10 +389,10 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
                   : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: _orange,
-                disabledBackgroundColor: const Color(0xFF252525),
+                disabledBackgroundColor: const Color(0xFF292929),
                 foregroundColor: Colors.white,
                 disabledForegroundColor: _muted,
-                elevation: _finished ? 3 : 0,
+                elevation: finished ? 3 : 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -399,20 +400,20 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    _finished
-                        ? Icons.check_circle_outline
-                        : Icons.pending_actions,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 9),
+                  if (finished) ...[
+                    const Icon(
+                      Icons.check_circle_outline,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 9),
+                  ],
                   Text(
-                    _finished
+                    finished
                         ? 'Complete Day ${widget.day}'
                         : '$_completed of $_total activities done',
-                    style: t.titleMedium?.copyWith(
+                    style: t.titleMedium!.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: _finished ? Colors.white : _muted,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -424,7 +425,8 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
     );
   }
 
-  // Progress header
+  // HEADER
+
   Widget _header(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -432,99 +434,110 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
         borderRadius: BorderRadius.circular(24),
         gradient: const LinearGradient(
           colors: [
-            Color(0xFF3A2417),
-            Color(0xFF211B18),
-            _card,
+            Color(0xFF302116),
+            Color(0xFF211D19),
+            Color(0xFF1C1C1E),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: _orange.withOpacity(0.25),
+          color: _orange.withOpacity(0.18),
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'WEIGHT GAIN',
-                  style: t.labelSmall?.copyWith(
-                    color: _softOrange,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.5,
-                  ),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'WEIGHT GAIN',
+                      style: t.labelSmall?.copyWith(
+                        color: _softOrange,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      widget.title,
+                      style: t.headlineSmall!.copyWith(
+                        color: _text,
+                        fontWeight: FontWeight.w700,
+                        height: 1.3,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Build strength and gain healthy weight.',
+                      style: t.bodySmall!.copyWith(
+                        color: _muted,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 5),
-
-                Text(
-                  widget.title,
-                  style: t.headlineSmall?.copyWith(
-                    color: _text,
-                    fontWeight: FontWeight.w700,
-                  ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                width: 66,
+                height: 66,
+                decoration: BoxDecoration(
+                  color: _orange.withOpacity(0.10),
+                  shape: BoxShape.circle,
                 ),
-                const SizedBox(height: 8),
-
-                Text(
-                  'Today\'s progress',
-                  style: t.bodySmall?.copyWith(
-                    color: _muted,
-                  ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 54,
+                      height: 54,
+                      child: CircularProgressIndicator(
+                        value: _progress,
+                        strokeWidth: 5,
+                        strokeCap: StrokeCap.round,
+                        backgroundColor: Colors.white12,
+                        valueColor:
+                        const AlwaysStoppedAnimation(_orange),
+                      ),
+                    ),
+                    Text(
+                      '${(_progress * 100).round()}%',
+                      style: t.titleSmall!.copyWith(
+                        color: _text,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 13),
-
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
-                    value: _progress,
-                    minHeight: 8,
-                    backgroundColor: Colors.white12,
-                    valueColor:
-                    const AlwaysStoppedAnimation(_orange),
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                Text(
-                  '$_completed / $_total activities completed',
-                  style: t.bodySmall?.copyWith(
-                    color: _softOrange,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          Text(
+            "Today's progress",
+            style: t.bodySmall!.copyWith(color: _muted),
+          ),
+          const SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: LinearProgressIndicator(
+              value: _progress,
+              minHeight: 8,
+              backgroundColor: Colors.white12,
+              valueColor:
+              const AlwaysStoppedAnimation(_orange),
             ),
           ),
-
-          const SizedBox(width: 18),
-
-          SizedBox(
-            width: 68,
-            height: 68,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox.expand(
-                  child: CircularProgressIndicator(
-                    value: _progress,
-                    strokeWidth: 6,
-                    strokeCap: StrokeCap.round,
-                    backgroundColor: Colors.white12,
-                    valueColor:
-                    const AlwaysStoppedAnimation(_orange),
-                  ),
-                ),
-                Text(
-                  '${(_progress * 100).round()}%',
-                  style: t.titleSmall?.copyWith(
-                    color: _text,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+          const SizedBox(height: 8),
+          Text(
+            '$_completed / $_total activities completed',
+            style: t.bodySmall?.copyWith(
+              color: _softOrange,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -532,30 +545,36 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
     );
   }
 
-  // Goal selector heading
-  Widget _goalTitle(TextTheme t) {
+  // SECTION HEADING
+
+  Widget _sectionHeading(
+      TextTheme t,
+      String title,
+      String subtitle,
+      ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Your weight gain goal',
-          style: t.titleMedium?.copyWith(
+          title,
+          style: t.titleMedium!.copyWith(
             color: _text,
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Choose your target to adjust workout intensity.',
-          style: t.bodySmall?.copyWith(
-            color: _muted,
+        if (subtitle.isNotEmpty) ...[
+          const SizedBox(height: 3),
+          Text(
+            subtitle,
+            style: t.bodySmall!.copyWith(color: _muted),
           ),
-        ),
+        ],
       ],
     );
   }
 
-  // Goal selector
+  // GOAL SELECTOR
+
   Widget _goalSelector(TextTheme t) {
     return Row(
       children: List.generate(_plans.length, (i) {
@@ -565,49 +584,38 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
           child: GestureDetector(
             onTap: () => _changeGoal(i),
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 220),
               margin: EdgeInsets.only(
                 right: i == _plans.length - 1 ? 0 : 10,
               ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 14,
-                horizontal: 5,
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 14),
               decoration: BoxDecoration(
                 color: selected
-                    ? _orange.withOpacity(0.15)
+                    ? _orange.withOpacity(0.13)
                     : _card,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: selected ? _orange : _border,
-                  width: selected ? 1.4 : 1,
+                  width: selected ? 1.3 : 1,
                 ),
               ),
               child: Column(
                 children: [
                   Text(
                     _plans[i].label,
-                    style: t.titleSmall?.copyWith(
+                    style: t.titleSmall!.copyWith(
                       color: selected ? _softOrange : _text,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 3),
                   Text(
                     _plans[i].intensity,
-                    style: t.bodySmall?.copyWith(
-                      color: selected ? _orange : _muted,
+                    style: t.bodySmall!.copyWith(
+                      color: selected ? _softOrange : _muted,
                       fontSize: 11,
                     ),
                   ),
-                  if (selected) ...[
-                    const SizedBox(height: 6),
-                    const Icon(
-                      Icons.check_circle,
-                      color: _orange,
-                      size: 17,
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -617,7 +625,8 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
     );
   }
 
-  // Workout statistics
+  // STATS
+
   Widget _statsRow(TextTheme t) {
     Widget stat(
         IconData icon,
@@ -627,34 +636,31 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
       return Expanded(
         child: Container(
           padding: const EdgeInsets.symmetric(
-            vertical: 15,
+            vertical: 16,
             horizontal: 5,
           ),
           decoration: BoxDecoration(
             color: _card,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(17),
             border: Border.all(color: _border),
           ),
           child: Column(
             children: [
               Icon(icon, color: _orange, size: 21),
-              const SizedBox(height: 8),
+              const SizedBox(height: 9),
               Text(
                 value,
-                maxLines: 1,
-                style: t.titleSmall?.copyWith(
+                style: t.titleMedium!.copyWith(
                   color: _text,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 3),
+              const SizedBox(height: 2),
               Text(
                 label,
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                style: t.bodySmall?.copyWith(
+                style: t.bodySmall!.copyWith(
                   color: _muted,
-                  fontSize: 10,
+                  fontSize: 11,
                 ),
               ),
             ],
@@ -668,31 +674,247 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
     return Row(
       children: [
         stat(Icons.timer_outlined, '$total min', 'Total time'),
-        const SizedBox(width: 9),
+        const SizedBox(width: 10),
         stat(
           Icons.restaurant_outlined,
           '+${_plan.kcalSurplus}',
           'kcal surplus',
         ),
-        const SizedBox(width: 9),
-        stat(
-          Icons.bolt_outlined,
-          _plan.intensity,
-          'Intensity',
+        const SizedBox(width: 10),
+        stat(Icons.bolt_outlined, _plan.intensity, 'Intensity'),
+      ],
+    );
+  }
+
+  // SECTION CARD
+
+  Widget _section(
+      TextTheme t, {
+        required String title,
+        required String subtitle,
+        String? note,
+        required Widget child,
+        required IconData icon,
+      }) {
+    return Container(
+      padding: const EdgeInsets.all(17),
+      decoration: BoxDecoration(
+        color: _card,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: _border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: _orange.withOpacity(0.11),
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: Icon(
+                  icon,
+                  color: _orange,
+                  size: 19,
+                ),
+              ),
+              const SizedBox(width: 11),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: t.titleSmall!.copyWith(
+                        color: _text,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: t.bodySmall!.copyWith(
+                        color: _softOrange,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (note != null) ...[
+            const SizedBox(height: 14),
+            Container(
+              padding: const EdgeInsets.all(11),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.035),
+                borderRadius: BorderRadius.circular(11),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.info_outline,
+                    color: _muted,
+                    size: 17,
+                  ),
+                  const SizedBox(width: 9),
+                  Expanded(
+                    child: Text(
+                      note,
+                      style: t.bodySmall!.copyWith(
+                        color: _muted,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 12),
+          child,
+        ],
+      ),
+    );
+  }
+
+  // DESCRIPTION TILE
+
+  Widget _descriptionTile(
+      TextTheme t,
+      String description,
+      IconData icon,
+      ) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 42,
+          height: 42,
+          decoration: BoxDecoration(
+            color: _orange.withOpacity(0.11),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: _orange,
+            size: 21,
+          ),
+        ),
+        const SizedBox(width: 13),
+        Expanded(
+          child: Text(
+            description,
+            style: t.bodySmall!.copyWith(
+              color: _muted,
+              height: 1.6,
+            ),
+          ),
         ),
       ],
     );
   }
 
-  // Common section card
-  Widget _section(
-      TextTheme t, {
-        required String title,
-        required String subtitle,
-        required IconData icon,
-        String? note,
-        required Widget child,
-      }) {
+  // EXERCISE TILE
+
+  Widget _exerciseTile(
+      TextTheme t,
+      Exercise e,
+      bool done,
+      VoidCallback onTap,
+      ) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(13),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: 13,
+        ),
+        decoration: BoxDecoration(
+          color: done ? _orange.withOpacity(0.09) : Colors.transparent,
+          borderRadius: BorderRadius.circular(17),
+        ),
+        child: Row(
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: 43,
+              height: 43,
+              decoration: BoxDecoration(
+                color: done
+                    ? _orange.withOpacity(0.15)
+                    : const Color(0xFF29292C),
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Icon(
+                e.icon,
+                color: done ? _orange : _text,
+                size: 21,
+              ),
+            ),
+            const SizedBox(width: 13),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    e.title,
+                    style: t.bodyMedium!.copyWith(
+                      color: done ? _muted : _text,
+                      fontWeight: FontWeight.w600,
+                      decoration: done
+                          ? TextDecoration.lineThrough
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    e.detail,
+                    style: t.bodySmall!.copyWith(
+                      color: _muted,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 180),
+              child: Icon(
+                done
+                    ? Icons.check_circle
+                    : Icons.circle_outlined,
+                key: ValueKey(done),
+                color: done ? _orange : Colors.white24,
+                size: 22,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // DAILY TIPS
+
+  Widget _tips(TextTheme t) {
+    const tips = [
+      'Drink 2-3 litres of water today.',
+      'Eat about 250-500 kcal above your daily need.',
+      'Have protein with every meal: eggs, dal, paneer, chicken or curd.',
+      'Sleep 7-9 hours. Muscles grow while you rest.',
+      'A safe pace is about 0.25-0.5 kg per week.',
+    ];
+
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -705,66 +927,38 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
         children: [
           Row(
             children: [
-              Container(
-                width: 38,
-                height: 38,
-                decoration: BoxDecoration(
-                  color: _orange.withOpacity(0.13),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  icon,
-                  color: _orange,
-                  size: 20,
-                ),
+              const Icon(
+                Icons.lightbulb_outline,
+                color: _orange,
+                size: 21,
               ),
-              const SizedBox(width: 11),
-
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: t.titleMedium?.copyWith(
-                        color: _text,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: t.bodySmall?.copyWith(
-                        color: _softOrange,
-                        fontSize: 11,
-                      ),
-                    ),
-                  ],
+              const SizedBox(width: 10),
+              Text(
+                'Daily tips',
+                style: t.titleMedium!.copyWith(
+                  color: _text,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-
-          if (note != null) ...[
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(11),
-              decoration: BoxDecoration(
-                color: _orange.withOpacity(0.07),
-                borderRadius: BorderRadius.circular(12),
-              ),
+          const SizedBox(height: 16),
+          ...tips.map(
+                (s) => Padding(
+              padding: const EdgeInsets.only(bottom: 12),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(
-                    Icons.info_outline,
+                    Icons.check_circle_outline,
                     color: _orange,
                     size: 17,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 11),
                   Expanded(
                     child: Text(
-                      note,
-                      style: t.bodySmall?.copyWith(
+                      s,
+                      style: t.bodySmall!.copyWith(
                         color: _muted,
                         height: 1.5,
                       ),
@@ -773,194 +967,32 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
                 ],
               ),
             ),
-          ],
-
-          const SizedBox(height: 12),
-          child,
+          ),
         ],
       ),
     );
   }
 
-  // Warm-up and cool-down description
-  Widget _description(TextTheme t, String description) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Icon(
-          Icons.check_circle_outline,
-          color: _orange,
-          size: 19,
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Text(
-            description,
-            style: t.bodySmall?.copyWith(
-              color: _muted,
-              height: 1.7,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // MOTIVATIONAL QUOTE
 
-  // Exercise tile
-  Widget _exerciseTile(
-      TextTheme t,
-      Exercise e,
-      bool done,
-      VoidCallback onTap,
-      ) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(14),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 11,
-          horizontal: 9,
-        ),
-        margin: const EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-          color: done
-              ? _orange.withOpacity(0.07)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                color: done
-                    ? _success.withOpacity(0.13)
-                    : _orange.withOpacity(0.13),
-                borderRadius: BorderRadius.circular(13),
-              ),
-              child: Icon(
-                e.icon,
-                color: done ? _success : _orange,
-                size: 22,
-              ),
-            ),
-
-            const SizedBox(width: 13),
-
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    e.title,
-                    style: t.bodyMedium?.copyWith(
-                      color: done ? _muted : _text,
-                      fontWeight: FontWeight.w600,
-                      decoration: done
-                          ? TextDecoration.lineThrough
-                          : null,
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    e.detail,
-                    style: t.bodySmall?.copyWith(
-                      color: _muted,
-                      fontSize: 11,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(width: 8),
-
-            Icon(
-              done
-                  ? Icons.check_circle
-                  : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
-              size: 22,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Daily tips
-  Widget _tips(TextTheme t) {
-    const tips = [
-      'Drink 2-3 litres of water today.',
-      'Eat about 250-500 kcal above your daily need.',
-      'Have protein with every meal: eggs, dal, paneer, chicken or curd.',
-      'Sleep 7-9 hours. Muscles grow while you rest.',
-      'A safe pace is about 0.25-0.5 kg per week.',
-    ];
-
-    return _section(
-      t,
-      title: 'Daily tips',
-      subtitle: 'Build healthy habits',
-      icon: Icons.lightbulb_outline,
-      child: Column(
-        children: tips.map((s) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.check_circle_outline,
-                  color: _orange,
-                  size: 18,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    s,
-                    style: t.bodySmall?.copyWith(
-                      color: _muted,
-                      height: 1.6,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  // Motivational quote
   Widget _quote(TextTheme t) {
     return Container(
       padding: const EdgeInsets.all(19),
       decoration: BoxDecoration(
+        color: const Color(0xFF201D19),
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-          colors: [
-            _orange.withOpacity(0.12),
-            _card,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
         border: Border.all(
-          color: _orange.withOpacity(0.25),
+          color: _orange.withOpacity(0.20),
         ),
       ),
       child: Row(
         children: [
           Container(
-            width: 46,
-            height: 46,
+            width: 43,
+            height: 43,
             decoration: BoxDecoration(
-              color: _orange.withOpacity(0.13),
-              borderRadius: BorderRadius.circular(14),
+              color: _orange.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(13),
             ),
             child: const Icon(
               Icons.fitness_center,
@@ -969,11 +1001,10 @@ class _DayGainWorkoutScreenState extends State<DayGainWorkoutScreen> {
             ),
           ),
           const SizedBox(width: 14),
-
           Expanded(
             child: Text(
-              'Don\'t run from your dream, chase the dream.',
-              style: t.titleSmall?.copyWith(
+              "Don't run from your dream, chase the dream.",
+              style: t.bodyMedium!.copyWith(
                 color: _text,
                 fontWeight: FontWeight.w600,
                 height: 1.5,
