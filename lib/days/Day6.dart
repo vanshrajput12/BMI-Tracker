@@ -9,7 +9,6 @@ const _softOrange = Color(0xFFFFB366);
 const _text = Color(0xFFEDEAF2);
 const _muted = Color(0xFF9A98A3);
 const _border = Color(0xFF303034);
-const _success = Color(0xFF55C98A);
 
 class _Exercise {
   final String title;
@@ -274,7 +273,6 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
           ),
         ),
       ),
-
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 4, 20, 120),
         children: [
@@ -354,7 +352,6 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
           ),
         ],
       ),
-
       bottomNavigationBar: SafeArea(
         child: Container(
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
@@ -651,7 +648,7 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: _card,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(21),
         border: Border.all(color: _border),
       ),
       child: Column(
@@ -660,57 +657,80 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
           Row(
             children: [
               Container(
-                width: 36,
-                height: 36,
+                width: 38,
+                height: 38,
                 decoration: BoxDecoration(
-                  color: _orange.withOpacity(0.13),
-                  borderRadius: BorderRadius.circular(11),
+                  color: _orange.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
                   icon,
                   color: _orange,
-                  size: 19,
+                  size: 20,
                 ),
               ),
               const SizedBox(width: 11),
-
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: t.titleMedium?.copyWith(
-                        color: _text,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    if (subtitle.isNotEmpty)
-                      Text(
-                        subtitle,
-                        style: t.bodySmall?.copyWith(
-                          color: _softOrange,
-                          fontSize: 11,
-                        ),
-                      ),
-                  ],
+                child: Text(
+                  title,
+                  style: t.titleMedium?.copyWith(
+                    color: _text,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
+              if (subtitle.isNotEmpty)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.06),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    subtitle,
+                    style: t.labelSmall?.copyWith(
+                      color: _softOrange,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
             ],
           ),
-
           if (note != null) ...[
-            const SizedBox(height: 12),
-            Text(
-              note,
-              style: t.bodySmall?.copyWith(
-                color: _muted,
-                height: 1.5,
+            const SizedBox(height: 13),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: _orange.withValues(alpha: 0.07),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(
+                    Icons.lightbulb_outline,
+                    color: _softOrange,
+                    size: 18,
+                  ),
+                  const SizedBox(width: 9),
+                  Expanded(
+                    child: Text(
+                      note,
+                      style: t.bodySmall?.copyWith(
+                        color: _muted,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
-
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
           child,
         ],
       ),
@@ -726,39 +746,27 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(14),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 11,
-          horizontal: 9,
-        ),
-        margin: const EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-          color: done
-              ? _orange.withOpacity(0.07)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(14),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 9),
         child: Row(
           children: [
             AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: 44,
-              height: 44,
+              duration: const Duration(milliseconds: 180),
+              width: 43,
+              height: 43,
               decoration: BoxDecoration(
                 color: done
-                    ? _success.withOpacity(0.13)
-                    : _orange.withOpacity(0.13),
+                    ? _orange.withValues(alpha: 0.14)
+                    : const Color(0xFF29292C),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: Icon(
                 e.icon,
-                color: done ? _success : _orange,
-                size: 22,
+                color: done ? _orange : _text,
+                size: 21,
               ),
             ),
-
             const SizedBox(width: 13),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -768,9 +776,8 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
                     style: t.bodyMedium?.copyWith(
                       color: done ? _muted : _text,
                       fontWeight: FontWeight.w600,
-                      decoration: done
-                          ? TextDecoration.lineThrough
-                          : null,
+                      decoration:
+                      done ? TextDecoration.lineThrough : null,
                     ),
                   ),
                   const SizedBox(height: 3),
@@ -784,15 +791,26 @@ class _DayRecoveryScreenState extends State<DayRecoveryScreen> {
                 ],
               ),
             ),
-
             const SizedBox(width: 8),
-
-            Icon(
-              done
-                  ? Icons.check_circle
-                  : Icons.circle_outlined,
-              color: done ? _success : Colors.white24,
-              size: 22,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                color: done ? _orange : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: done ? _orange : Colors.white24,
+                  width: 1.5,
+                ),
+              ),
+              child: done
+                  ? const Icon(
+                Icons.check,
+                color: Colors.black,
+                size: 16,
+              )
+                  : null,
             ),
           ],
         ),
