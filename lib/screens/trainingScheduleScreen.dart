@@ -14,16 +14,15 @@ import '../days/Day6.dart';
 import '../days/Day7.dart';
 import '../services/training_progess_service.dart';
 
-// Calm, mostly neutral palette. Coral is used only for "today",
-// sage green only for "done". No amber on this screen.
-const _bg = Color(0xFF0E0E10);
-const _surface = Color(0xFF16171A);
-const _surfaceHi = Color(0xFF1C1D21);
-const _line = Color(0x14FFFFFF);
-const _text = Color(0xFFF2F0F5);
-const _muted = Color(0xFF8C8A94);
-const _coral = Color(0xFFFF6B5A);
-const _sage = Color(0xFFFFBF00);
+// Same palette as the goal screen: dark base, orange accents,
+// and only a very faint red tint inside gradients.
+const _bg = Color(0xFF121212);
+const _card = Color(0xFF1C1C1E);
+const _border = Color(0xFF2C2C2E);
+const _orange = Color(0xFFFF8A1F);
+const _orangeTint = Color(0xFF3A2514);
+const _text = Color(0xFFEDEAF2);
+const _muted = Color(0xFF9A98A3);
 
 class WorkoutDay {
   final int number;
@@ -151,7 +150,7 @@ class _TrainingScheduleScreenState extends State<TrainingScheduleScreen>
     final nextMidnight = DateTime(now.year, now.month, now.day + 1);
     _midnightTimer = Timer(
       nextMidnight.difference(now) + const Duration(seconds: 1),
-          () {
+      () {
         if (!mounted) return;
         setState(() {});
         _scheduleMidnight();
@@ -180,7 +179,7 @@ class _TrainingScheduleScreenState extends State<TrainingScheduleScreen>
     if (!_ready) {
       return const Scaffold(
         backgroundColor: _bg,
-        body: Center(child: CircularProgressIndicator(color: Colors.amber)),
+        body: Center(child: CircularProgressIndicator(color: _orange)),
       );
     }
 
@@ -193,7 +192,7 @@ class _TrainingScheduleScreenState extends State<TrainingScheduleScreen>
   }
 }
 
-/// The screen design (unchanged). It only shows what it is given.
+/// The screen design. It only shows what it is given.
 class _ScheduleView extends StatelessWidget {
   final List<WorkoutDay> days;
   final Set<int> completed; // day numbers
@@ -211,7 +210,7 @@ class _ScheduleView extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme);
     final todayDay = days.firstWhere(
-          (d) => d.number == today,
+      (d) => d.number == today,
       orElse: () => days.first,
     );
 
@@ -223,7 +222,6 @@ class _ScheduleView extends StatelessWidget {
         scrolledUnderElevation: 0,
         elevation: 0,
         centerTitle: true,
-
         title: Column(
           children: [
             Text(
@@ -234,7 +232,6 @@ class _ScheduleView extends StatelessWidget {
                 color: Colors.orange,
               ),
             ),
-
             SizedBox(width: 220, child: Divider(color: Colors.white)),
           ],
         ),
@@ -243,21 +240,35 @@ class _ScheduleView extends StatelessWidget {
         bottom: false,
         child: ListView(
           // Extra bottom padding so the floating nav bar never covers content.
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 140),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 140),
           children: [
             _todayCard(t, todayDay),
-            const SizedBox(height: 28),
-            Text(
-              'All days',
-              style: t.titleMedium!.copyWith(
-                color: _text,
-                fontWeight: FontWeight.w600,
-              ),
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                Container(
+                  width: 24,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: _orange,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  'ALL DAYS',
+                  style: t.labelMedium!.copyWith(
+                    color: _orange,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.6,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 14),
             ...days.map(
-                  (d) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
+              (d) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
                 child: _dayRow(t, d),
               ),
             ),
@@ -269,87 +280,71 @@ class _ScheduleView extends StatelessWidget {
 
   Widget _todayCard(TextTheme t, WorkoutDay d) {
     return Container(
-      clipBehavior: Clip.antiAlias,
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: _orange.withOpacity(0.28)),
         gradient: const LinearGradient(
-          colors: [Color(0xFF2A1A19), Color(0xFF17181B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF38241A), // warm brown
+            _card,
+            Color(0xFF2A1A1C), // very slight red hint
+          ],
+          stops: [0.0, 0.65, 1.0],
         ),
-        border: Border.all(color: _coral.withOpacity(0.25)),
       ),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Positioned(
-            right: -18,
-            top: -10,
-            child: Icon(
-              d.icon,
-              size: 150,
-              color: Colors.white.withOpacity(0.04),
+          Text(
+            'TODAY  |  DAY ${d.number}',
+            style: t.labelMedium!.copyWith(
+              color: _orange,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 1.6,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Today  |  Day ${d.number}',
-                  style: t.bodyMedium!.copyWith(
-                    color: _coral,
-                    fontWeight: FontWeight.w500,
-                  ),
+          const SizedBox(height: 6),
+          Text(
+            d.title,
+            style: t.titleLarge!.copyWith(
+              color: _text,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              _chip(t, Icons.timer_outlined, d.duration),
+              ...d.focus.map((f) => _chip(t, null, f)),
+            ],
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            height: 46,
+            child: ElevatedButton.icon(
+              onPressed: () => onDayTap(d.number),
+              icon: Icon(
+                d.isRest ? Icons.bedtime_outlined : Icons.play_arrow_rounded,
+                size: 22,
+              ),
+              label: Text(
+                d.isRest ? 'View rest day' : 'Start workout',
+                style: t.titleSmall!.copyWith(fontWeight: FontWeight.w600),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: _orange,
+                foregroundColor: const Color(0xFF111113),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  d.title,
-                  style: t.headlineMedium!.copyWith(
-                    color: _text,
-                    fontWeight: FontWeight.w700,
-                    height: 1.15,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    _chip(t, Icons.timer_outlined, d.duration),
-                    ...d.focus.map((f) => _chip(t, null, f)),
-                  ],
-                ),
-                const SizedBox(height: 22),
-                SizedBox(
-                  height: 50,
-                  child: ElevatedButton.icon(
-                    onPressed: () => onDayTap(d.number),
-                    icon: Icon(
-                      d.isRest
-                          ? Icons.bedtime_outlined
-                          : Icons.play_arrow_rounded,
-                      size: 24,
-                    ),
-                    label: Text(
-                      d.isRest ? 'View rest day' : 'Start workout',
-                      style: t.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _text,
-                      foregroundColor: const Color(0xFF111113),
-                      elevation: 0,
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],
@@ -359,21 +354,25 @@ class _ScheduleView extends StatelessWidget {
 
   Widget _chip(TextTheme t, IconData? icon, String label) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.07),
+        color: Colors.white.withOpacity(0.05),
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: _border),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 15, color: _muted),
-            const SizedBox(width: 6),
+            Icon(icon, size: 14, color: _orange),
+            const SizedBox(width: 5),
           ],
           Text(
             label,
-            style: t.bodySmall!.copyWith(color: _text.withOpacity(0.85)),
+            style: t.bodySmall!.copyWith(
+              color: _text.withOpacity(0.85),
+              fontSize: 12,
+            ),
           ),
         ],
       ),
@@ -383,87 +382,104 @@ class _ScheduleView extends StatelessWidget {
   Widget _dayRow(TextTheme t, WorkoutDay d) {
     final done = completed.contains(d.number);
     final isToday = d.number == today;
+    final radius = BorderRadius.circular(18);
 
     final badgeBg = isToday
-        ? _coral
+        ? _orange
         : done
-        ? _sage.withOpacity(0.12)
+        ? _orangeTint
         : Colors.white.withOpacity(0.06);
-    final badgeFg = isToday ? Colors.white : (done ? _sage : _text);
+    final badgeFg = isToday
+        ? const Color(0xFF111113)
+        : (done ? _orange : _text);
 
-    return Material(
-      color: isToday ? _surfaceHi : _surface,
-      borderRadius: BorderRadius.circular(22),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(22),
-        onTap: () => onDayTap(d.number),
-        child: Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(
-              color: isToday ? _coral.withOpacity(0.45) : _line,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: radius,
+        color: isToday ? null : _card,
+        border: Border.all(color: isToday ? _orange.withOpacity(0.4) : _border),
+        gradient: isToday
+            ? const LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0xFF38241A), _card, Color(0xFF2A1A1C)],
+                stops: [0.0, 0.65, 1.0],
+              )
+            : null,
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: radius,
+          splashColor: _orange.withOpacity(0.12),
+          highlightColor: _orange.withOpacity(0.06),
+          onTap: () => onDayTap(d.number),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: badgeBg,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Day',
+                        style: t.labelSmall!.copyWith(
+                          color: badgeFg.withOpacity(0.8),
+                          fontSize: 10,
+                          height: 1,
+                        ),
+                      ),
+                      Text(
+                        '${d.number}',
+                        style: t.titleMedium!.copyWith(
+                          color: badgeFg,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        d.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: t.titleSmall!.copyWith(
+                          color: done ? _muted : _text,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        d.isRest
+                            ? 'Rest  |  stretch or easy walk'
+                            : '${d.focus.join(', ')}  |  ${d.duration}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: t.bodySmall!.copyWith(
+                          color: _muted,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                _trailing(t, done, isToday),
+              ],
             ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  color: badgeBg,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Day',
-                      style: t.labelSmall!.copyWith(
-                        color: badgeFg.withOpacity(0.8),
-                        height: 1,
-                      ),
-                    ),
-                    Text(
-                      '${d.number}',
-                      style: t.titleLarge!.copyWith(
-                        color: badgeFg,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      d.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: t.titleSmall!.copyWith(
-                        color: done ? _muted : _text,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    Text(
-                      d.isRest
-                          ? 'Rest  |  stretch or easy walk'
-                          : '${d.focus.join(', ')}  |  ${d.duration}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: t.bodySmall!.copyWith(color: _muted),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              _trailing(t, done, isToday),
-            ],
           ),
         ),
       ),
@@ -472,24 +488,25 @@ class _ScheduleView extends StatelessWidget {
 
   Widget _trailing(TextTheme t, bool done, bool isToday) {
     if (done) {
-      return const Icon(Icons.check_circle_rounded, color: _sage, size: 26);
+      return const Icon(Icons.check_circle_rounded, color: _orange, size: 24);
     }
     if (isToday) {
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
-          color: _coral.withOpacity(0.15),
+          color: _orange.withOpacity(0.15),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Text(
           'Today',
           style: t.bodySmall!.copyWith(
-            color: _coral,
+            color: _orange,
             fontWeight: FontWeight.w600,
+            fontSize: 12,
           ),
         ),
       );
     }
-    return const Icon(Icons.chevron_right_rounded, color: _muted, size: 26);
+    return const Icon(Icons.chevron_right_rounded, color: _muted, size: 24);
   }
 }
