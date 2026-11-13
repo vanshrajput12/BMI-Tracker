@@ -82,7 +82,7 @@ class _DayGainRestScreenState extends State<DayGainRestScreen> {
     });
   }
 
-  // Optional activity is pick one.
+
   void _toggleOptional(String key) {
     setState(() {
       if (_done.contains(key)) {
