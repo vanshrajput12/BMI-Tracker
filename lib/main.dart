@@ -6,6 +6,7 @@ import 'package:bmi_project/screens/auth_pages/login_screen.dart';
 import 'package:bmi_project/screens/auth_pages/sign_up_screen.dart';
 import 'package:bmi_project/screens/dashboard_screen.dart';
 import 'package:bmi_project/screens/profile_screen.dart';
+import 'package:bmi_project/screens/splash_screen.dart';
 import 'package:bmi_project/screens/user_detail_pages/details_screen.dart';
 import 'package:bmi_project/services/notification_service.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BMI Tracker',
-      home: const AuthWrapper(),
+      home: SplashScreen(next: (_) => const AuthWrapper()),
 
       theme: ThemeData(
         brightness: Brightness.dark,

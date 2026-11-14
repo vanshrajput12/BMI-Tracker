@@ -1,9 +1,8 @@
-// pubspec.yaml -> dependencies: google_fonts, firebase_auth
+// pubspec.yaml -> dependencies: google_fonts
 // No Lottie or other animation package is needed. Everything is drawn and
 // animated with Flutter's own AnimationController and CustomPainter.
 import 'dart:math' as math;
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,23 +18,15 @@ const _tagline = 'Track. Train. Transform.';
 
 const _splashDuration = Duration(milliseconds: 2800);
 
-/// Shows an animated BMI gauge, then opens the right screen:
-/// [loggedIn] if the user is signed in, otherwise [loggedOut].
+/// Shows an animated BMI gauge for about 3 seconds, then opens [next].
+/// It does not decide where the user goes. Your AuthWrapper does that.
 ///
 /// In main.dart:
-///   home: SplashScreen(
-///     loggedIn: (_) => const BottomNav(),
-///     loggedOut: (_) => const LoginScreen(),
-///   ),
+///   home: SplashScreen(next: (_) => const AuthWrapper()),
 class SplashScreen extends StatefulWidget {
-  final WidgetBuilder loggedIn;
-  final WidgetBuilder loggedOut;
+  final WidgetBuilder next;
 
-  const SplashScreen({
-    super.key,
-    required this.loggedIn,
-    required this.loggedOut,
-  });
+  const SplashScreen({super.key, required this.next});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -100,28 +91,14 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _goNext() async {
-    final minimumTime = Future<void>.delayed(_splashDuration);
-
-    // Wait for Firebase to restore the saved login (max 4 seconds).
-    User? user;
-    try {
-      user = await FirebaseAuth.instance
-          .authStateChanges()
-          .first
-          .timeout(const Duration(seconds: 4),
-          onTimeout: () => FirebaseAuth.instance.currentUser);
-    } catch (_) {
-      user = FirebaseAuth.instance.currentUser;
-    }
-
-    await minimumTime; // always show the full animation
+    // Let the whole animation play.
+    await Future<void>.delayed(_splashDuration);
     if (!mounted) return;
 
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 500),
-        pageBuilder: (context, _, __) =>
-        user != null ? widget.loggedIn(context) : widget.loggedOut(context),
+        pageBuilder: (context, _, __) => widget.next(context),
         transitionsBuilder: (context, animation, _, child) =>
             FadeTransition(opacity: animation, child: child),
       ),
